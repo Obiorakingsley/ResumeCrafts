@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/component/Footer";
+import Navbar from "@/component/Navbar";
 
 export const metadata: Metadata = {
   title: "Ai resume builder",
@@ -17,46 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={``}>
+      <body className="flex flex-col justify-between h-screen">
         <header className="dark:text-white bg-slate-50 dark:bg-black text-black py-4 px-2 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">ResumeCraft</h1>
-          <nav className="hidden sm:flex">
-            <ul className="list-none flex items-center gap-4 justify-between max-w-80">
-              <Link
-                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-                href="/"
-              >
-                <li>Template</li>
-              </Link>
-              <Link
-                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-                href="/"
-              >
-                <li>Examples</li>
-              </Link>
-              <Link
-                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-                href="/"
-              >
-                <li>Pricing</li>
-              </Link>
-            </ul>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              className="py-2 px-2 bg-indigo-600/10 text-indigo-500 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
-            >
-              Create My Resume
-            </button>
-            <Image
-              src="/user.png"
-              alt="profile pic"
-              width={20}
-              height={20}
-              className="size-9"
-            />
-          </div>
+          <Navbar />
         </header>
         <main>{children}</main>
         <footer className="bg-white dark:bg-black/50 border-t border-slate-200 dark:border-slate-800">

@@ -17,8 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={``}>
-        <header className="dark:text-white text-black py-5 px-2 flex items-center justify-between">
-          <h1 className="text-xl font-bold">ResumeCraft</h1>
+        <header className="dark:text-white bg-slate-50 text-black py-4 px-2 flex items-center justify-between">
+          <h1 className="text-2xl font-bold">ResumeCraft</h1>
           <nav className="hidden sm:flex">
             <ul className="list-none flex items-center gap-4 justify-between max-w-80">
               <Link
@@ -44,7 +44,7 @@ export default function RootLayout({
           <div className="flex items-center gap-4">
             <button
               type="button"
-              className="py-1 px-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 transition-colors focus:outline-none focus:ring-1 focus:ring-slate-100 focus:ring-offset-2 cursor-pointer"
+              className="py-2 px-2 bg-indigo-600/10 text-indigo-500 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
             >
               Create My Resume
             </button>
@@ -58,7 +58,6 @@ export default function RootLayout({
           </div>
         </header>
         <main>{children}</main>
-        <footer></footer>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import Footer from "@/component/Footer";
 
 export const metadata: Metadata = {
   title: "Ai resume builder",
@@ -17,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={``}>
-        <header className="dark:text-white bg-slate-50 text-black py-4 px-2 flex items-center justify-between">
+        <header className="dark:text-white bg-slate-50 dark:bg-black text-black py-4 px-2 flex items-center justify-between">
           <h1 className="text-2xl font-bold">ResumeCraft</h1>
           <nav className="hidden sm:flex">
             <ul className="list-none flex items-center gap-4 justify-between max-w-80">
@@ -58,6 +59,9 @@ export default function RootLayout({
           </div>
         </header>
         <main>{children}</main>
+        <footer className="bg-white dark:bg-black/50 border-t border-slate-200 dark:border-slate-800">
+          <Footer />
+        </footer>
       </body>
     </html>
   );

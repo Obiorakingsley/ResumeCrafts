@@ -21,7 +21,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="py-16 px-4 sm:py-24 bg-slate-100">
+      <section className="py-16 px-4 sm:py-24 bg-slate-100 dark:bg-black">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
             Why Choose ResumeCraft?

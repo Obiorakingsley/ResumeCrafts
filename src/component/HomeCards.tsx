@@ -3,7 +3,7 @@ import React from "react";
 const HomeCards = () => {
   return (
     <>
-      <div className="bg-white dark:bg-black/50 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center justify-center p-4">
+      <div className="bg-white dark:bg-black/50 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center justify-center p-4 py-8">
         <div className="flex-shrink-0">
           <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-400/10 text-indigo-400">
             <svg
@@ -27,7 +27,7 @@ const HomeCards = () => {
           </p>
         </div>
       </div>
-      <div className="bg-white dark:bg-black/50 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center justify-center p-4">
+      <div className="bg-white dark:bg-black/50 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center justify-center p-4 py-8">
         <div className="flex-shrink-0">
           <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-400/10 text-indigo-400">
             <svg
@@ -51,7 +51,7 @@ const HomeCards = () => {
           </p>
         </div>
       </div>
-      <div className="bg-white dark:bg-black/50 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center justify-center p-4">
+      <div className="bg-white dark:bg-black/50 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center justify-center p-4 py-8">
         <div className="flex-shrink-0">
           <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-400/10 text-indigo-400">
             <svg

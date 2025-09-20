@@ -17,24 +17,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={``}>
-        <header className="dark:text-white dark:bg-black bg-white text-black py-5 px-2 flex items-center justify-between">
+        <header className="dark:text-white text-black py-5 px-2 flex items-center justify-between">
           <h1 className="text-xl font-bold">ResumeCraft</h1>
           <nav className="hidden sm:flex">
             <ul className="list-none flex items-center gap-4 justify-between max-w-80">
               <Link
-                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-white dark:hover:text-white transition-colors"
+                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
                 href="/"
               >
                 <li>Template</li>
               </Link>
               <Link
-                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-white dark:hover:text-white transition-colors"
+                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
                 href="/"
               >
                 <li>Examples</li>
               </Link>
               <Link
-                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-white dark:hover:text-white transition-colors"
+                className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
                 href="/"
               >
                 <li>Pricing</li>
@@ -44,7 +44,7 @@ export default function RootLayout({
           <div className="flex items-center gap-4">
             <button
               type="button"
-              className="py-1 px-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors focus:outline-none focus:ring-1 focus:ring-slate-100 focus:ring-offset-2 cursor-pointer"
+              className="py-1 px-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 transition-colors focus:outline-none focus:ring-1 focus:ring-slate-100 focus:ring-offset-2 cursor-pointer"
             >
               Create My Resume
             </button>
@@ -57,18 +57,7 @@ export default function RootLayout({
             />
           </div>
         </header>
-        <main>
-          <section className="hero-bg bg-center">
-            <div>
-              <h1>Craft a Resume That Gets You Hired</h1>
-              <p>
-                Our Ai resume builder helps you create a professional resume in
-                minutes. Stand out from the competition and land your dream job
-              </p>
-            </div>
-          </section>
-          {children}
-        </main>
+        <main>{children}</main>
         <footer></footer>
       </body>
     </html>

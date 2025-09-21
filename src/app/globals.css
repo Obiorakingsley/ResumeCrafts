@@ -39,6 +39,7 @@ body {
   border: none;
   outline: none;
   background-color: var(--background);
+  width: 100%;
   min-width: 280px;
   padding: 0.7rem 0.2rem;
   border-radius: 8px;

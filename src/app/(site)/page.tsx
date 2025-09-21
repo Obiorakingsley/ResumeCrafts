@@ -1,4 +1,5 @@
 import HomeCards from "@/component/HomeCards";
+import Link from "next/link";
 import React from "react";
 
 const Home = () => {
@@ -15,9 +16,11 @@ const Home = () => {
               resume in minutes. Stand out from the competition and land your
               dream job
             </p>
-            <button className="mt-4 inline-block px-5 py-3 text-lg font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-transform transform hover:scale-105">
-              Start building
-            </button>
+            <Link href="/resume">
+              <button className="mt-4 inline-block px-5 py-3 text-lg font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-transform transform hover:scale-105 cursor-pointer">
+                Start building
+              </button>
+            </Link>
           </div>
         </div>
       </section>

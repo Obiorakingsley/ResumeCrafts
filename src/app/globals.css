@@ -39,7 +39,7 @@ body {
   border: none;
   outline: none;
   background-color: var(--background);
-  min-width: 300px;
+  min-width: 280px;
   padding: 0.7rem 0.2rem;
   border-radius: 8px;
   inset: 2px;

@@ -5,7 +5,9 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <>
-      <div className="text-2xl font-bold">ResumeCraft</div>
+      <Link href="/">
+        <h2 className="text-xl sm:text-2xl font-bold">ResumeCraft</h2>
+      </Link>
       <nav className="hidden sm:flex">
         <ul className="list-none flex items-center gap-4 justify-between max-w-80">
           <Link
@@ -31,7 +33,7 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         <button
           type="button"
-          className="py-2 px-2 bg-indigo-600/10 text-indigo-500 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
+          className="py-2 px-2 text-md bg-indigo-600/10 text-indigo-500 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
         >
           Create My Resume
         </button>

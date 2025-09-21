@@ -35,7 +35,8 @@ body {
   padding: 0.3rem;
 }
 
-.form input {
+.form input,
+textarea {
   border: none;
   outline: none;
   background-color: var(--background);
@@ -47,6 +48,12 @@ body {
   color: var(--color);
 }
 
-.form input:focus {
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(24%) sepia(96%) saturate(100%) hue-rotate(180deg);
+}
+
+.form input:focus,
+.form textarea:focus {
   border: 1px ridge #6d6a6a;
 }

@@ -25,7 +25,7 @@ const page = () => {
 
         <Link
           className="place-self-end my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
-          href="resume/experience"
+          href="/resume/experience"
         >
           <button>Next</button>
         </Link>

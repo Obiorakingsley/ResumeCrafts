@@ -1,9 +1,11 @@
 import Link from "next/link";
 import React from "react";
+import Button from "../../_Utils/Button";
 
 const page = () => {
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-2">
+      <Button path="/resume" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Skills</h3>
       <form
@@ -27,7 +29,7 @@ const page = () => {
           className="place-self-end my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
           href="/resume/experience"
         >
-          <button>Next</button>
+          <button>Next: Experience</button>
         </Link>
       </form>
     </section>

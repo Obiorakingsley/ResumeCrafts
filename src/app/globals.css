@@ -48,6 +48,12 @@ textarea {
   color: var(--color);
 }
 
+.form textarea {
+  padding: 0.3rem;
+  border: 1px solid rgba(128, 128, 128, 0.603);
+  font-size: 0.9rem;
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(24%) sepia(96%) saturate(100%) hue-rotate(180deg);

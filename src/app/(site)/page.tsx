@@ -16,7 +16,7 @@ const Home = () => {
               resume in minutes. Stand out from the competition and land your
               dream job
             </p>
-            <Link href="/resume">
+            <Link href="/build">
               <button className="mt-4 inline-block px-5 py-3 text-lg font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-transform transform hover:scale-105 cursor-pointer">
                 Start building
               </button>

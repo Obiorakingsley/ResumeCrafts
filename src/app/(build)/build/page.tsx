@@ -55,7 +55,7 @@ const page = () => {
         </label>
         <Link
           className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
-          href="resume/skills"
+          href="build/skills"
         >
           <button>Next: Skills</button>
         </Link>

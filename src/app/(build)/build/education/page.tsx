@@ -5,7 +5,7 @@ import Button from "../../_Utils/Button";
 const page = () => {
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
-      <Button path="/resume/experience" />
+      <Button path="/build/experience" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Education</h3>
       <form
@@ -41,9 +41,9 @@ const page = () => {
 
         <Link
           className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
-          href="/resume/education"
+          href="/build/summary"
         >
-          <button>Generate Resume</button>
+          <button>Next: Summary</button>
         </Link>
       </form>
     </section>

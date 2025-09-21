@@ -2,14 +2,16 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #ededed;
   --foreground: #171717;
+  --color: #0a0a0a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color: #edeaf3;
   }
 }
 
@@ -24,4 +26,26 @@ body {
   background-image: url("/resume.png");
   height: 70vh;
   /* background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYTA_7Uo306r4q3nCPLYhbgNuqUU0ySidie-4CXjSucosf5mcV2cBLTSEh2o-LEQyj8_Uku2TQ718NUJNI1OjcdcZzwY4fJZGMzxo7uL26WGUO8iKSYxxGfpDkW_3wC_q7vIrpyCpwNya3I1k_TtIou1j5nENl6cyE2M8m9_box3ZBGVLUgxS0usa9qFfv-LNe2Nq5ipyhu5Y1sEn_ypy5ISmtttbAmtwZ2BC2esM9dkgVmFiyJD48OCjhr_S3QnTegIyPGrk0CZfJ"); */
+}
+
+.form label {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: flex-start;
+  padding: 0.3rem;
+}
+
+.form input {
+  border: none;
+  outline: none;
+  background-color: var(--background);
+  min-width: 300px;
+  padding: 0.7rem 0.2rem;
+  border-radius: 8px;
+  inset: 2px;
+  color: var(--color);
+}
+
+.form input:focus {
+  border: 1px ridge #6d6a6a;
 }

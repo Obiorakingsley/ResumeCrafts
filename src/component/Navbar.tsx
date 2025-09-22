@@ -12,7 +12,7 @@ const Navbar = () => {
         <ul className="list-none flex items-center gap-4 justify-between max-w-80">
           <Link
             className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-            href="/"
+            href="/templates"
           >
             <li>Template</li>
           </Link>

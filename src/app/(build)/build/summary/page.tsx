@@ -47,13 +47,6 @@ const page = () => {
             <button>Choose Template</button>
           </Link>
         </div>
-        <button
-          type="button"
-          className="py-2 px-2 text-md text-slate-800 rounded-md dark:text-slate-200 transition-colors absolute bottom-[-45px] right-0 cursor-pointer shadow-md gap-1 flex items-center"
-        >
-          <FaPlus />
-          Add another job
-        </button>
       </form>
     </section>
   );

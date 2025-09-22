@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Button from "../../_Utils/Button";
+import { FaPlus } from "react-icons/fa";
 
 const page = () => {
   return (
@@ -62,8 +63,9 @@ const page = () => {
         <div className="flex items-center justify-between sm:col-span-2 my-2">
           <button
             type="button"
-            className="py-2 px-2 text-md text-slate-600 rounded-md dark:text-slate-300 transition-colors cursor-pointer"
+            className="py-2 px-2 text-md text-slate-800 rounded-md dark:text-slate-200 transition-colors cursor-pointer shadow-md gap-1 flex items-center"
           >
+            <FaPlus />
             Add another job
           </button>
           <Link

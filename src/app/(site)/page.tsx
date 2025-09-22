@@ -1,6 +1,7 @@
 import HomeCards from "@/component/HomeCards";
 import Link from "next/link";
 import React from "react";
+import FilePicker from "../../component/FilePicker";
 
 const Home = () => {
   return (
@@ -16,11 +17,16 @@ const Home = () => {
               resume in minutes. Stand out from the competition and land your
               dream job
             </p>
-            <Link href="/build">
-              <button className="mt-4 inline-block px-5 py-3 text-lg font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-transform transform hover:scale-105 cursor-pointer">
-                Start building
-              </button>
-            </Link>
+            <div className="flex mt-10 items-center justify-center gap-6 mx-auto">
+              <Link
+                className=" p-4 text-lg font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-all hover:scale-105 cursor-pointer"
+                href="/build"
+              >
+                <button className="cursor-pointer">Start fresh</button>
+              </Link>
+
+              <FilePicker />
+            </div>
           </div>
         </div>
       </section>

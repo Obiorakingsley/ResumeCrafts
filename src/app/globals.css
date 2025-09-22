@@ -23,9 +23,18 @@ body {
 .hero-bg {
   background-color: rgb(245, 244, 244);
   background-size: cover;
-  background-image: url("/resume.png");
+  background-image: url("/images/resume.png");
   height: 70vh;
-  /* background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYTA_7Uo306r4q3nCPLYhbgNuqUU0ySidie-4CXjSucosf5mcV2cBLTSEh2o-LEQyj8_Uku2TQ718NUJNI1OjcdcZzwY4fJZGMzxo7uL26WGUO8iKSYxxGfpDkW_3wC_q7vIrpyCpwNya3I1k_TtIou1j5nENl6cyE2M8m9_box3ZBGVLUgxS0usa9qFfv-LNe2Nq5ipyhu5Y1sEn_ypy5ISmtttbAmtwZ2BC2esM9dkgVmFiyJD48OCjhr_S3QnTegIyPGrk0CZfJ"); */
+}
+
+.modern-bg {
+  background-image: url("/images/modern.png");
+}
+.classic-bg {
+  background-image: url("/images/classic.png");
+}
+.creative-bg {
+  background-image: url("/images/creative.png");
 }
 
 .form label {

@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
       <Link href="/">
-        <h2 className="text-xl sm:text-2xl font-bold">ResumeCraft</h2>
+        <h1 className="text-xl sm:text-2xl font-bold">ResumeCraft</h1>
       </Link>
       <nav className="hidden sm:flex">
         <ul className="list-none flex items-center gap-4 justify-between max-w-80">
@@ -31,12 +31,14 @@ const Navbar = () => {
         </ul>
       </nav>
       <div className="flex items-center gap-4">
-        <button
-          type="button"
-          className="py-2 px-2 text-md bg-indigo-600/10 text-indigo-500 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
-        >
-          Create My Resume
-        </button>
+        <Link href="/resume">
+          <button
+            type="button"
+            className="py-2 px-2 text-md dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
+          >
+            My Resume
+          </button>
+        </Link>
         <Image
           src="/user.png"
           alt="profile pic"

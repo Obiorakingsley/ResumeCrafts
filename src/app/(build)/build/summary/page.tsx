@@ -41,8 +41,8 @@ const page = () => {
             </button>
           </div>
           <Link
-            className="bg-indigo-500 transition-colors hover:bg-indigo-600 p-1 sm:px-3 rounded-md text-slate-50 text-sm"
-            href="/build/education"
+            className="bg-indigo-500 transition-colors hover:bg-indigo-600 p-2 sm:px-3 rounded-md text-slate-50 text-sm"
+            href="/templates"
           >
             <button>Choose Template</button>
           </Link>

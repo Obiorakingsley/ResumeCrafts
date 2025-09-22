@@ -16,12 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col justify-between h-screen">
-        <header className="dark:text-white bg-slate-50 dark:bg-black text-black py-4 px-2 flex items-center justify-between">
+      <body className=" min-h-screen">
+        <header className="dark:text-white bg-slate-50 dark:bg-black text-black py-4 px-2 flex items-center justify-between sticky top-0 z-20">
           <Navbar />
         </header>
-        <main>{children}</main>
-        <footer className="bg-white dark:bg-black/50 border-t border-slate-200 dark:border-slate-800">
+        <main className="pb-30 sm:pb-24">{children}</main>
+        <footer className="bg-white dark:bg-black/50 border-t border-slate-200 dark:border-slate-800 absolute bottom-0 w-full">
           <Footer />
         </footer>
       </body>

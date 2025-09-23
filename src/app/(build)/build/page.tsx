@@ -24,6 +24,7 @@ const page = () => {
             name="fullname"
             type="text"
             placeholder="e.g. John Doe"
+            autoFocus
           />
         </label>
         <label htmlFor="email">
@@ -49,7 +50,7 @@ const page = () => {
           <input
             id="social"
             name="social"
-            type="text"
+            type="url"
             placeholder="e.g. linkedIn.com/in/JohnDoe"
           />
         </label>

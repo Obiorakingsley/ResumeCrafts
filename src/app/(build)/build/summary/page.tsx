@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 const page = () => {
   return (
     <section className="flex flex-col w-full items-center justify-center py-8 px-3 min-h-[80vh]">
-      <Button path="/build/skills" />
+      <Button path="/build/education" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Summary</h3>
       <form
@@ -29,13 +29,13 @@ const page = () => {
             <span>Add more sections</span>
             <button
               type="button"
-              className="text-xs flex items-center gap-1 p-1 rounded-full shadow-md"
+              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md"
             >
               <FaPlus /> Projects
             </button>
             <button
               type="button"
-              className="text-xs flex items-center gap-1 p-1 rounded-full shadow-md"
+              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md"
             >
               <FaPlus /> Website
             </button>

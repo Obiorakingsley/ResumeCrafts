@@ -21,6 +21,7 @@ const page = () => {
             name="skills"
             type="text"
             placeholder="e.g. React, Figma"
+            autoFocus
           />
         </label>
         <div className="border-2 dark:border-slate-50/20 border-slate-300/40"></div>

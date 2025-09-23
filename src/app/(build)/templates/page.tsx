@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const page = () => {
@@ -24,9 +25,14 @@ const page = () => {
                 A sleek, contemporary design that emphasizes clarity and impact,
                 ideal for showcasing a progressive career.
               </p>
-              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors">
-                Select Template
+              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
+                Use Template
               </button>
+              <Link href="/templates/modern">
+                <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                  Preview
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -41,9 +47,14 @@ const page = () => {
                 A timeless, refined layout that conveys professionalism and
                 attention to detail, perfect for traditional industries.
               </p>
-              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors">
-                Select Template
+              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
+                Use Template
               </button>
+              <Link href="/template/classic">
+                <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                  Preview
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -59,9 +70,14 @@ const page = () => {
                 creativity and unique skills, suitable for artistic or
                 design-focused roles.
               </p>
-              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors">
-                Select Template
+              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
+                Use Template
               </button>
+              <Link href="/template/creative">
+                <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                  Preview
+                </button>
+              </Link>
             </div>
           </div>
         </div>

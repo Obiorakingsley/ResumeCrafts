@@ -20,6 +20,7 @@ const page = () => {
             name="title"
             type="text"
             placeholder="e.g. Senior Project Manager"
+            autoFocus
           />
         </label>
         <label htmlFor="company">

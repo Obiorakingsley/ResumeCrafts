@@ -19,6 +19,7 @@ const page = () => {
             name="institution"
             type="text"
             placeholder="e.g. University of Californai, Berkely"
+            autoFocus
           />
         </label>
         <label htmlFor="Degree">

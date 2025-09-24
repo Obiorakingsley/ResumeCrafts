@@ -50,7 +50,7 @@ const page = () => {
               <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
                 Use Template
               </button>
-              <Link href="/template/classic">
+              <Link href="/templates/classic">
                 <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
                   Preview
                 </button>
@@ -73,7 +73,7 @@ const page = () => {
               <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
                 Use Template
               </button>
-              <Link href="/template/creative">
+              <Link href="/templates/creative">
                 <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
                   Preview
                 </button>

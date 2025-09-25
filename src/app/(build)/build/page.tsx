@@ -65,6 +65,7 @@ const page = () => {
         <label htmlFor="email">
           Email
           <input
+            required
             id="email"
             type="email"
             placeholder="e.g. JohnDoe@email.com"
@@ -89,6 +90,7 @@ const page = () => {
         <label htmlFor="social">
           LinkedIn
           <input
+            required
             id="social"
             type="url"
             placeholder="e.g. linkedIn.com/in/JohnDoe"

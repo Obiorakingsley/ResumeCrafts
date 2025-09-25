@@ -10,7 +10,7 @@ const page = () => {
   const schema = z.object({
     skills: z
       .string()
-      .min(2, "Skills should be 2 characters long")
+      .min(2, "Skills should be at least 2 characters long")
       .regex(/^[a-zA-Z]/, "Skills should'nt be a number"),
   });
 

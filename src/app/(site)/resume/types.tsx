@@ -6,6 +6,7 @@ export type ResumeData = {
   skills?: string[];
   linkedIn?: string;
   website?: string;
+  projects?: { projectName: string; url?: string; description: string }[];
   experience?: {
     role?: string;
     company?: string;

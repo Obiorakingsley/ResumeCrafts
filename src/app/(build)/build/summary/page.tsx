@@ -58,12 +58,14 @@ const page = () => {
         <div className="flex items-start justify-between sm:col-span-2 my-2">
           <div className="flex gap-2 flex-wrap max-w-40">
             <span>Add more sections</span>
-            <button
-              type="button"
-              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md cursor-pointer"
-            >
-              <FaPlus /> Projects
-            </button>
+            <Link href="/build/project">
+              <button
+                type="button"
+                className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md cursor-pointer"
+              >
+                <FaPlus /> Projects
+              </button>
+            </Link>
             <button
               onClick={() => {
                 setWebsite((prev) => !prev);

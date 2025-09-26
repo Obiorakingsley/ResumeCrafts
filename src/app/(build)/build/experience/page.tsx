@@ -7,12 +7,10 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/app/store/resumeStore";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const page = () => {
   const { resumeData, setResumeData } = useResumeStore();
-  const router = useRouter();
   const [exp, setExp] = useState(0);
   const schema = z.object({
     title: z.string().min(2, "Title should be at least 2 characters long"),

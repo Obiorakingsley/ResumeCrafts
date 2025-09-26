@@ -1,11 +1,16 @@
 "use client";
-import Link from "next/link";
 import React from "react";
 import Button from "../../_Utils/Button";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useResumeStore } from "@/app/store/resumeStore";
+import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
+
 const page = () => {
+  const { setResumeData, resumeData } = useResumeStore();
+  const [eduCount, setEduCount] = useState(0);
   const schema = z.object({
     institution: z
       .string("Invalid input")
@@ -21,12 +26,16 @@ const page = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({ resolver: zodResolver(schema) });
 
   type edu = z.infer<typeof schema>;
 
   const sendData = (data: edu) => {
-    console.log(data);
+    setResumeData({ education: [...(resumeData.education || []), data] });
+    setEduCount((prev) => prev + 1);
+    console.log(resumeData);
+    reset();
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
@@ -82,12 +91,26 @@ const page = () => {
             {...register("endDate", { valueAsDate: true })}
           />
         </label>
+        <div className="flex items-center justify-between sm:col-span-2 my-2">
+          <button
+            type="submit"
+            onClick={() => {
+              console.log(resumeData);
+            }}
+            className="py-2 px-2 text-md text-slate-800 rounded-md dark:text-slate-200 transition-colors cursor-pointer shadow-md gap-1 flex items-center"
+          >
+            <FaPlus />
+            Add
+            <span>{eduCount > 0 || resumeData.education ? "more" : ""}</span>
+          </button>
 
-        <Button
-          type="submit"
-          text="Next: Summary"
-          className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
-        />
+          <Button
+            className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
+            type="button"
+            path="/build/summary"
+            text="Next: Summary"
+          />
+        </div>
       </form>
     </section>
   );

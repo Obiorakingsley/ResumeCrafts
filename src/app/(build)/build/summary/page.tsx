@@ -1,17 +1,21 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../_Utils/Button";
-import { FaPlus } from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useResumeStore } from "@/app/store/resumeStore";
 
 const page = () => {
+  const { resumeData, setResumeData } = useResumeStore();
+  const [website, setWebsite] = useState(false);
   const schema = z.object({
     summary: z
       .string()
       .min(10, "Summary should be at least 10 characters long"),
+    website: z.url().min(5, "Invalid URL").optional(),
   });
 
   const {
@@ -23,16 +27,17 @@ const page = () => {
   type summary = z.infer<typeof schema>;
 
   const sendData = (data: summary) => {
-    console.log(data);
+    console.log(resumeData);
+    setResumeData(data);
   };
   return (
-    <section className="flex flex-col w-full items-center justify-center py-8 px-3 min-h-[80vh]">
+    <section className="flex flex-col w-full items-center justify-center pb-12 px-3">
       <Button type="button" path="/build/education" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Summary</h3>
       <form
         onSubmit={handleSubmit(sendData)}
-        className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 sm:grid-cols-2 align-center border-2 border-slate-400/20 relative"
+        className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 sm:grid-cols-2 align-center border-2 border-slate-400/20"
       >
         <label htmlFor="summart" className="sm:col-span-2 ">
           Professional Summary
@@ -55,16 +60,30 @@ const page = () => {
             <span>Add more sections</span>
             <button
               type="button"
-              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md"
+              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md cursor-pointer"
             >
               <FaPlus /> Projects
             </button>
             <button
+              onClick={() => {
+                setWebsite((prev) => !prev);
+              }}
               type="button"
-              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md"
+              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md cursor-pointer"
             >
-              <FaPlus /> Website
+              {website ? <FaMinus /> : <FaPlus />} Website
             </button>
+            {website && (
+              <label htmlFor="website">
+                <span className="text-xs ">Website</span>
+                <input autoFocus type="url" {...register("website")} />
+                {errors.website && (
+                  <span className="text-xs text-red-500">
+                    {errors.website.message}
+                  </span>
+                )}
+              </label>
+            )}
           </div>
 
           <Button

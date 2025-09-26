@@ -3,11 +3,14 @@ import Link from "next/link";
 import React from "react";
 import Button from "../_Utils/Button";
 import { z } from "zod";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useResumeStore } from "@/app/store/resumeStore";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+  const { resumeData, setResumeData } = useResumeStore();
   const schema = z.object({
     fullName: z
       .string()
@@ -31,11 +34,13 @@ const page = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const sendData = (data: personalForm) => {
-    console.log(data);
+    setResumeData(data);
+    console.log(resumeData);
+    router.push("/build/skills");
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[80vh]">
-      <Button path="/" />
+      <Button type="button" path="/" />
       <div className="mb-12 text-center">
         <h2 className="text-4xl font-bold tracking-tight">Build Your Resume</h2>
         <p className="mt-2 text-lg">
@@ -103,12 +108,11 @@ const page = () => {
           )}
         </label>
 
-        <button
+        <Button
           type="submit"
+          text="Next: Skills"
           className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
-        >
-          Next: Skills
-        </button>
+        />
       </form>
     </section>
   );

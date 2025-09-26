@@ -27,7 +27,7 @@ const page = () => {
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-8 px-3 min-h-[80vh]">
-      <Button path="/build/education" />
+      <Button type="button" path="/build/education" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Summary</h3>
       <form
@@ -67,9 +67,11 @@ const page = () => {
             </button>
           </div>
 
-          <button className="bg-indigo-500 transition-colors hover:bg-indigo-600 p-2 sm:px-3 rounded-md text-slate-50 text-sm">
-            Choose Template
-          </button>
+          <Button
+            type="submit"
+            className="bg-indigo-500 transition-colors cursor-pointer hover:bg-indigo-600 p-2 sm:px-3 rounded-md text-slate-50 text-sm"
+            text="Choose template"
+          />
         </div>
       </form>
     </section>

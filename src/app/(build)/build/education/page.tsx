@@ -30,7 +30,7 @@ const page = () => {
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
-      <Button path="/build/experience" />
+      <Button type="button" path="/build/experience" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Education</h3>
       <form
@@ -83,9 +83,11 @@ const page = () => {
           />
         </label>
 
-        <button className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50">
-          Next: Summary
-        </button>
+        <Button
+          type="submit"
+          text="Next: Summary"
+          className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
+        />
       </form>
     </section>
   );

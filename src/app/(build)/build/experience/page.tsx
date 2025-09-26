@@ -6,33 +6,42 @@ import { FaPlus } from "react-icons/fa";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useResumeStore } from "@/app/store/resumeStore";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const page = () => {
+  const { resumeData, setResumeData } = useResumeStore();
+  const router = useRouter();
+  const [exp, setExp] = useState(0);
   const schema = z.object({
     title: z.string().min(2, "Title should be at least 2 characters long"),
     company: z.string().min(2, "Company should be at least 2 characters long"),
-    startDate: z.date(),
-    endDate: z.date(),
+    start: z.string(),
+    end: z.string(),
 
-    role: z
-      .string("Role should be at least 10 characters long")
-      .min(10, "Role should be at least 10 characters long"),
+    role: z.string().min(10, "Role should be at least 10 characters long"),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({ resolver: zodResolver(schema) });
 
   type experience = z.infer<typeof schema>;
 
   const sendData = (data: experience) => {
-    console.log(data);
+    setResumeData({
+      experience: [...(resumeData.experience || []), data],
+    });
+    setExp((prev) => prev + 1);
+    reset();
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-8 px-3 min-h-[80vh]">
-      <Button path="/build/skills" />
+      <Button type="button" path="/build/skills" />
       <div className="mb-12 text-center"></div>
       <h3 className="text-2xl font-bold mb-6 border-b">Work Experience</h3>
       <form
@@ -66,24 +75,22 @@ const page = () => {
             </span>
           )}
         </label>
-        <label htmlFor="startDate">
+        <label htmlFor="start">
           Start Date
           <input
             className="input-date"
-            id="startDate"
+            id="start"
             type="date"
-            {...register("startDate", { valueAsDate: true })}
-            required
+            {...register("start")}
           />
         </label>
-        <label htmlFor="endDate">
+        <label htmlFor="end">
           End Date
           <input
             className="input-date"
-            id="endDate"
+            id="end"
             type="date"
-            {...register("endDate", { valueAsDate: true })}
-            required
+            {...register("end")}
           />
         </label>
         <label htmlFor="roles" className="sm:col-span-2">
@@ -102,16 +109,20 @@ const page = () => {
         </label>
         <div className="flex items-center justify-between sm:col-span-2 my-2">
           <button
-            type="button"
+            type="submit"
             className="py-2 px-2 text-md text-slate-800 rounded-md dark:text-slate-200 transition-colors cursor-pointer shadow-md gap-1 flex items-center"
           >
             <FaPlus />
-            Add another job
+            Add
+            <span>{exp > 0 || resumeData.experience ? "more" : ""}</span>
           </button>
 
-          <button className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50">
-            Next: Education
-          </button>
+          <Button
+            className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
+            type="submit"
+            path="/build/education"
+            text="Next: Education"
+          />
         </div>
       </form>
     </section>

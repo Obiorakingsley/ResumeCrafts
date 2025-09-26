@@ -61,7 +61,7 @@ export default function PreviewPage({
 
   return (
     <section className="p-6">
-      <Button path="/templates" />
+      <Button type="button" path="/templates" />
       <h2 className="text-2xl sm:text-3xl mt-6 font-bold mb-6">
         {template.toUpperCase()} Template Preview
       </h2>

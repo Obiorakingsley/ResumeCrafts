@@ -35,7 +35,7 @@ const page = () => {
 
   const sendData = (data: personalForm) => {
     setResumeData(data);
-    console.log(resumeData);
+
     router.push("/build/skills");
   };
   return (
@@ -111,7 +111,7 @@ const page = () => {
         <Button
           type="submit"
           text="Next: Skills"
-          className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
+          className="place-self-end sm:col-span-2 my-2 bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50 cursor-pointer"
         />
       </form>
     </section>

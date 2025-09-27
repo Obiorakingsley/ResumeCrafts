@@ -1,21 +1,23 @@
 export type ResumeData = {
-  name?: string;
+  fullName?: string;
   email?: string;
   phone?: string;
   summary?: string;
   skills?: string[];
   linkedIn?: string;
   website?: string;
-  projects?: { projectName: string; url?: string; description: string }[];
+  projects?: { projectName: string; url?: string; description: string[] }[];
   experience?: {
-    role?: string;
+    title?: string;
     company?: string;
-    years?: { start: number | string; end: number | string };
+    start: number | string;
+    end: number | string;
     details?: string[];
   }[];
   education?: {
     degree?: string;
-    school?: string;
-    years?: { start: string; end: string };
+    institution?: string;
+    startDate: string;
+    endDate: string;
   }[];
 };

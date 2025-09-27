@@ -15,11 +15,9 @@ const page = () => {
     institution: z
       .string("Invalid input")
       .min(5, "Institution should be at least 5 characters long"),
-    degree: z
-      .string("Invalid input")
-      .min(5, "Degree should be at least 5 characters long"),
-    startDate: z.date(),
-    endDate: z.date(),
+    degree: z.string("Invalid input"),
+    startDate: z.string(),
+    endDate: z.string(),
   });
 
   const {
@@ -77,19 +75,21 @@ const page = () => {
         </label>
         <label htmlFor="startDate">
           Start Date
-          <input
-            id="startDate"
-            type="date"
-            {...register("startDate", { valueAsDate: true })}
-          />
+          <input id="startDate" type="date" {...register("startDate")} />
+          {errors.startDate && (
+            <span className="text-xs text-red-500">
+              {errors.startDate.message}
+            </span>
+          )}
         </label>
         <label htmlFor="endDate">
           End Date
-          <input
-            id="endDate"
-            type="date"
-            {...register("endDate", { valueAsDate: true })}
-          />
+          <input id="endDate" type="text" {...register("endDate")} />{" "}
+          {errors.endDate && (
+            <span className="text-xs text-red-500">
+              {errors.endDate.message}
+            </span>
+          )}
         </label>
         <div className="flex items-center justify-between sm:col-span-2 my-2">
           <button

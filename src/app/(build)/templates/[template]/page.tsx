@@ -5,9 +5,12 @@ import Modern from "@/component/ModernTemplate";
 import Classic from "@/component/ClassicTemplate";
 import Creative from "@/component/CreativeTemplate";
 import Button from "../../_Utils/Button";
+import { useResumeStore } from "@/app/store/resumeStore";
+import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 
-const resumeData: ResumeData = {
-  name: "John Doe",
+const dummyData: ResumeData = {
+  fullName: "John Doe",
   email: "john.doe@example.com",
   phone: "+1 (555) 123-4567",
   linkedIn: "linkedIn.com/in/johndoe",
@@ -24,29 +27,42 @@ const resumeData: ResumeData = {
   ],
   experience: [
     {
-      role: "Frontend Developer",
+      title: "Frontend Developer",
       company: "Tech Solutions Inc.",
-      years: { start: "2021", end: "Present" },
+      start: "2021",
+      end: "Present",
       details: [
         "Led the migration of legacy apps to React/Next.js, improving performance by 40%.",
         " Collaborated with designers to create accessible UI components.",
       ],
     },
     {
-      role: "Web Developer Intern",
+      title: "Web Developer Intern",
       company: "Creative Studio",
-      years: { start: "2020", end: "2021" },
+      start: "2020",
+      end: "2021",
       details: [
         "Assisted in building client websites with HTML, CSS, and JavaScript.",
         " Learned version control with Git and agile workflows.",
       ],
     },
   ],
+  projects: [
+    {
+      projectName: "Ecommerce-store",
+      url: "https://kingsleyobiora.vercel.app",
+      description: [
+        "A full-stack, responsive e-commerce web application built with React and Firebase.",
+        "Technologies: React,  Firebase, Firestore, CSS3",
+      ],
+    },
+  ],
   education: [
     {
       degree: "B.Sc. Computer Science",
-      school: "State University",
-      years: { start: "2016 ", end: " 2020" },
+      institution: "State University",
+      startDate: "2016",
+      endDate: " 2020",
     },
   ],
 };
@@ -58,10 +74,20 @@ export default function PreviewPage({
 }) {
   const { template } = use(params);
   const [selected, setSelected] = useState(template);
-
+  const router = useRouter();
+  const { resumeData, setResumeData } = useResumeStore();
   return (
     <section className="p-6">
-      <Button type="button" path="/templates" />
+      <button
+        className="flex items-center gap-1 mt-2 dark:bg-black/50 rounded-md text-lg ml-2 cursor-pointer fixed top-16 left-0 p-1"
+        onClick={() => {
+          return router.back();
+        }}
+        type="button"
+      >
+        <FaArrowLeft />
+        Back
+      </button>
       <h2 className="text-2xl sm:text-3xl mt-6 font-bold mb-6">
         {template.toUpperCase()} Template Preview
       </h2>
@@ -69,8 +95,8 @@ export default function PreviewPage({
       {/* Template Preview */}
       <div className="border p-4 rounded bg-white">
         {selected === "modern" && <Modern data={resumeData} />}
-        {selected === "classic" && <Classic data={resumeData} />}
-        {selected === "creative" && <Creative data={resumeData} />}
+        {selected === "classic" && <Classic data={dummyData} />}
+        {selected === "creative" && <Creative data={dummyData} />}
       </div>
     </section>
   );

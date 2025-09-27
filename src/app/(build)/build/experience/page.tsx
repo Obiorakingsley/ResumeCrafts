@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Button from "../../_Utils/Button";
 import { FaPlus } from "react-icons/fa";
-import { z } from "zod";
+import { string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/app/store/resumeStore";
@@ -15,10 +15,15 @@ const page = () => {
   const schema = z.object({
     title: z.string().min(2, "Title should be at least 2 characters long"),
     company: z.string().min(2, "Company should be at least 2 characters long"),
+
     start: z.string(),
     end: z.string(),
 
-    role: z.string().min(10, "Role should be at least 10 characters long"),
+    details: z.preprocess(
+      (val) =>
+        typeof val === "string" ? val.split(",").map((w) => w.trim()) : val,
+      z.array(string().min(10, "Role should be at least 10 characters long"))
+    ),
   });
 
   const {
@@ -35,6 +40,8 @@ const page = () => {
       experience: [...(resumeData.experience || []), data],
     });
     setExp((prev) => prev + 1);
+    console.log(data);
+
     reset();
   };
   return (
@@ -81,28 +88,36 @@ const page = () => {
             type="date"
             {...register("start")}
           />
+          {errors.start && (
+            <span className="text-xs text-red-500">{errors.start.message}</span>
+          )}
         </label>
         <label htmlFor="end">
           End Date
           <input
             className="input-date"
             id="end"
-            type="date"
+            type="text"
             {...register("end")}
           />
+          {errors.end && (
+            <span className="text-xs text-red-500">{errors.end.message}</span>
+          )}
         </label>
         <label htmlFor="roles" className="sm:col-span-2">
-          Role
+          Role/Achievements
           <textarea
-            className=" border-2 dark:border-slate-50/20 border-slate-300/40 w-full p-1"
+            className=" border-2 dark:border-slate-50/20 border-slate-300/40 w-full p-1 placeholder:text-sm"
             id="roles"
             cols={30}
             rows={5}
             placeholder="Describe your key role and achievements"
-            {...register("role")}
+            {...register("details")}
           ></textarea>
-          {errors.role && (
-            <span className="text-xs text-red-500">{errors.role.message}</span>
+          {errors.details && (
+            <span className="text-xs text-red-500">
+              {errors.details.message}
+            </span>
           )}
         </label>
         <div className="flex items-center justify-between sm:col-span-2 my-2">

@@ -16,10 +16,16 @@ const page = () => {
       .string()
       .min(5, "project name should be at least 5 characters long"),
     url: z.url().optional(),
-    description: z
-      .string()
-      .min(10, "project description should be at least 10 characters long")
-      .max(50),
+    description: z.preprocess(
+      (val) =>
+        typeof val === "string" ? val.split(",").map((w) => w.trim()) : val,
+      z.array(
+        z
+          .string()
+          .min(10, "project description should be at least 10 characters long")
+          .max(50)
+      )
+    ),
   });
 
   const {

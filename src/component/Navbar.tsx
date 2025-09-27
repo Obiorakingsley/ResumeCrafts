@@ -1,8 +1,11 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const path = usePathname();
   return (
     <>
       <Link href="/">
@@ -31,16 +34,18 @@ const Navbar = () => {
         </ul>
       </nav>
       <div className="flex items-center gap-4">
-        <Link href="/resume">
+        <Link
+          href={path.startsWith("/build") ? "/templates/modern" : "/resume"}
+        >
           <button
             type="button"
             className="py-2 px-2 text-md dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
           >
-            My Resume
+            {path.startsWith("/build") ? "Preview" : "My Resume"}
           </button>
         </Link>
         <Image
-          src="/user.png"
+          src="/images/user.png"
           alt="profile pic"
           width={20}
           height={20}

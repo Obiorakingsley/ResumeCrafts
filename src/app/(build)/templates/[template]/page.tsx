@@ -4,7 +4,6 @@ import { ResumeData } from "@/app/(site)/resume/types";
 import Modern from "@/component/ModernTemplate";
 import Classic from "@/component/ClassicTemplate";
 import Creative from "@/component/CreativeTemplate";
-import Button from "../../_Utils/Button";
 import { useResumeStore } from "@/app/store/resumeStore";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
@@ -95,8 +94,8 @@ export default function PreviewPage({
       {/* Template Preview */}
       <div className="border p-4 rounded bg-white">
         {selected === "modern" && <Modern data={resumeData} />}
-        {selected === "classic" && <Classic data={dummyData} />}
-        {selected === "creative" && <Creative data={dummyData} />}
+        {selected === "classic" && <Classic data={resumeData} />}
+        {selected === "creative" && <Creative data={resumeData} />}
       </div>
     </section>
   );

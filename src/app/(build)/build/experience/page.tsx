@@ -8,10 +8,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/app/store/resumeStore";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { resumeData, setResumeData } = useResumeStore();
   const [exp, setExp] = useState(0);
+  const router = useRouter();
   const schema = z.object({
     title: z.string().min(2, "Title should be at least 2 characters long"),
     company: z.string().min(2, "Company should be at least 2 characters long"),
@@ -40,9 +42,7 @@ const page = () => {
       experience: [...(resumeData.experience || []), data],
     });
     setExp((prev) => prev + 1);
-    console.log(data);
-
-    reset();
+    router.push("/build/education");
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-8 px-3 min-h-[80vh]">
@@ -85,8 +85,9 @@ const page = () => {
           <input
             className="input-date"
             id="start"
-            type="date"
+            type="text"
             {...register("start")}
+            placeholder="dd/mm/yy"
           />
           {errors.start && (
             <span className="text-xs text-red-500">{errors.start.message}</span>
@@ -99,6 +100,7 @@ const page = () => {
             id="end"
             type="text"
             {...register("end")}
+            placeholder="dd/mm/yy"
           />
           {errors.end && (
             <span className="text-xs text-red-500">{errors.end.message}</span>
@@ -133,7 +135,6 @@ const page = () => {
           <Button
             className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
             type="submit"
-            path="/build/education"
             text="Next: Education"
           />
         </div>

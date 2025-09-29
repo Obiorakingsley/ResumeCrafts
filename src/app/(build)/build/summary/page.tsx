@@ -7,10 +7,12 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/app/store/resumeStore";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { resumeData, setResumeData } = useResumeStore();
   const [website, setWebsite] = useState(false);
+  const router = useRouter();
   const schema = z.object({
     summary: z
       .string()
@@ -27,7 +29,6 @@ const page = () => {
   type summary = z.infer<typeof schema>;
 
   const sendData = (data: summary) => {
-    console.log(resumeData);
     setResumeData(data);
   };
   return (
@@ -58,14 +59,17 @@ const page = () => {
         <div className="flex items-start justify-between sm:col-span-2 my-2">
           <div className="flex gap-2 flex-wrap max-w-40">
             <span>Add more sections</span>
-            <Link href="/build/project">
-              <button
-                type="button"
-                className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md cursor-pointer"
-              >
-                <FaPlus /> Projects
-              </button>
-            </Link>
+
+            <button
+              onClick={() => {
+                router.push("/build/project");
+              }}
+              type="submit"
+              className="text-sm flex items-center gap-1 p-1 rounded-full shadow-md cursor-pointer"
+            >
+              <FaPlus /> Project
+            </button>
+
             <button
               onClick={() => {
                 setWebsite((prev) => !prev);
@@ -90,6 +94,7 @@ const page = () => {
 
           <Button
             type="submit"
+            path="/templates"
             className="bg-indigo-500 transition-colors cursor-pointer hover:bg-indigo-600 p-2 sm:px-3 rounded-md text-slate-50 text-sm"
             text="Choose template"
           />

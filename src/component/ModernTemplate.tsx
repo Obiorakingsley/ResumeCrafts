@@ -25,6 +25,14 @@ export default function ResumeTemplate1({ data }: { data: ResumeData }) {
             {data.linkedIn}
           </Link>
         </p>
+        <p>
+          <Link
+            className="text-blue-700"
+            href={data.website ? data.website : ""}
+          >
+            {data.website}
+          </Link>
+        </p>
       </section>
 
       <section className="mb-6 border-t-2 text-gray-800 border-gray-400 pt-3">

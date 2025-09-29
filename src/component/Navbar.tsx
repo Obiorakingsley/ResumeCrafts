@@ -6,42 +6,44 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const path = usePathname();
+  const text = path === "/" ? "My Resume" : "New Resume";
+
   return (
     <>
       <Link href="/">
         <h1 className="text-xl sm:text-2xl font-bold">ResumeCraft</h1>
       </Link>
-      <nav className="hidden sm:flex">
-        <ul className="list-none flex items-center gap-4 justify-between max-w-80">
-          <Link
-            className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-            href="/templates"
-          >
-            <li>Template</li>
-          </Link>
-          <Link
-            className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-            href="/"
-          >
-            <li>Examples</li>
-          </Link>
-          <Link
-            className="text-lg font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-            href="/"
-          >
-            <li>Pricing</li>
-          </Link>
-        </ul>
-      </nav>
-      <div className="flex items-center gap-4">
-        <Link
-          href={path.startsWith("/build") ? "/templates/modern" : "/resume"}
-        >
+      <div className="flex items-center gap-2">
+        <nav>
+          <ul className="list-none flex items-center gap-4 justify-between max-w-80">
+            <Link
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              href="/templates"
+            >
+              <li>Template</li>
+            </Link>
+
+            <Link
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              href="/"
+            >
+              <li>Pricing</li>
+            </Link>
+            <Link
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              href="/templates/modern"
+            >
+              <li>Preview</li>
+            </Link>
+          </ul>
+        </nav>
+
+        <Link href={path === "/" ? "/resume" : "/build"}>
           <button
             type="button"
             className="py-2 px-2 text-md dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
           >
-            {path.startsWith("/build") ? "Preview" : "My Resume"}
+            {text}
           </button>
         </Link>
         <Image
@@ -49,7 +51,7 @@ const Navbar = () => {
           alt="profile pic"
           width={20}
           height={20}
-          className="size-9"
+          className="size-9 hidden sm:flex"
         />
       </div>
     </>

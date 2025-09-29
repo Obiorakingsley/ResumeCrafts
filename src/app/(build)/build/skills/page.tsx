@@ -15,11 +15,7 @@ const page = () => {
     skills: z.preprocess(
       (val) =>
         typeof val === "string" ? val.split(",").map((s) => s.trim()) : val,
-      z.array(
-        z
-          .string("Skills should'nt be a number")
-          .min(2, "Skills should be at least 2 characters long")
-      )
+      z.array(z.string().min(2, "Skills should be at least 2 characters long"))
     ),
   });
 
@@ -43,7 +39,6 @@ const page = () => {
       <h3 className="text-2xl font-bold mb-6 border-b">Skills</h3>
       <form
         onSubmit={handleSubmit(sendData)}
-        action=""
         className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 align-center border-2 border-slate-400/20 w-full max-w-xl"
       >
         <label htmlFor="skills">
@@ -63,7 +58,7 @@ const page = () => {
             </span>
           )}
         </label>
-        <div className="border-2 dark:border-slate-50/20 border-slate-300/40"></div>
+        {/* <div className="border-2 dark:border-slate-50/20 border-slate-300/40"></div> */}
 
         <Button
           type="submit"

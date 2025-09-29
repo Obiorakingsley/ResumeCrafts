@@ -58,8 +58,8 @@ export default function ResumeTemplate2({ data }: { data: ResumeData }) {
           Project
         </h3>
         {data.projects?.map((pro, i) => (
-          <div key={i} className="mt-4">
-            <h4 className="font-semibold text-gray-700 ">
+          <div key={i} className="mt-2">
+            <h4 className=" text-gray-800 ">
               {pro?.projectName} |{" "}
               <Link
                 className="text-blue-700 font-normal"

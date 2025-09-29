@@ -7,10 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/app/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { setResumeData, resumeData } = useResumeStore();
   const [eduCount, setEduCount] = useState(0);
+  const router = useRouter();
   const schema = z.object({
     institution: z
       .string("Invalid input")
@@ -32,8 +34,8 @@ const page = () => {
   const sendData = (data: edu) => {
     setResumeData({ education: [...(resumeData.education || []), data] });
     setEduCount((prev) => prev + 1);
-    console.log(resumeData);
     reset();
+    router.push("/build/summary");
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
@@ -75,7 +77,12 @@ const page = () => {
         </label>
         <label htmlFor="startDate">
           Start Date
-          <input id="startDate" type="date" {...register("startDate")} />
+          <input
+            id="startDate"
+            type="text"
+            {...register("startDate")}
+            placeholder="dd/mm/yy"
+          />
           {errors.startDate && (
             <span className="text-xs text-red-500">
               {errors.startDate.message}
@@ -84,7 +91,12 @@ const page = () => {
         </label>
         <label htmlFor="endDate">
           End Date
-          <input id="endDate" type="text" {...register("endDate")} />{" "}
+          <input
+            id="endDate"
+            type="text"
+            {...register("endDate")}
+            placeholder="dd/mm/yy"
+          />{" "}
           {errors.endDate && (
             <span className="text-xs text-red-500">
               {errors.endDate.message}
@@ -94,9 +106,6 @@ const page = () => {
         <div className="flex items-center justify-between sm:col-span-2 my-2">
           <button
             type="submit"
-            onClick={() => {
-              console.log(resumeData);
-            }}
             className="py-2 px-2 text-md text-slate-800 rounded-md dark:text-slate-200 transition-colors cursor-pointer shadow-md gap-1 flex items-center"
           >
             <FaPlus />
@@ -107,7 +116,6 @@ const page = () => {
           <Button
             className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
             type="button"
-            path="/build/summary"
             text="Next: Summary"
           />
         </div>

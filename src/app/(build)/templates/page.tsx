@@ -1,7 +1,84 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { useResumeStore } from "@/app/store/resumeStore";
 
 const page = () => {
+  const { resumeData, setResumeData } = useResumeStore();
+
+  async function fetchData() {
+    try {
+      const res = await fetch("/api/generate-resume", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: "John Doe",
+          email: "john.doe@example.com",
+          phone: "+1 (555) 123-4567",
+          linkedIn: "linkedIn.com/in/johndoe",
+          website: "www.johndoe.com",
+          summary: "...",
+          skills: [
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "Tailwind CSS",
+            "Node.js",
+          ],
+          experience: [
+            {
+              title: "Frontend Developer",
+              company: "Tech Solutions Inc.",
+              start: "2021",
+              end: "Present",
+              details: [
+                "Led the migration of legacy apps to React/Next.js, improving performance by 40%.",
+                " Collaborated with designers to create accessible UI components.",
+              ],
+            },
+            {
+              title: "Web Developer Intern",
+              company: "Creative Studio",
+              start: "2020",
+              end: "2021",
+              details: [
+                "Assisted in building client websites with HTML, CSS, and JavaScript.",
+                " Learned version control with Git and agile workflows.",
+              ],
+            },
+          ],
+          projects: [
+            {
+              projectName: "Ecommerce-store",
+              url: "https://kingsleyobiora.vercel.app",
+              description: [
+                "A full-stack, responsive e-commerce web application built with React and Firebase.",
+                "Technologies: React,  Firebase, Firestore, CSS3",
+              ],
+            },
+          ],
+          education: [
+            {
+              degree: "B.Sc. Computer Science",
+              institution: "State University",
+              startDate: "2016",
+              endDate: " 2020",
+            },
+          ],
+        }),
+      });
+      const data = await res.json();
+      console.log(JSON.stringify(data));
+      // setResumeData(data);
+      // console.log("Resume data updated:", resumeData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <section className="flex-grow container mx-auto px-6 py-12">
       <div className="text-center mb-12">
@@ -25,7 +102,12 @@ const page = () => {
                 A sleek, contemporary design that emphasizes clarity and impact,
                 ideal for showcasing a progressive career.
               </p>
-              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
+              <button
+                onClick={() => {
+                  fetchData();
+                }}
+                className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer"
+              >
                 Use Template
               </button>
               <Link href="/templates/modern">

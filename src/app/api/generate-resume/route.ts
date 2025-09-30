@@ -1,73 +1,50 @@
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    "HTTP-Referer": process.env.SITE_URL || "",
+    "X-Title": "Resume Craft",
+  },
+  apiKey: process.env.API_KEY,
+});
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  const { skills, jobTitle, experience, phone, email, website } = body;
-
-  const prompt = `
-  You are a professional resume writer. Based on the following info, generate a JSON object with a full resume structure:
-  - Job Title: ${jobTitle}
-  - Years of Experience: ${experience}
-  - Skills: ${skills}
-
-  Structure it like this:
-  {
-    "name": "Full Name",
-    "email": "example@email.com",
-    "phone": "123456789",
-    "summary": "...",
-    "skills": ["Skill1", "Skill2"],
-    "experience": [
-      {
-        "title": "...",
-        "company": "...",
-        "start": "YYYY-MM",
-        "end": "YYYY-MM",
-        "role": "Detailed bullet points..."
-      }
-    ],
-    "education": [
-      {
-        "school": "...",
-        "degree": "...",
-        "start": "YYYY",
-        "end": "YYYY"
-      }
-    ]
-  }
-  Only return valid JSON.
+    const prompt = `
+  You are a professional resume writer. Based on the following info, format the resume, check for errors and complete the summary section to match the resume, note(only only return valid json data, nothing else) ${JSON.stringify(
+    body
+  )}
   `;
+    const completion = await openai.chat.completions.create({
+      model: "deepseek/deepseek-chat-v3.1:free" /*"deepseek/deepseek-r1:free"*/,
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    });
 
-  const messages = [
-    {
-      role: "system",
-      content: "You are an expert resume writer.",
-    },
-    {
-      role: "user",
-      content: prompt,
-    },
-  ];
+    const raw = completion.choices[0].message?.content || "";
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    let json = {};
 
-  const response = await fetch(
-    "https://openrouter.ai/api/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.OPEN_API_KEY}`,
-        "Content-Type": "application/json",
-        // "HTTP-Referer": "https://your-site.com", // optional
-        // "X-Title": "AI Resume Builder", // optional
-      },
-      body: JSON.stringify({
-        model: "deepseek/deepseek-v3.1-terminus",
-        messages,
-      }),
+    if (jsonMatch) {
+      try {
+        json = JSON.parse(jsonMatch[0]);
+      } catch (e) {
+        console.error("Failed to parse AI JSON:", e, raw);
+      }
     }
-  );
 
-  const data = await response.json();
-  return NextResponse.json(data);
+    return NextResponse.json(json);
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: "faild to fetch" }, { status: 500 });
+  }
 }

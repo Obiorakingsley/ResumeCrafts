@@ -17,6 +17,7 @@ const page = () => {
         typeof val === "string" ? val.split(",").map((s) => s.trim()) : val,
       z.array(z.string().min(2, "Skills should be at least 2 characters long"))
     ),
+    location: z.string().min(1, "pls fill this section"),
   });
 
   const {
@@ -48,7 +49,7 @@ const page = () => {
           <input
             id="skills"
             type="text"
-            placeholder="e.g. React, Figma"
+            placeholder="e.g. React, Figma, "
             autoFocus
             {...register("skills")}
           />
@@ -58,8 +59,23 @@ const page = () => {
             </span>
           )}
         </label>
-        {/* <div className="border-2 dark:border-slate-50/20 border-slate-300/40"></div> */}
-
+        <div className="border-1 dark:border-slate-50/10 border-slate-300/40"></div>
+        <div>
+          <label htmlFor="location">
+            Location
+            <input
+              type="text"
+              id="location"
+              placeholder="e.g, Lagos, Nigeria"
+              {...register("location")}
+            />
+            {errors.location && (
+              <span className="text-red-500 text-xs">
+                {errors.location.message}
+              </span>
+            )}
+          </label>
+        </div>
         <Button
           type="submit"
           text="Next: Experience"

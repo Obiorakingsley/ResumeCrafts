@@ -22,7 +22,7 @@ const page = () => {
       z.array(
         z
           .string()
-          .min(10, "project description should be at least 10 characters long")
+          .min(1, "project description should be at least 10 characters long")
           .max(50)
       )
     ),
@@ -40,7 +40,6 @@ const page = () => {
   const sendData = (data: edu) => {
     setResumeData({ projects: [...(resumeData.projects || []), data] });
     setProject((prev) => prev + 1);
-    console.log(resumeData);
     reset();
   };
   return (

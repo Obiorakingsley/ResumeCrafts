@@ -42,7 +42,7 @@ const page = () => {
       experience: [...(resumeData.experience || []), data],
     });
     setExp((prev) => prev + 1);
-    router.push("/build/education");
+    reset();
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-8 px-3 min-h-[80vh]">
@@ -136,6 +136,7 @@ const page = () => {
             className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
             type="submit"
             text="Next: Education"
+            path="/build/education"
           />
         </div>
       </form>

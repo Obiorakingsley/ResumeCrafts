@@ -14,6 +14,7 @@ const dummyData: ResumeData = {
   phone: "+1 (555) 123-4567",
   linkedIn: "linkedIn.com/in/johndoe",
   website: "www.johndoe.com",
+  location: "Lagos, Nigeria",
   summary:
     "Frontend Developer with 3+ years of experience building responsive web applications. Passionate about React, Next.js, and crafting clean UI/UX experiences.",
   skills: [
@@ -93,9 +94,15 @@ export default function PreviewPage({
 
       {/* Template Preview */}
       <div className="border p-4 rounded bg-white">
-        {selected === "modern" && <Modern data={resumeData} />}
-        {selected === "classic" && <Classic data={resumeData} />}
-        {selected === "creative" && <Creative data={resumeData} />}
+        {selected === "modern" && (
+          <Modern data={resumeData.fullName ? resumeData : dummyData} />
+        )}
+        {selected === "classic" && (
+          <Classic data={resumeData.fullName ? resumeData : dummyData} />
+        )}
+        {selected === "creative" && (
+          <Creative data={resumeData.fullName ? resumeData : dummyData} />
+        )}
       </div>
     </section>
   );

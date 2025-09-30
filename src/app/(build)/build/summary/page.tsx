@@ -14,9 +14,7 @@ const page = () => {
   const [website, setWebsite] = useState(false);
   const router = useRouter();
   const schema = z.object({
-    summary: z
-      .string()
-      .min(10, "Summary should be at least 10 characters long"),
+    summary: z.string().optional(),
     website: z.url().min(5, "Invalid URL").optional(),
   });
 

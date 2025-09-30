@@ -35,7 +35,6 @@ const page = () => {
     setResumeData({ education: [...(resumeData.education || []), data] });
     setEduCount((prev) => prev + 1);
     reset();
-    router.push("/build/summary");
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
@@ -114,9 +113,10 @@ const page = () => {
           </button>
 
           <Button
-            className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
+            className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50 cursor-pointer"
             type="button"
             text="Next: Summary"
+            path="/build/summary"
           />
         </div>
       </form>

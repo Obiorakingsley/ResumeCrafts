@@ -30,6 +30,7 @@ Schema:
   "phone": "...",
   "linkedIn": "...",
   "website": "...",
+  "location": "..."
   "summary": "...",
   "skills": [
     "skill1",

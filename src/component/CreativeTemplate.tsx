@@ -6,19 +6,25 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
     <article className="grid grid-cols-3 w-[794px] overflow-hidden min-h-screen mx-auto border shadow-md">
       {/* Sidebar */}
       <aside className="col-span-1  bg-blue-600 text-white p-6">
-        <h3 className="text-2xl font-bold mb-2">{data.fullName}</h3>
+        <h3 className="text-2xl font-bold mb-4">{data.fullName}</h3>
+        <p className="mb-2">{data?.location}</p>
         <p>{data.phone}</p>
         <p>
           <Link href={`mailto:${data.email ? data.email : ""}`}>
             {data?.email}
           </Link>
         </p>
-        <p>
-          <Link href={data.linkedIn ? data.linkedIn : ""}>{data.linkedIn}</Link>
+        <p className="mt-2">
+          <Link href={data.linkedIn ? data.linkedIn : "#"}>
+            {data.linkedIn}
+          </Link>
         </p>
-        <p className="mb-4">{data.website}</p>
+        <p className="mb-2">
+          {" "}
+          <Link href={data.website ? data.website : "#"}>{data.website}</Link>
+        </p>
 
-        <h3 className="text-lg font-semibold mb-2">Skills</h3>
+        <h3 className="text-lg font-semibold mt-10 mb-3">Skills</h3>
         <ul className="space-y-1">
           {data.skills?.map((skill, i) => (
             <li key={i} className="text-sm">
@@ -41,16 +47,15 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
               <h4 className="font-semibold text-gray-700">
                 {exp.title} – {exp.company}
               </h4>
-              <p className="text-sm text-gray-800">
+              <p className="text-sm text-gray-700 font-semibold">
                 {exp.start} - {exp.end}
               </p>
-              <div className="text-gray-800">
+
+              <ul className="text-gray-700 gap-2 flex flex-col list-disc pl-6">
                 {exp.details?.map((details, i) => (
-                  <p key={i} className="mt-2">
-                    {details}
-                  </p>
+                  <li key={i}>{details}</li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </section>
@@ -60,7 +65,7 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
           {data.projects?.map((pro, i) => (
             <div key={i} className="mt-2">
               <h4 className="text-md text-gray-700 ">
-                {pro?.projectName} |{" "}
+                <span className="font-semibold">{pro?.projectName}</span> |{" "}
                 <Link
                   className="text-blue-700 font-light"
                   href={pro.url ? pro?.url : ""}
@@ -85,7 +90,7 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
               <h3 className="font-semibold">
                 {edu.degree} – {edu.institution}
               </h3>
-              <p className="text-sm text-gray-800">
+              <p className="text-sm font-semibold text-gray-700">
                 {edu.startDate} - {edu.endDate}
               </p>
             </div>

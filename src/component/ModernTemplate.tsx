@@ -8,6 +8,7 @@ export default function ResumeTemplate1({ data }: { data: ResumeData }) {
         <h2 className="text-4xl font-bold text-gray-800 mb-5">
           {data?.fullName}
         </h2>
+        <p>{data.location}</p>
         <p>{data.phone}</p>
         <p>
           <Link
@@ -17,15 +18,14 @@ export default function ResumeTemplate1({ data }: { data: ResumeData }) {
             {data?.email}
           </Link>
         </p>
-        <p>
+        <p className="flex gap-4 items-center">
           <Link
             className="text-blue-700"
             href={data.linkedIn ? data.linkedIn : ""}
           >
             {data.linkedIn}
           </Link>
-        </p>
-        <p>
+
           <Link
             className="text-blue-700"
             href={data.website ? data.website : ""}

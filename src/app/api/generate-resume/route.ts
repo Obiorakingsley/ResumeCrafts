@@ -15,10 +15,61 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const prompt = `
-  You are a professional resume writer. Based on the following info, format the resume, check for errors and complete the summary section to match the resume, note(only only return valid json data, nothing else) ${JSON.stringify(
-    body
-  )}
+    const prompt = `You are a professional resume writer.  
+Based on the information provided below, do the following:
+1. Correct any spelling or formatting errors.
+2. Complete or improve the summary section so that it matches the rest of the resume.
+3. Format the entire resume into a structured JSON object following the exact schema below.
+4. Do not include any explanations, markdown, code fences, or text outside the JSON object.  
+5. Return ONLY valid JSON.
+
+Schema:
+{
+  "fullName": "...",
+  "email": "...",
+  "phone": "...",
+  "linkedIn": "...",
+  "website": "...",
+  "summary": "...",
+  "skills": [
+    "skill1",
+    "skill2"
+  ],
+  "experience": [
+    {
+      "title": "...",
+      "company": "...",
+      "start": "...",
+      "end": "...",
+      "details": [
+        "detail1",
+        "detail2"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "projectName": "...",
+      "url": "...",
+      "description": [
+        "description1",
+        "description2"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "...",
+      "institution": "...",
+      "startDate": "...",
+      "endDate": "..."
+    }
+  ]
+}
+
+User data:
+${JSON.stringify(body)}
+
   `;
     const completion = await openai.chat.completions.create({
       model: "deepseek/deepseek-chat-v3.1:free" /*"deepseek/deepseek-r1:free"*/,

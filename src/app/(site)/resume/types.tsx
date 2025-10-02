@@ -1,3 +1,4 @@
+// Resume Form schema
 export type ResumeData = {
   fullName?: string;
   email?: string;

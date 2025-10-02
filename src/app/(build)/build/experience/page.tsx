@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React from "react";
 import Button from "../../_Utils/Button";
 import { FaPlus } from "react-icons/fa";
@@ -14,6 +13,8 @@ const page = () => {
   const { resumeData, setResumeData } = useResumeStore();
   const [exp, setExp] = useState(0);
   const router = useRouter();
+
+  //Experience zod schema
   const schema = z.object({
     title: z.string().min(2, "Title should be at least 2 characters long"),
     company: z.string().min(2, "Company should be at least 2 characters long"),
@@ -37,6 +38,7 @@ const page = () => {
 
   type experience = z.infer<typeof schema>;
 
+  //Add Experience details to state
   const sendData = (data: experience) => {
     setResumeData({
       experience: [...(resumeData.experience || []), data],
@@ -66,6 +68,7 @@ const page = () => {
             <span className="text-xs text-red-500">{errors.title.message}</span>
           )}
         </label>
+
         <label htmlFor="company">
           Company
           <input
@@ -80,6 +83,7 @@ const page = () => {
             </span>
           )}
         </label>
+
         <label htmlFor="start">
           Start Date
           <input
@@ -93,6 +97,7 @@ const page = () => {
             <span className="text-xs text-red-500">{errors.start.message}</span>
           )}
         </label>
+
         <label htmlFor="end">
           End Date
           <input
@@ -106,6 +111,7 @@ const page = () => {
             <span className="text-xs text-red-500">{errors.end.message}</span>
           )}
         </label>
+
         <label htmlFor="roles" className="sm:col-span-2">
           Role/Achievements
           <textarea
@@ -122,6 +128,7 @@ const page = () => {
             </span>
           )}
         </label>
+
         <div className="flex items-center justify-between sm:col-span-2 my-2">
           <button
             type="submit"
@@ -132,6 +139,7 @@ const page = () => {
             <span>{exp > 0 || resumeData.experience ? "more" : ""}</span>
           </button>
 
+          {/* Custom Button */}
           <Button
             className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
             type="submit"

@@ -8,6 +8,7 @@ import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 
+// Dummy data for template preview
 const dummyData: ResumeData = {
   fullName: "John Doe",
   email: "john.doe@example.com",
@@ -73,7 +74,10 @@ export default function PreviewPage({
   params: Promise<{ template: string }>;
 }) {
   const { template } = use(params);
+
+  // Set selected templates
   const [selected, setSelected] = useState(template);
+
   const router = useRouter();
   const { resumeData, setResumeData } = useResumeStore();
   return (

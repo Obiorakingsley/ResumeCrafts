@@ -1,13 +1,11 @@
 export const runtime = "nodejs";
-
 import { NextResponse } from "next/server";
-
 const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
 // @ts-ignore
 pdfjsLib.GlobalWorkerOptions.workerSrc = require("pdfjs-dist/legacy/build/pdf.worker.js");
-
 const mammoth = require("mammoth");
 
+//Post Request
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -23,6 +21,7 @@ export async function POST(req: Request) {
 
     let textContent = "";
 
+//File type checking
     if (fileName.endsWith(".pdf")) {
       textContent = await extractTextFromPDF(buffer);
     } else if (fileName.endsWith(".docx")) {

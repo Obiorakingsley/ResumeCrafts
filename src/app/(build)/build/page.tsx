@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 const page = () => {
   const router = useRouter();
   const { resumeData, setResumeData } = useResumeStore();
+
+  //Summary zod schema
   const schema = z.object({
     fullName: z
       .string()
@@ -33,9 +35,9 @@ const page = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
+  //Add summary details to state
   const sendData = (data: personalForm) => {
     setResumeData(data);
-
     router.push("/build/skills");
   };
   return (
@@ -47,7 +49,9 @@ const page = () => {
           Fill in the details below to generate a professional resume.
         </p>
       </div>
+
       <h3 className="text-2xl font-bold mb-6 border-b">Personal Information</h3>
+
       <form
         onSubmit={handleSubmit(sendData)}
         className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 sm:grid-cols-2 align-center border-2 border-slate-400/20"
@@ -67,6 +71,7 @@ const page = () => {
             </span>
           )}
         </label>
+
         <label htmlFor="email">
           Email
           <input
@@ -80,6 +85,7 @@ const page = () => {
             <span className="text-red-500 text-xs">{errors.email.message}</span>
           )}
         </label>
+
         <label htmlFor="phone">
           Phone
           <input
@@ -92,6 +98,7 @@ const page = () => {
             <span className="text-red-500 text-xs">{errors.phone.message}</span>
           )}
         </label>
+
         <label htmlFor="social">
           LinkedIn
           <input

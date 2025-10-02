@@ -5,6 +5,7 @@ import FilePicker from "../../component/FilePicker";
 
 const Home = () => {
   return (
+    //Home Page
     <>
       <section className="hero-bg bg-center">
         <div className="bg-black/45 h-full grid place-content-center">
@@ -30,6 +31,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <section className="py-16 px-4 sm:py-24 bg-slate-100 dark:bg-black">
         <div className="text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">

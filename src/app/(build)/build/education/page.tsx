@@ -13,6 +13,8 @@ const page = () => {
   const { setResumeData, resumeData } = useResumeStore();
   const [eduCount, setEduCount] = useState(0);
   const router = useRouter();
+
+  //Education zod schema
   const schema = z.object({
     institution: z
       .string()
@@ -30,6 +32,8 @@ const page = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   type edu = z.infer<typeof schema>;
+
+  //Add form details to state
 
   const sendData = (data: edu) => {
     setResumeData({ education: [...(resumeData.education || []), data] });
@@ -74,6 +78,7 @@ const page = () => {
             </span>
           )}
         </label>
+
         <label htmlFor="startDate">
           Start Date
           <input

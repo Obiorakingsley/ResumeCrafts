@@ -3,6 +3,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const page = () => {
   return (
+    // List of Completed Resume
     <section className=" p-4 pb-12 w-full">
       <h2 className="text-2xl sm:text-3xl mb-16 font-semibold">My Resume</h2>
       <div className="flex flex-wrap gap-8 justify-center sm:justify-start w-full">

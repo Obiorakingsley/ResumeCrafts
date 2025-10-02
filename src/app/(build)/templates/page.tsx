@@ -1,14 +1,19 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
+import { FaCheck } from "react-icons/fa";
+import { FaCircleCheck } from "react-icons/fa6";
+import { useState } from "react";
 
 const page = () => {
-  const { resumeData, setResumeData } = useResumeStore();
+  const { resumeData, setResumeData, template, setTemplate } = useResumeStore();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  async function fetchData() {
+  //Make Request to Openai
+  async function fetchData(temp: string) {
+    setLoading(true);
     try {
       const res = await fetch("/api/generate-resume", {
         method: "POST",
@@ -17,16 +22,23 @@ const page = () => {
         },
         body: JSON.stringify(resumeData),
       });
+
+      //Add Response to State
       const data = await res.json();
       if (!data) return;
-      setResumeData(data.trim());
+
+      setResumeData(data);
       console.log("Resume data updated:", resumeData);
+      router.push(`/templates/${temp}`);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
+    //List of available Templates
     <section className="flex-grow container mx-auto px-6 py-12">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
@@ -37,8 +49,18 @@ const page = () => {
           design is crafted to highlight your skills and experience effectively.
         </p>
       </div>
+
+      {/* Modern Template */}
       <div className="space-y-8">
-        <div className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container">
+        <div
+          onClick={() => {
+            setTemplate("modern");
+          }}
+          className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
+        >
+          <span className="absolute right-0 top-0 text-indigo-500 p-4">
+            {template === "modern" && <FaCircleCheck size={20} />}
+          </span>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
             <div className="modern-bg col-span-1 lg:col-span-2 h-64 lg:h-full bg-cover bg-slate-100 bg-center"></div>
             <div className="col-span-1 lg:col-span-3 p-8">
@@ -49,23 +71,46 @@ const page = () => {
                 A sleek, contemporary design that emphasizes clarity and impact,
                 ideal for showcasing a progressive career.
               </p>
-              <button
-                onClick={() => {
-                  fetchData();
-                }}
-                className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer"
-              >
-                Use Template
-              </button>
-              <Link href="/templates/modern">
-                <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
-                  Preview
+              <div className="flex items-center justify-start">
+                <button
+                  disabled={loading}
+                  onClick={() => {
+                    fetchData("modern");
+                  }}
+                  className={` bg-indigo-500 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-500/90 transition-colors cursor-pointer ${
+                    loading &&
+                    "hover:cursor-not-allowed bg-indigo-950 hover:bg-indigo-900"
+                  }`}
+                >
+                  {loading && template === "modern" ? (
+                    <div className="relative m-auto w-6 h-4">
+                      <span className=" border-2 border-t-0 absolute p-2 rounded-full m-auto left-0 right-0 top-0 bottom-0 border-b-0 animate-spin"></span>
+                    </div>
+                  ) : (
+                    <span>Use Template</span>
+                  )}
                 </button>
-              </Link>
+
+                <Link href="/templates/modern">
+                  <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                    Preview
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container">
+
+        {/* Classic Template */}
+        <div
+          onClick={() => {
+            setTemplate("classic");
+          }}
+          className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
+        >
+          <span className="absolute right-0 top-0 text-indigo-500 p-4">
+            {template === "classic" && <FaCircleCheck size={20} />}
+          </span>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
             <div className="classic-bg col-span-1 lg:col-span-2 h-64 lg:h-full bg-cover bg-slate-100 bg-center"></div>
             <div className="col-span-1 lg:col-span-3 p-8">
@@ -76,23 +121,45 @@ const page = () => {
                 A timeless, refined layout that conveys professionalism and
                 attention to detail, perfect for traditional industries.
               </p>
-              <button
-                onClick={() => {
-                  fetchData();
-                }}
-                className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer"
-              >
-                Use Template
-              </button>
-              <Link href="/templates/classic">
-                <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
-                  Preview
+              <div className="flex items-center justify-start">
+                <button
+                  disabled={loading}
+                  onClick={() => {
+                    fetchData("classic");
+                  }}
+                  className={` bg-indigo-500 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-500/90 transition-colors cursor-pointer ${
+                    loading &&
+                    "hover:cursor-not-allowed bg-indigo-950 hover:bg-indigo-900"
+                  }`}
+                >
+                  {loading && template === "classic" ? (
+                    <div className="relative m-auto w-6 h-4">
+                      <span className=" border-2 border-t-0 absolute p-2 rounded-full m-auto left-0 right-0 top-0 bottom-0 border-b-0 animate-spin"></span>
+                    </div>
+                  ) : (
+                    <span>Use Template</span>
+                  )}
                 </button>
-              </Link>
+                <Link href="/templates/classic">
+                  <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                    Preview
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container">
+
+        {/* Creative Template */}
+        <div
+          onClick={() => {
+            setTemplate("creative");
+          }}
+          className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
+        >
+          <span className="absolute right-0 top-0 text-indigo-500 p-4">
+            {template === "creative" && <FaCircleCheck size={20} />}
+          </span>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
             <div className="creative-bg col-span-1 lg:col-span-2 h-64 lg:h-full bg-cover bg-slate-100 bg-center"></div>
             <div className="col-span-1 lg:col-span-3 p-8">
@@ -104,19 +171,31 @@ const page = () => {
                 creativity and unique skills, suitable for artistic or
                 design-focused roles.
               </p>
-              <button
-                onClick={() => {
-                  fetchData();
-                }}
-                className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer"
-              >
-                Use Template
-              </button>
-              <Link href="/templates/creative">
-                <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
-                  Preview
+              <div className="flex items-center justify-start">
+                <button
+                  disabled={loading}
+                  onClick={() => {
+                    fetchData("creative");
+                  }}
+                  className={` bg-indigo-500 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-500/90 transition-colors cursor-pointer ${
+                    loading &&
+                    "hover:cursor-not-allowed bg-indigo-950 hover:bg-indigo-900"
+                  }`}
+                >
+                  {loading && template === "creative" ? (
+                    <div className="relative m-auto w-6 h-4">
+                      <span className=" border-2 border-t-0 absolute p-2 rounded-full m-auto left-0 right-0 top-0 bottom-0 border-b-0 animate-spin"></span>
+                    </div>
+                  ) : (
+                    <span>Use Template</span>
+                  )}
                 </button>
-              </Link>
+                <Link href="/templates/creative">
+                  <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                    Preview
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

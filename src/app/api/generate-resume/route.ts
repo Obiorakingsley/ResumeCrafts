@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
+//Query Openai
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
   defaultHeaders: {
@@ -11,6 +12,7 @@ const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
 
+//Post request
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -82,6 +84,7 @@ ${JSON.stringify(body)}
       ],
     });
 
+//Format response using REGEX
     const raw = completion.choices[0].message?.content || "";
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     let json = {};

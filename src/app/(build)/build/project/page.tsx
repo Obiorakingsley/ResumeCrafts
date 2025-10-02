@@ -11,6 +11,8 @@ import { useState } from "react";
 const page = () => {
   const { setResumeData, resumeData } = useResumeStore();
   const [project, setProject] = useState(0);
+
+  //Project zod schema
   const schema = z.object({
     projectName: z
       .string()
@@ -37,6 +39,8 @@ const page = () => {
 
   type edu = z.infer<typeof schema>;
 
+  //Add Project details to state
+
   const sendData = (data: edu) => {
     setResumeData({ projects: [...(resumeData.projects || []), data] });
     setProject((prev) => prev + 1);
@@ -45,7 +49,7 @@ const page = () => {
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
       <Button type="button" path="/build/experience" />
-      <div className="mb-12 text-center"></div>
+
       <h3 className="text-2xl font-bold mb-6 border-b">Project</h3>
       <form
         onSubmit={handleSubmit(sendData)}
@@ -66,6 +70,7 @@ const page = () => {
             </span>
           )}
         </label>
+
         <label htmlFor="url">
           <p>
             URL <span className="text-xs">(optional)</span>
@@ -80,6 +85,7 @@ const page = () => {
             <span className="text-xs text-red-500">{errors.url.message}</span>
           )}
         </label>
+
         <label htmlFor="description" className="sm:col-span-2">
           Description
           <textarea

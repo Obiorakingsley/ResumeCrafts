@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 const page = () => {
   const router = useRouter();
   const { resumeData, setResumeData } = useResumeStore();
+
+  //Skills zod Schema
   const schema = z.object({
     skills: z.preprocess(
       (val) =>
@@ -28,6 +30,7 @@ const page = () => {
 
   type skillType = z.infer<typeof schema>;
 
+  //Add Skills info to state and Navigate
   const sendData = (data: skillType) => {
     setResumeData(data);
     console.log(resumeData);
@@ -36,7 +39,7 @@ const page = () => {
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-2">
       <Button type="button" path="/build" />
-      <div className="mb-12 text-center"></div>
+
       <h3 className="text-2xl font-bold mb-6 border-b">Skills</h3>
       <form
         onSubmit={handleSubmit(sendData)}
@@ -59,7 +62,9 @@ const page = () => {
             </span>
           )}
         </label>
+
         <div className="border-1 dark:border-slate-50/10 border-slate-300/40"></div>
+
         <div>
           <label htmlFor="location">
             Location
@@ -76,6 +81,7 @@ const page = () => {
             )}
           </label>
         </div>
+
         <Button
           type="submit"
           text="Next: Experience"

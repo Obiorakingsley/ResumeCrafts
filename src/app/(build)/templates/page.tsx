@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useResumeStore } from "@/app/store/resumeStore";
+import { useResumeStore } from "@/store/resumeStore";
 
 const page = () => {
   const { resumeData, setResumeData } = useResumeStore();
@@ -19,9 +19,8 @@ const page = () => {
       });
       const data = await res.json();
       if (!data) return;
-      setResumeData(data);
+      setResumeData(data.trim());
       console.log("Resume data updated:", resumeData);
-      router.push("/templates/modern");
     } catch (error) {
       console.log(error);
     }
@@ -77,7 +76,12 @@ const page = () => {
                 A timeless, refined layout that conveys professionalism and
                 attention to detail, perfect for traditional industries.
               </p>
-              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
+              <button
+                onClick={() => {
+                  fetchData();
+                }}
+                className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer"
+              >
                 Use Template
               </button>
               <Link href="/templates/classic">
@@ -100,7 +104,12 @@ const page = () => {
                 creativity and unique skills, suitable for artistic or
                 design-focused roles.
               </p>
-              <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer">
+              <button
+                onClick={() => {
+                  fetchData();
+                }}
+                className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors cursor-pointer"
+              >
                 Use Template
               </button>
               <Link href="/templates/creative">

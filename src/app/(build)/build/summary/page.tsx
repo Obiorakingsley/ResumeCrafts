@@ -6,7 +6,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useResumeStore } from "@/app/store/resumeStore";
+import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
 
 const page = () => {

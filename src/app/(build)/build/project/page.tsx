@@ -4,7 +4,7 @@ import Button from "../../_Utils/Button";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useResumeStore } from "@/app/store/resumeStore";
+import { useResumeStore } from "@/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ const page = () => {
     projectName: z
       .string()
       .min(5, "project name should be at least 5 characters long"),
-    url: z.url().optional(),
+    url: z.string().optional(),
     description: z.preprocess(
       (val) =>
         typeof val === "string" ? val.split(",").map((w) => w.trim()) : val,

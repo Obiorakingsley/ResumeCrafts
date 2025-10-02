@@ -4,7 +4,7 @@ import Button from "../../_Utils/Button";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useResumeStore } from "@/app/store/resumeStore";
+import { useResumeStore } from "@/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -15,9 +15,9 @@ const page = () => {
   const router = useRouter();
   const schema = z.object({
     institution: z
-      .string("Invalid input")
+      .string()
       .min(5, "Institution should be at least 5 characters long"),
-    degree: z.string("Invalid input"),
+    degree: z.string().min(5, "Degree should be at least 5 characters long"),
     startDate: z.string(),
     endDate: z.string(),
   });

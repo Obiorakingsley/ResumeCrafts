@@ -8,9 +8,9 @@ export type ResumeData = {
   website?: string;
   location?: string;
   projects?: {
-    projectName: string;
+    projectName?: string;
     url?: string;
-    description: string[];
+    description?: string[];
   }[];
   experience?: {
     title?: string;

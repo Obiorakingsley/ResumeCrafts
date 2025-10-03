@@ -58,20 +58,20 @@ export default function UploadResume() {
   }
 
   return (
-    <div className="flex flex-col items-center space-y-4 w-40">
+    <div className="flex flex-col items-center space-y-4">
       <label
         htmlFor="resume-upload"
-        className="cursor-pointer border-2 text-white px-3 py-3 transition-all rounded-lg shadow hover:scale-105 w-40"
+        className="cursor-pointer border-2 text-white p-2 transition-all rounded-lg shadow hover:scale-105 min-w-33 max-w-36"
       >
         {loading ? (
           <div className="relative m-auto w-6 h-6">
             <span className="border-2 border-t-transparent border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
           </div>
         ) : file ? (
-          <p className="text-sm text-white flex items-center gap-2">
-            <FaFile size={30} />{" "}
+          <p className="text-xs sm:text-sm text-white flex items-center gap-2 m-auto text-center">
+            <FaFile size={26} />{" "}
             <span className="font-semibold">
-              {file.name.substring(0, 20) + "..."}
+              {file.name.substring(0, 15) + "..."}
             </span>
           </p>
         ) : (

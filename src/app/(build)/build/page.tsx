@@ -22,7 +22,7 @@ const page = () => {
         /^[a-zA-Z]+(?: [a-zA-Z]+)+$/,
         "Please enter your first name and last name"
       ),
-    email: z.string(),
+    email: z.string().min(1, "Invalid email"),
     phone: z.string().regex(/^\d{11,15}$/, "Please enter a valid phone number"),
     linkedIn: z.string(),
   });
@@ -75,7 +75,6 @@ const page = () => {
         <label htmlFor="email">
           Email
           <input
-            required
             id="email"
             type="email"
             placeholder="e.g. JohnDoe@email.com"
@@ -102,7 +101,6 @@ const page = () => {
         <label htmlFor="social">
           LinkedIn
           <input
-            required
             id="social"
             type="url"
             placeholder="e.g. linkedIn.com/in/JohnDoe"

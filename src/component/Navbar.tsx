@@ -24,19 +24,6 @@ const Navbar = () => {
             >
               <li>Template</li>
             </Link>
-
-            <Link
-              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-              href="/"
-            >
-              <li>Pricing</li>
-            </Link>
-            <Link
-              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-              href="/templates/modern"
-            >
-              <li>Preview</li>
-            </Link>
           </ul>
         </nav>
 

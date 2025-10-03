@@ -59,29 +59,30 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
             </div>
           ))}
         </section>
+        {data.projects?.length && (
+          <section className="mb-6">
+            <h3 className="text-lg font-semibold text-blue-700">Project</h3>
+            {data.projects?.map((pro, i) => (
+              <div key={i} className="mt-2">
+                <h4 className="text-md text-gray-700 ">
+                  <span className="font-semibold">{pro?.projectName}</span> |{" "}
+                  <Link
+                    className="text-blue-700 font-light"
+                    href={pro.url ? pro?.url : ""}
+                  >
+                    {pro?.url}
+                  </Link>
+                </h4>
 
-        <section className="mb-6">
-          <h3 className="text-lg font-semibold text-blue-700">Project</h3>
-          {data.projects?.map((pro, i) => (
-            <div key={i} className="mt-2">
-              <h4 className="text-md text-gray-700 ">
-                <span className="font-semibold">{pro?.projectName}</span> |{" "}
-                <Link
-                  className="text-blue-700 font-light"
-                  href={pro.url ? pro?.url : ""}
-                >
-                  {pro?.url}
-                </Link>
-              </h4>
-
-              <ul className="text-gray-700 list-disc pl-6">
-                {pro.description?.map((d, i) => (
-                  <li key={i}>{d}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
+                <ul className="text-gray-700 list-disc pl-6">
+                  {pro.description?.map((d, i) => (
+                    <li key={i}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </section>
+        )}
 
         <section>
           <h3 className="text-lg font-bold text-blue-600">Education</h3>

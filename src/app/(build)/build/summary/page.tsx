@@ -15,7 +15,7 @@ const page = () => {
   const router = useRouter();
   const schema = z.object({
     summary: z.string().optional(),
-    website: z.url().min(5, "Invalid URL").optional(),
+    website: z.string().min(5, "Invalid URL").optional(),
   });
 
   const {
@@ -25,7 +25,7 @@ const page = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   type summary = z.infer<typeof schema>;
-
+  // Add summary details to state
   const sendData = (data: summary) => {
     setResumeData(data);
   };
@@ -67,7 +67,7 @@ const page = () => {
             >
               <FaPlus /> Project
             </button>
-
+            <br />
             <button
               onClick={() => {
                 setWebsite((prev) => !prev);
@@ -77,6 +77,7 @@ const page = () => {
             >
               {website ? <FaMinus /> : <FaPlus />} Website
             </button>
+
             {website && (
               <label htmlFor="website">
                 <span className="text-xs ">Website</span>

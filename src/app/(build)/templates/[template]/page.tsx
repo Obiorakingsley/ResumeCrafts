@@ -7,6 +7,7 @@ import Creative from "@/component/CreativeTemplate";
 import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
+import DownloadResume from "@/component/DownloadResume";
 
 // Dummy data for template preview
 const dummyData: ResumeData = {
@@ -106,6 +107,7 @@ export default function PreviewPage({
           <Creative data={resumeData.fullName ? resumeData : dummyData} />
         )}
       </div>
+      <DownloadResume />
     </section>
   );
 }

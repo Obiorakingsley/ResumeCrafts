@@ -20,7 +20,7 @@ const Home = () => {
             </p>
             <div className="flex mt-10 items-center justify-center gap-6 mx-auto">
               <Link
-                className=" p-4 text-lg font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-all hover:scale-105 cursor-pointer"
+                className=" px-4 py-2 text-lg font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-500 transition-all hover:scale-105 cursor-pointer"
                 href="/build"
               >
                 <button className="cursor-pointer">Start fresh</button>

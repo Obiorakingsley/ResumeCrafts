@@ -2,13 +2,18 @@
 import { useResumeStore } from "@/store/resumeStore";
 
 export default function DownloadButtons() {
-  const { resumeData } = useResumeStore();
+  const { resumeData, template } = useResumeStore();
 
   const handleDownload = async (type: "pdf" | "docx") => {
-    const res = await fetch("/api/convert-resume", {
+    if (!resumeData) return;
+    const res = await fetch(`/api/download-${template}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...resumeData, fileType: type }),
+      body: JSON.stringify({
+        ...resumeData,
+        fileType: type,
+        template: template,
+      }),
     });
 
     const blob = await res.blob();

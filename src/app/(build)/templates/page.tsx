@@ -15,7 +15,7 @@ const page = () => {
   async function fetchData(temp: string) {
     setLoading(true);
     try {
-      const res = await fetch("/api/generate-resume", {
+      const res = await fetch(`/api/generate-resume`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

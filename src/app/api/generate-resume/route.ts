@@ -22,7 +22,7 @@ Based on the information provided below, do the following:
 1. Correct any spelling or formatting errors.
 2. Complete or improve the summary section so that it matches the rest of the resume.
 3. Format the entire resume into a structured JSON object following the exact schema below.
-4. Do not include any explanations, markdown, code fences, or text outside the JSON object.  
+4. Do not include any explanations, markdown, code fences, or text outside the JSON object. 
 5. Return ONLY valid JSON.
 
 Schema:
@@ -84,7 +84,7 @@ ${JSON.stringify(body)}
       ],
     });
 
-//Format response using REGEX
+    //Format response using REGEX
     const raw = completion.choices[0].message?.content || "";
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     let json = {};

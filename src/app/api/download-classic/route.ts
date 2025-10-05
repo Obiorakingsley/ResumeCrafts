@@ -18,7 +18,8 @@ export async function POST(req: Request) {
   const fileType = data.fileType || "pdf";
 
   if (fileType === "pdf") {
-    const pdfBuffer = await generatePDF(data);
+    const pdfBuffer = await generateClassicPDF(data);
+
     return new Response(new Uint8Array(pdfBuffer), {
       headers: {
         "Content-Type": "application/pdf",
@@ -26,7 +27,8 @@ export async function POST(req: Request) {
       },
     });
   } else if (fileType === "docx") {
-    const docxBuffer = await generateDOCX(data);
+    const docxBuffer = await generateClassicDOCX(data);
+
     return new Response(new Uint8Array(docxBuffer), {
       headers: {
         "Content-Type":
@@ -39,8 +41,10 @@ export async function POST(req: Request) {
   return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
 }
 
+//Classic Resume template
+
 // Generate PDF
-export async function generatePDF(data: any) {
+export async function generateClassicPDF(data: any) {
   return new Promise<Buffer>((resolve) => {
     const regularFont = path.resolve("./public/fonts/Roboto-Regular.ttf");
     const boldFont = path.resolve("./public/fonts/Roboto-Bold.ttf");
@@ -63,22 +67,21 @@ export async function generatePDF(data: any) {
     doc
       .font("Roboto-Bold")
       .fontSize(24)
-      .text(data.fullName || "", {
-        align: "center",
-      });
+      .fillColor("black")
+      .text(data.fullName || "", { align: "center" });
     doc.moveDown(0.3);
 
     doc
       .font("Roboto")
       .fontSize(12)
+      .fillColor("black")
       .text(data.location || "", { align: "center" });
     doc.text(data.phone || "", { align: "center" });
-    doc.fillColor("blue").text(data.email || "", {
+    doc.fillColor("black").text(data.email || "", {
       align: "center",
       link: data.email ? `mailto:${data.email}` : undefined,
       underline: true,
     });
-    doc.fillColor("black");
 
     if (data.linkedIn || data.website) {
       let linksLine = "";
@@ -87,18 +90,17 @@ export async function generatePDF(data: any) {
       doc
         .font("Roboto")
         .fontSize(12)
-        .fillColor("blue")
+        .fillColor("black")
         .text(linksLine, {
           align: "center",
           link: data.linkedIn || data.website,
-          underline: false,
+          underline: true,
         });
-      doc.fillColor("black");
     }
 
     doc.moveDown(0.8);
 
-    // header section top border
+    // Reusable Section Heading
     function sectionHeading(title: string) {
       doc.moveDown(0.8);
       const x = doc.x;
@@ -109,95 +111,99 @@ export async function generatePDF(data: any) {
         .moveTo(x, y)
         .lineTo(x + width, y)
         .lineWidth(1)
-        .strokeColor("#9ca3af") // gray-400
+        .strokeColor("black")
         .stroke();
       doc.moveDown(0.4);
-      doc.font("Roboto-Bold").fontSize(14).fillColor("#374151").text(title);
-      doc.fillColor("black");
+      doc.font("Roboto-Bold").fontSize(18).fillColor("black").text(title);
       doc.moveDown(0.3);
     }
 
-    //Summary section
+    // Summary
     if (data.summary) {
       sectionHeading("Summary");
-      doc.font("Roboto").fontSize(12).text(data.summary);
+      doc.font("Roboto").fontSize(12).fillColor("black").text(data.summary);
     }
 
-    //Skills section
+    // Skills
     if (data.skills?.length) {
       sectionHeading("Skills");
-      doc.font("Roboto").fontSize(12);
       const skillsText = data.skills.join("  •  ");
-      doc.text(skillsText, {
-        align: "left",
-      });
+      doc
+        .font("Roboto")
+        .fontSize(12)
+        .fillColor("black")
+        .text(skillsText, { align: "left" });
     }
 
-    //Experience section
+    // Experience
     if (data.experience?.length) {
       sectionHeading("Experience");
       data.experience.forEach((exp: any) => {
         doc
           .font("Roboto-Bold")
           .fontSize(12)
+          .fillColor("black")
           .text(`${exp.title} – ${exp.company}`);
         doc
           .font("Roboto")
           .fontSize(10)
-          .fillColor("#374151")
+          .fillColor("black")
           .text(`${exp.start} - ${exp.end}`);
-        doc.fillColor("black");
 
         if (exp.details?.length) {
           exp.details.forEach((line: string) => {
-            doc.font("Roboto").fontSize(11).text(`• ${line}`, {
-              indent: 10,
-            });
+            doc
+              .font("Roboto")
+              .fontSize(11)
+              .fillColor("black")
+              .text(`• ${line}`, { indent: 10 });
           });
         }
         doc.moveDown(0.5);
       });
     }
 
-    //Project section
+    // Projects
     if (data.projects?.length) {
       sectionHeading("Projects");
       data.projects.forEach((proj: any) => {
         doc
           .font("Roboto-Bold")
           .fontSize(12)
+          .fillColor("black")
           .text(proj.projectName || "");
         if (proj.url) {
-          doc.font("Roboto").fontSize(11).fillColor("blue").text(proj.url, {
+          doc.font("Roboto").fontSize(11).fillColor("black").text(proj.url, {
             link: proj.url,
             underline: true,
           });
-          doc.fillColor("black");
         }
 
         proj.description?.forEach((desc: string) => {
-          doc.font("Roboto").fontSize(11).text(`• ${desc}`, {
-            indent: 10,
-          });
+          doc
+            .font("Roboto")
+            .fontSize(11)
+            .fillColor("black")
+            .text(`• ${desc}`, { indent: 10 });
         });
         doc.moveDown(0.5);
       });
     }
 
-    //Education section
+    // Education
     if (data.education?.length) {
       sectionHeading("Education");
       data.education.forEach((edu: any) => {
         doc
           .font("Roboto-Bold")
           .fontSize(12)
+          .fillColor("black")
           .text(`${edu.degree} – ${edu.institution}`);
         doc
           .font("Roboto")
           .fontSize(11)
-          .fillColor("#374151")
+          .fillColor("black")
           .text(`${edu.startDate} - ${edu.endDate}`);
-        doc.fillColor("black");
         doc.moveDown(0.4);
       });
     }
@@ -209,7 +215,7 @@ export async function generatePDF(data: any) {
 /////////////////////////////////////////////////
 
 // Generate DOCX
-async function generateDOCX(data: any) {
+async function generateClassicDOCX(data: any) {
   const doc = new Document({
     sections: [
       {
@@ -218,28 +224,28 @@ async function generateDOCX(data: any) {
           new Paragraph({
             text: data.fullName,
             heading: HeadingLevel.HEADING_1,
-            alignment: AlignmentType.LEFT,
+            alignment: AlignmentType.CENTER,
             spacing: { after: 200 },
           }),
 
           // Contact Info
           new Paragraph({
             text: data.location,
-            alignment: AlignmentType.LEFT,
+            alignment: AlignmentType.CENTER,
           }),
           new Paragraph({
             text: data.phone,
-            alignment: AlignmentType.LEFT,
+            alignment: AlignmentType.CENTER,
           }),
           new Paragraph({
             children: [new TextRun({ text: data.email, style: "Hyperlink" })],
-            alignment: AlignmentType.LEFT,
+            alignment: AlignmentType.CENTER,
           }),
           new Paragraph({
             children: [
               new TextRun({ text: data.linkedIn, style: "Hyperlink" }),
             ],
-            alignment: AlignmentType.LEFT,
+            alignment: AlignmentType.CENTER,
           }),
 
           ,
@@ -249,11 +255,11 @@ async function generateDOCX(data: any) {
                   children: [
                     new TextRun({ text: data.website, style: "Hyperlink" }),
                   ],
-                  alignment: AlignmentType.LEFT,
+                  alignment: AlignmentType.CENTER,
                 }),
               ]
             : []),
-          new Paragraph({ text: "", spacing: { after: 400 } }), // spacing after contact section
+          new Paragraph({ text: "", spacing: { after: 400 } }),
 
           // Summary
           ...(data.summary

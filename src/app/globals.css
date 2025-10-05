@@ -22,6 +22,24 @@ body {
   min-height: 100vh;
   position: relative;
 }
+.menu {
+  background-color: var(--background);
+  color: var(--color);
+}
+
+.menu li {
+  padding: 0.5rem 0.3rem;
+}
+.menu li:last-child {
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+.menu li:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+  transition: all 0.2s ease;
+}
+
 .hero-bg {
   background-color: rgb(245, 244, 244);
   background-size: cover;

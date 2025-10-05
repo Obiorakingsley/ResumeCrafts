@@ -93,9 +93,12 @@ export default function PreviewPage({
         <FaArrowLeft />
         Back
       </button>
-      <h2 className="text-2xl sm:text-3xl mt-6 font-bold mb-6">
-        {template.toUpperCase()} Template Preview
-      </h2>
+      <div className="mt-6  mb-6 flex items-center justify-between">
+        <h2 className="text-xl sm:text-2xl  font-bold ">
+          {template.toUpperCase()} Template Preview
+        </h2>
+        <DownloadResume />
+      </div>
 
       {/* Template Preview */}
       <div className="border p-4 rounded bg-white">
@@ -107,7 +110,6 @@ export default function PreviewPage({
           <Creative data={resumeData.fullName ? resumeData : dummyData} />
         )}
       </div>
-      <DownloadResume />
     </section>
   );
 }

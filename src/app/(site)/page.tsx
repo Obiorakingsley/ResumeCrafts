@@ -1,3 +1,4 @@
+"use client";
 import HomeCards from "@/component/HomeCards";
 import Link from "next/link";
 import React from "react";

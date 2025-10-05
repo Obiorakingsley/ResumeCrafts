@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
-import { FaCheck } from "react-icons/fa";
+
 import { FaCircleCheck } from "react-icons/fa6";
 import { useState } from "react";
 
@@ -91,7 +91,7 @@ const page = () => {
                   )}
                 </button>
 
-                <Link href="/templates/modern">
+                <Link className="hidden lg:block" href="/templates/modern">
                   <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
                     Preview
                   </button>
@@ -140,7 +140,7 @@ const page = () => {
                     <span>Use Template</span>
                   )}
                 </button>
-                <Link href="/templates/classic">
+                <Link className="hidden lg:block" href="/templates/classic">
                   <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
                     Preview
                   </button>
@@ -190,7 +190,7 @@ const page = () => {
                     <span>Use Template</span>
                   )}
                 </button>
-                <Link href="/templates/creative">
+                <Link className="hidden lg:block" href="/templates/creative">
                   <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
                     Preview
                   </button>

@@ -1,5 +1,6 @@
 "use client";
 import { useResumeStore } from "@/store/resumeStore";
+import { FaFileDownload } from "react-icons/fa";
 
 export default function DownloadButtons() {
   const { resumeData, template } = useResumeStore();
@@ -28,15 +29,19 @@ export default function DownloadButtons() {
   return (
     <div className="flex gap-4">
       <button
+        type="button"
         onClick={() => handleDownload("pdf")}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 "
       >
+        <FaFileDownload size={20} />
         Download PDF
       </button>
       <button
+        type="button"
         onClick={() => handleDownload("docx")}
-        className="bg-green-600 text-white px-4 py-2 rounded"
+        className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1"
       >
+        <FaFileDownload />
         Download DOCX
       </button>
     </div>

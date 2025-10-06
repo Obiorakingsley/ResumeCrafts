@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ResumeTemplate2({ data }: { data: ResumeData }) {
   return (
-    <article className="p-6 bg-gray-50 border w-[794px] min-h-screen overflow-hidden mx-auto font-light text-gray-800">
+    <article className="p-6 bg-gray-50 border hidden lg:block w-[794px] min-h-screen overflow-hidden mx-auto font-light text-gray-800">
       <h2 className="text-3xl mb-3 text-center font-bold">{data.fullName}</h2>
       <p className="text-gray-800 text-center flex items-center gap-4 justify-center">
         <span className="text-center">{data.location}</span>

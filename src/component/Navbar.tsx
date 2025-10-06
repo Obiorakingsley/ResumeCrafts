@@ -54,52 +54,52 @@ const Navbar = () => {
           height={20}
           className="size-9 hidden sm:block"
         />
-        <div className="relative">
+        <div className="">
           <button
             onClick={() => {
               setMenu((prev) => !prev);
             }}
             className="cursor-pointer sm:hidden"
           >
-            <span className="absolute left-[10000px]">menu</span>
+            <span className="absolute opacity-0 left-80">menu</span>
             <FaEllipsisV size={20} />
           </button>
-          {menu && (
-            <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[48px] sm:hidden">
-              <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
-                <li
-                  onClick={() => {
-                    setMenu((prev) => !prev);
-                  }}
-                >
-                  <Link className="flex items-center gap-0.5" href="/templates">
-                    <FaFileLines />
-                    Templates
-                  </Link>
-                </li>
-                <li
-                  onClick={() => {
-                    setMenu((prev) => !prev);
-                  }}
-                >
-                  <Link className="flex items-center gap-0.5" href="/pricing">
-                    <FaDollarSign /> Pricing
-                  </Link>
-                </li>
-                <li
-                  onClick={() => {
-                    setMenu((prev) => !prev);
-                  }}
-                >
-                  <Link className="flex items-center gap-0.5" href="/profile">
-                    <FaUser />
-                    Profile
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          )}
         </div>
+        {menu && (
+          <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[70px] sm:hidden">
+            <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
+              <li
+                onClick={() => {
+                  setMenu((prev) => !prev);
+                }}
+              >
+                <Link className="flex items-center gap-0.5" href="/templates">
+                  <FaFileLines />
+                  Templates
+                </Link>
+              </li>
+              <li
+                onClick={() => {
+                  setMenu((prev) => !prev);
+                }}
+              >
+                <Link className="flex items-center gap-0.5" href="/pricing">
+                  <FaDollarSign /> Pricing
+                </Link>
+              </li>
+              <li
+                onClick={() => {
+                  setMenu((prev) => !prev);
+                }}
+              >
+                <Link className="flex items-center gap-0.5" href="/profile">
+                  <FaUser />
+                  Profile
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
       </div>
     </>
   );

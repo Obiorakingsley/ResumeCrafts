@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
-import { FaDollarSign, FaEllipsisV, FaUser } from "react-icons/fa";
+import { FaDollarSign, FaEllipsisV, FaSignInAlt, FaUser } from "react-icons/fa";
 import { FaFileLines } from "react-icons/fa6";
 
 const Navbar = () => {
@@ -32,6 +32,12 @@ const Navbar = () => {
               href="/pricing"
             >
               <li>Pricing</li>
+            </Link>
+            <Link
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              href="/pricing"
+            >
+              <li>Sign In</li>
             </Link>
           </ul>
         </nav>
@@ -68,6 +74,16 @@ const Navbar = () => {
         {menu && (
           <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[70px] sm:hidden">
             <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
+              <li
+                onClick={() => {
+                  setMenu((prev) => !prev);
+                }}
+              >
+                <Link className="flex items-center gap-0.5" href="/profile">
+                  <FaSignInAlt />
+                  Sign In
+                </Link>
+              </li>
               <li
                 onClick={() => {
                   setMenu((prev) => !prev);

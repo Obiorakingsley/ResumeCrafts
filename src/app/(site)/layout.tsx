@@ -6,6 +6,8 @@ import Footer from "@/component/Footer";
 import Navbar from "@/component/Navbar";
 import Login from "@/component/SignIn";
 import { useResumeStore } from "@/store/resumeStore";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 // export const metadata: Metadata = {
 //   title: "Ai resume builder",
@@ -25,6 +27,19 @@ export default function RootLayout({
         </header>
         <main className="pb-30 sm:pb-24">
           {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
+
           <Login />
         </main>
         <footer className="bg-white dark:bg-black/50 border-t border-slate-200 dark:border-slate-800 absolute bottom-0 w-full">

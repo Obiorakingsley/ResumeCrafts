@@ -16,16 +16,18 @@ import { useResumeStore } from "@/store/resumeStore";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
-import { auth } from "@/lib/config/firebase";
-
+import { auth, googleProvider } from "@/lib/config/firebase";
+import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Modal() {
-  const { resumeData, setResumeData, modal, setModal } = useResumeStore();
-  const { setLoading, loading } = useAuthStore();
+  const { modal, setModal } = useResumeStore();
+  const { setLoading, loading, user } = useAuthStore();
   const [isSignedUp, setIsSignedUp] = useState(true);
 
+  //Form details schema
   const schema = z.object({
     Name: z.string().min(4, "Full name must be at least 4 characters long"),
     email: z.string().email("Invalid email"),
@@ -42,7 +44,7 @@ export default function Modal() {
 
   const sendData = async (data: authT) => {
     if (isSignedUp) {
-      //Handle Sign in
+      //Handle Email and Password Sign in
       try {
         setLoading(true);
         const userCredential = await signInWithEmailAndPassword(
@@ -51,20 +53,21 @@ export default function Modal() {
           data.password
         );
         const user = userCredential.user;
+        alert("signed");
+        toast.success("Successfully signed in");
         setModal(false);
-        console.log("user signed in " + user);
       } catch (err: any) {
         if (
           err.code === "auth/invalid-credential" ||
           err.code === "auth/user-not-found"
         ) {
-          alert(`auth error ${err.message}`);
+          toast.error("there was an error");
         }
       } finally {
         setLoading(false);
       }
     } else {
-      //Handle Sign Up
+      //Handle Email and Password Sign Up
       try {
         setLoading(true);
         const newUser = await createUserWithEmailAndPassword(
@@ -72,9 +75,9 @@ export default function Modal() {
           data.email,
           data.password
         );
-        console.log("new user created " + newUser.user);
-        setModal(false);
+
         const user = newUser.user;
+        alert("signed Up successfully");
         setModal(false);
         console.log("user signed in " + user);
       } catch (err: any) {
@@ -90,6 +93,18 @@ export default function Modal() {
     }
   };
 
+  //Handle Google Sign IN
+  async function handleGoogleSignIn() {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      alert("successfully signed in");
+      setModal(false);
+    } catch (err: any) {
+      alert("an error occured");
+      console.log(err.message);
+    }
+  }
+
   return (
     <Dialog open={modal} onOpenChange={setModal}>
       <DialogContent className="dark:bg-[#080808] bg-slate-200 dark:text-white text-black border border-slate-700 rounded-xl p-6 sm:max-w-md w-[90%]">
@@ -104,10 +119,12 @@ export default function Modal() {
         {isSignedUp ? (
           // Handle Sign in
           <form onSubmit={handleSubmit(sendData)} className="grid gap-4 mt-4">
-            <div className="flex flex-col text-left">
-              <label htmlFor="email" className="mb-1 text-sm font-medium">
-                Email
-              </label>
+            {/* Email */}
+            <label
+              htmlFor="email"
+              className="mb-1 text-sm font-medium flex flex-col text-left gap-1"
+            >
+              Email
               <input
                 id="email"
                 type="email"
@@ -120,11 +137,14 @@ export default function Modal() {
                   {errors.email.message}
                 </span>
               )}
-            </div>
-            <div className="flex flex-col text-left">
-              <label htmlFor="password" className="mb-1 text-sm font-medium">
-                Password
-              </label>
+            </label>
+
+            {/* Password */}
+            <label
+              htmlFor="password"
+              className="mb-1 text-sm font-medium flex flex-col text-left gap-1"
+            >
+              Password
               <input
                 id="password"
                 type="password"
@@ -137,8 +157,11 @@ export default function Modal() {
                   {errors.password.message}
                 </span>
               )}
-            </div>
+            </label>
+
+            {/* Sign In Button */}
             <button
+              disabled={loading}
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2"
             >
@@ -147,12 +170,20 @@ export default function Modal() {
                   <span className="border-2 border-t-transparent border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
                 </div>
               ) : (
-                "Sign Up"
+                "Sign In"
               )}
             </button>
+
             <span className="text-center">or</span>
+
+            {/* //Google sign In */}
             <div className="flex items-center justify-center gap-4">
-              <div>
+              <div
+                onClick={() => {
+                  handleGoogleSignIn();
+                }}
+                className="cursor-pointer"
+              >
                 <img
                   src="/images/google.png"
                   alt="Google icon"
@@ -160,13 +191,17 @@ export default function Modal() {
                   width={25}
                 />
               </div>
-              <button onClick={() => {}} className="text-slate-50">
+              <button
+                type="button"
+                onClick={() => {}}
+                className="text-slate-50"
+              >
                 dont have an account?{" "}
                 <span
                   onClick={() => {
                     setIsSignedUp((prev) => !prev);
                   }}
-                  className="underline"
+                  className="underline cursor-pointer"
                 >
                   Sign Up
                 </span>
@@ -178,10 +213,12 @@ export default function Modal() {
           // Handle Sign up
           /////////////
           <form onSubmit={handleSubmit(sendData)} className="grid gap-4 mt-4">
-            <div className="flex flex-col text-left">
-              <label htmlFor="Name" className="mb-1 text-sm font-medium">
-                Name
-              </label>
+            {/* Name */}
+            <label
+              htmlFor="Name"
+              className="mb-1 text-sm font-medium flex flex-col text-left gap-1"
+            >
+              Name
               <input
                 id="Name"
                 type="text"
@@ -194,11 +231,14 @@ export default function Modal() {
                   {errors.Name.message}
                 </span>
               )}
-            </div>
-            <div className="flex flex-col text-left">
-              <label htmlFor="email" className="mb-1 text-sm font-medium">
-                Email
-              </label>
+            </label>
+
+            {/* Email */}
+            <label
+              htmlFor="email"
+              className="mb-1 text-sm font-medium flex flex-col text-left gap-1"
+            >
+              Email
               <input
                 id="email"
                 type="email"
@@ -211,11 +251,14 @@ export default function Modal() {
                   {errors.email.message}
                 </span>
               )}
-            </div>
-            <div className="flex flex-col text-left">
-              <label htmlFor="password" className="mb-1 text-sm font-medium">
-                Password
-              </label>
+            </label>
+
+            {/* Password */}
+            <label
+              htmlFor="password"
+              className="mb-1 text-sm font-medium flex flex-col gap-1 text-left"
+            >
+              Password
               <input
                 id="password"
                 type="password"
@@ -228,15 +271,32 @@ export default function Modal() {
                   {errors.password.message}
                 </span>
               )}
-            </div>
-            <Button
+            </label>
+
+            {/* Sign Up Button */}
+            <button
+              disabled={loading}
               type="submit"
-              text="Sign Up"
               className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2"
-            />
+            >
+              {loading ? (
+                <div className="relative m-auto w-6 h-6">
+                  <span className="border-2 border-t-transparent border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
+                </div>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+
             <span className="text-center">or</span>
+
+            {/* Google Sign In */}
             <div className="flex items-center justify-center gap-4">
-              <div>
+              <div
+                onClick={() => {
+                  handleGoogleSignIn();
+                }}
+              >
                 <img
                   src="/images/google.png"
                   alt="Google icon"

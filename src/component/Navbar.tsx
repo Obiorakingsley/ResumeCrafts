@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
 import { FaDollarSign, FaEllipsisV, FaSignInAlt, FaUser } from "react-icons/fa";
 import { FaFileLines } from "react-icons/fa6";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const Navbar = () => {
   const path = usePathname();

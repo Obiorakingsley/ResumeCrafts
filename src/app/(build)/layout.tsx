@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Navbar from "@/component/Navbar";
 import Login from "@/component/SignIn";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Ai resume builder",
@@ -22,6 +24,19 @@ export default function RootLayout({
         </header>
         <main className=" min-h-[80vh]">
           {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
+
           <Login />
         </main>
       </body>

@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Footer from "@/component/Footer";
 import Navbar from "@/component/Navbar";
-import Login from "@/component/Login";
+import Login from "@/component/SignIn";
+import { useResumeStore } from "@/store/resumeStore";
 
 // export const metadata: Metadata = {
 //   title: "Ai resume builder",

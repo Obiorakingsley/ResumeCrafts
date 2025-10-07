@@ -10,7 +10,7 @@ import { FaFileLines } from "react-icons/fa6";
 const Navbar = () => {
   const path = usePathname();
   const text = path === "/" ? "My Resume" : "New Resume";
-  const { resetResumeData } = useResumeStore();
+  const { resetResumeData, setModal } = useResumeStore();
   const [menu, setMenu] = useState(false);
 
   return (
@@ -33,12 +33,14 @@ const Navbar = () => {
             >
               <li>Pricing</li>
             </Link>
-            <Link
-              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-              href="/pricing"
+            <button
+              onClick={() => {
+                setModal(true);
+              }}
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors cursor-pointer"
             >
-              <li>Sign In</li>
-            </Link>
+              Sign In
+            </button>
           </ul>
         </nav>
 
@@ -75,14 +77,14 @@ const Navbar = () => {
           <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[70px] sm:hidden">
             <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
               <li
+                className="flex cursor-pointer items-center gap-2"
                 onClick={() => {
                   setMenu((prev) => !prev);
+                  setModal(true);
                 }}
               >
-                <Link className="flex items-center gap-0.5" href="/profile">
-                  <FaSignInAlt />
-                  Sign In
-                </Link>
+                <FaSignInAlt />
+                Sign In
               </li>
               <li
                 onClick={() => {

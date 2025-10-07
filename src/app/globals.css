@@ -58,21 +58,13 @@ body {
 .menu {
   background-color: var(--background);
   color: var(--color);
-  animation: menu 0.4s linear forwards;
+  animation: menu 0.2s linear forwards;
 }
 
 @keyframes menu {
   0% {
     right: -100px;
     opacity: 0;
-  }
-  50% {
-    right: -20px;
-    opacity: 0.5;
-  }
-  90% {
-    right: 10px;
-    opacity: 0.9;
   }
   100% {
     right: 0px;

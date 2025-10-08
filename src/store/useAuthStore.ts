@@ -6,15 +6,14 @@ type authState = {
   user: User | null;
   loading: boolean;
   setLoading: (data: boolean) => void;
+  setUser: (user: User | null) => void;
 };
 
 export const useAuthStore = create<authState>((set) => ({
   user: null,
-  loading: false,
-
-  setLoading: (data) => {
-    set(() => ({ loading: data }));
-  },
+  loading: true,
+  setLoading: (data) => set({ loading: data }),
+  setUser: (user) => set({ user }),
 }));
 
 onAuthStateChanged(auth, (user) => {

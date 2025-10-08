@@ -21,7 +21,7 @@ const page = () => {
   const formatProviderName = (id: string) => {
     switch (id) {
       case "password":
-        return "Email & Password";
+        return "Email";
       case "google.com":
         return (
           <span className="flex items-center gap-1">
@@ -71,10 +71,7 @@ const page = () => {
       <section className="dark:bg-black flex-wrap gap-4 flex items-start justify-between dark:text-slate-50 rounded-2xl shadow p-6 space-y-4">
         <div className="flex items-start gap-4">
           <img
-            src={
-              user?.photoURL ||
-              `https://ui-avatars.com/api/?name=${user?.displayName || "User"}`
-            }
+            src={user?.photoURL || "/images/user.png"}
             alt="Avatar"
             className="w-16 h-16 rounded-full object-cover border"
           />
@@ -86,12 +83,12 @@ const page = () => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="shadow-2xl border-none outline-none dark:bg-slate-300 bg-white rounded px-2 py-1 text-black"
+                  className="shadow-2xl border-none outline-none dark:bg-gray-900 dark:text-white bg-white rounded px-2 py-1 text-black"
                 />
 
                 <button
                   onClick={() => setEditingName(false)}
-                  className="text-gray-600 dark:text-slate-50"
+                  className="text-gray-600 dark:text-slate-50 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -103,7 +100,7 @@ const page = () => {
                 </h2>
                 <button
                   onClick={() => setEditingName(true)}
-                  className="text-sm text-indigo-700 hover:underline"
+                  className="text-sm text-indigo-700 cursor-pointer hover:underline"
                 >
                   Edit
                 </button>
@@ -117,12 +114,15 @@ const page = () => {
 
         {editingName && (
           <button
-            onClick={handleNameUpdate}
+            onClick={() => {
+              if (!name) return;
+              handleNameUpdate();
+            }}
             disabled={loading}
-            className="bg-indigo-600 text-white rounded place-content-end px-3 py-1"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded place-content-end px-3 py-1 min-w-12 min-h-6 cursor-pointer transition-colors"
           >
             {loading ? (
-              <div className="relative m-auto w-6 h-6">
+              <div className="relative m-auto w-5 h-5">
                 <span className="border-2 border-t-transparent border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
               </div>
             ) : (
@@ -138,23 +138,23 @@ const page = () => {
           Profile Details
         </h3>
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between text-sm">
             <span>Uid:</span>
             <span className="text-sm text-gray-400">{user?.uid}</span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between text-sm">
             <div className="text-sm">
               {formatProviderName(authProvider || "")}
             </div>
             <span className="text-sm text-gray-400">Connected</span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between text-sm">
             <span>Account Created:</span>
             <span className="text-sm text-gray-400">
               {user?.metadata.creationTime}
             </span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between text-sm">
             <span>Last Login:</span>
             <span className="text-sm text-gray-400">
               {user?.metadata.lastSignInTime}
@@ -167,7 +167,7 @@ const page = () => {
       <section className="dark:bg-black text-slate-50 rounded-2xl shadow p-6 space-y-3">
         <button
           onClick={handleSignOut}
-          className="w-full bg-indigo-500 rounded-lg py-2 hover:bg-indigo-600 transition-colors"
+          className="w-full bg-indigo-500 rounded-lg py-2 hover:bg-indigo-600 transition-colors cursor-pointer"
         >
           Sign Out
         </button>

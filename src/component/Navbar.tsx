@@ -60,20 +60,29 @@ const Navbar = () => {
         >
           {text}
         </button>
-
-        <Link className="hidden sm:block" href="/profile">
-          {user?.photoURL ? (
+        {/* Profile icon */}
+        <button
+          onClick={() => {
+            if (!user) {
+              return setModal(true);
+            } else {
+              router.push("/profile");
+            }
+          }}
+          className="hidden sm:block"
+        >
+          {
             <img
-              src={user.photoURL.toString()}
+              src={
+                user?.photoURL ? user?.photoURL.toString() : "/images/user.png"
+              }
               alt="profile pic"
               width={17}
               height={17}
-              className="size-8 rounded-full"
+              className="size-8 rounded-full cursor-pointer"
             />
-          ) : (
-            <FaUser size={20} />
-          )}
-        </Link>
+          }
+        </button>
         <div>
           <button
             onClick={() => {
@@ -91,16 +100,18 @@ const Navbar = () => {
       {menu && (
         <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[64px] sm:hidden">
           <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
-            <li
-              className="flex cursor-pointer items-center gap-2"
-              onClick={() => {
-                setMenu((prev) => !prev);
-                setModal(true);
-              }}
-            >
-              <FaSignInAlt />
-              Sign In
-            </li>
+            {!user && (
+              <li
+                className="flex cursor-pointer items-center gap-2"
+                onClick={() => {
+                  setMenu((prev) => !prev);
+                  setModal(true);
+                }}
+              >
+                <FaSignInAlt />
+                Sign In
+              </li>
+            )}
             <li
               onClick={() => {
                 setMenu((prev) => !prev);
@@ -121,14 +132,18 @@ const Navbar = () => {
               </Link>
             </li>
             <li
+              className="flex items-center gap-1.5"
               onClick={() => {
                 setMenu((prev) => !prev);
+                if (!user) {
+                  return setModal(true);
+                } else {
+                  router.push("/profile");
+                }
               }}
             >
-              <Link className="flex items-center gap-0.5" href="/profile">
-                <FaUser />
-                Profile
-              </Link>
+              <FaUser />
+              Profile
             </li>
           </ul>
         </nav>

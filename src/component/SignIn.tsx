@@ -30,22 +30,34 @@ export default function Modal() {
   const [isSignedUp, setIsSignedUp] = useState(true);
 
   //Form details schema
-  const schema = z.object({
-    Name: z.string().min(4, "Full name must be at least 4 characters long"),
+  const signInSchema = z.object({
     email: z.string().email("Invalid email"),
     password: z.string().min(6, "Password must be at least 6 characters"),
   });
 
-  type authT = z.infer<typeof schema>;
+  const signUpSchema = z.object({
+    Name: z
+      .string()
+      .min(4, "Full name must be at least 4 characters long")
+      .optional(),
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+  });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<authT>({ resolver: zodResolver(schema) });
+  type signUpType = z.infer<typeof signUpSchema>;
+  type signInType = z.infer<typeof signInSchema>;
 
-  const sendData = async (data: authT) => {
+  //Sign Up Form useForm hook
+  const signUpForm = useForm<signUpType>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  //Sign Up Form useForm hook
+  const signInForm = useForm<signInType>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const sendData = async (data: signUpType) => {
     if (isSignedUp) {
       //Handle Email and Password Sign in
       try {
@@ -57,7 +69,7 @@ export default function Modal() {
         );
         const user = userCredential.user;
         toast.success("Successfully signed in");
-        reset();
+        signInForm.reset();
         setModal(false);
       } catch (err: any) {
         err.code === "auth/invalid-credential"
@@ -85,7 +97,7 @@ export default function Modal() {
         console.log(user.displayName);
 
         await signOut(auth);
-        reset();
+        signUpForm.reset();
         setIsSignedUp(true);
       } catch (err: any) {
         err.code === "auth/invalid-credential"
@@ -131,7 +143,10 @@ export default function Modal() {
         </DialogHeader>
         {isSignedUp ? (
           // Handle Sign in
-          <form onSubmit={handleSubmit(sendData)} className="grid gap-4 mt-4">
+          <form
+            onSubmit={signInForm.handleSubmit(sendData)}
+            className="grid gap-4 mt-4"
+          >
             {/* Email */}
 
             <label
@@ -140,15 +155,16 @@ export default function Modal() {
             >
               Email
               <input
-                id="emai"
+                autoComplete="on"
+                id="email"
                 type="email"
                 placeholder="e.g. johndoe@email.com"
                 className="bg-transparent border border-slate-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                {...register("email")}
+                {...signInForm.register("email")}
               />
-              {errors.email && (
+              {signInForm.formState.errors.email && (
                 <span className="text-red-500 text-xs mt-1">
-                  {errors.email.message}
+                  {signInForm.formState.errors.email.message}
                 </span>
               )}
             </label>
@@ -164,11 +180,11 @@ export default function Modal() {
                 type="password"
                 placeholder="********"
                 className="bg-transparent border border-slate-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                {...register("password")}
+                {...signInForm.register("password")}
               />
-              {errors.password && (
+              {signInForm.formState.errors.password && (
                 <span className="text-red-500 text-xs mt-1">
-                  {errors.password.message}
+                  {signInForm.formState.errors.password.message}
                 </span>
               )}
             </label>
@@ -213,7 +229,7 @@ export default function Modal() {
                 dont have an account?{" "}
                 <span
                   onClick={() => {
-                    reset();
+                    signInForm.reset();
                     setIsSignedUp((prev) => !prev);
                   }}
                   className="underline cursor-pointer text-indigo-500"
@@ -227,7 +243,10 @@ export default function Modal() {
           /////////////
           // Handle Sign up
           /////////////
-          <form onSubmit={handleSubmit(sendData)} className="grid gap-4 mt-4">
+          <form
+            onSubmit={signUpForm.handleSubmit(sendData)}
+            className="grid gap-4 mt-4"
+          >
             {/* Name */}
             <div className="flex flex-col text-left gap-1">
               <label htmlFor="Name" className="mb-1 text-sm font-medium">
@@ -238,11 +257,11 @@ export default function Modal() {
                 type="text"
                 placeholder="e.g. John Doe"
                 className="bg-transparent border border-slate-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                {...register("Name")}
+                {...signUpForm.register("Name")}
               />
-              {errors.Name && (
+              {signUpForm.formState.errors.Name && (
                 <span className="text-red-500 text-xs mt-1">
-                  {errors.Name.message}
+                  {signUpForm.formState.errors.Name.message}
                 </span>
               )}
             </div>
@@ -258,11 +277,11 @@ export default function Modal() {
                 type="email"
                 placeholder="e.g. johndoe@email.com"
                 className="bg-transparent border border-slate-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                {...register("email")}
+                {...signUpForm.register("email")}
               />
-              {errors.email && (
+              {signUpForm.formState.errors.email && (
                 <span className="text-red-500 text-xs mt-1">
-                  {errors.email.message}
+                  {signUpForm.formState.errors.email.message}
                 </span>
               )}
             </label>
@@ -278,11 +297,11 @@ export default function Modal() {
                 type="password"
                 placeholder="********"
                 className="bg-transparent border border-slate-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                {...register("password")}
+                {...signUpForm.register("password")}
               />
-              {errors.password && (
+              {signUpForm.formState.errors.password && (
                 <span className="text-red-500 text-xs mt-1">
-                  {errors.password.message}
+                  {signUpForm.formState.errors.password.message}
                 </span>
               )}
             </label>
@@ -323,7 +342,7 @@ export default function Modal() {
                 dont have an account?{" "}
                 <span
                   onClick={() => {
-                    reset();
+                    signUpForm.reset();
                     setIsSignedUp((prev) => !prev);
                   }}
                   className="underline text-indigo-500 cursor-pointer"

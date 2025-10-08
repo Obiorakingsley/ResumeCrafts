@@ -77,7 +77,7 @@ const page = () => {
                   onClick={() => {
                     fetchData("modern");
                   }}
-                  className={` bg-indigo-500 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-500/90 transition-colors cursor-pointer ${
+                  className={` bg-indigo-600 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-700 transition-colors cursor-pointer ${
                     loading &&
                     "hover:cursor-not-allowed bg-indigo-950 hover:bg-indigo-900"
                   }`}
@@ -92,7 +92,7 @@ const page = () => {
                 </button>
 
                 <Link className="hidden lg:block" href="/templates/modern">
-                  <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                  <button className="bg-indigo-600 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-4 cursor-pointer">
                     Preview
                   </button>
                 </Link>
@@ -108,7 +108,7 @@ const page = () => {
           }}
           className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
         >
-          <span className="absolute right-0 top-0 text-indigo-500 p-4">
+          <span className="absolute right-0 top-0 text-indigo-600 p-4">
             {template === "classic" && <FaCircleCheck size={20} />}
           </span>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
@@ -127,7 +127,7 @@ const page = () => {
                   onClick={() => {
                     fetchData("classic");
                   }}
-                  className={` bg-indigo-500 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-500/90 transition-colors cursor-pointer ${
+                  className={` bg-indigo-600 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-700 transition-colors cursor-pointer ${
                     loading &&
                     "hover:cursor-not-allowed bg-indigo-950 hover:bg-indigo-900"
                   }`}
@@ -141,7 +141,7 @@ const page = () => {
                   )}
                 </button>
                 <Link className="hidden lg:block" href="/templates/classic">
-                  <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                  <button className="bg-indigo-600 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-4 cursor-pointer">
                     Preview
                   </button>
                 </Link>
@@ -157,7 +157,7 @@ const page = () => {
           }}
           className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
         >
-          <span className="absolute right-0 top-0 text-indigo-500 p-4">
+          <span className="absolute right-0 top-0 text-indigo-600 p-4">
             {template === "creative" && <FaCircleCheck size={20} />}
           </span>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
@@ -177,7 +177,7 @@ const page = () => {
                   onClick={() => {
                     fetchData("creative");
                   }}
-                  className={` bg-indigo-500 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-500/90 transition-colors cursor-pointer ${
+                  className={` bg-indigo-600 text-white font-bold text-sm py-2 h-9 w-35 rounded-lg text-center hover:bg-indigo-700 transition-colors cursor-pointer ${
                     loading &&
                     "hover:cursor-not-allowed bg-indigo-950 hover:bg-indigo-900"
                   }`}
@@ -191,7 +191,7 @@ const page = () => {
                   )}
                 </button>
                 <Link className="hidden lg:block" href="/templates/creative">
-                  <button className="bg-indigo-500 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-500/90 transition-colors ml-4 cursor-pointer">
+                  <button className="bg-indigo-600 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-4 cursor-pointer">
                     Preview
                   </button>
                 </Link>

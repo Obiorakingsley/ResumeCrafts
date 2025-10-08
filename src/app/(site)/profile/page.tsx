@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { updateProfile } from "firebase/auth";
+import { Span } from "next/dist/trace";
 
 const page = () => {
   const { user } = useAuthStore();
@@ -15,6 +16,32 @@ const page = () => {
   const [editingName, setEditingName] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const authProvider = user?.providerData[0]?.providerId;
+
+  const formatProviderName = (id: string) => {
+    switch (id) {
+      case "password":
+        return "Email & Password";
+      case "google.com":
+        return (
+          <span className="flex items-center gap-1">
+            <img
+              width={17}
+              height={17}
+              src="/images/google.png"
+              alt="google icon"
+            />
+            Google
+          </span>
+        );
+      case "facebook.com":
+        return "Facebook";
+      case "github.com":
+        return "GitHub";
+      default:
+        return id;
+    }
+  };
 
   const handleNameUpdate = async () => {
     if (!user) return;
@@ -31,10 +58,10 @@ const page = () => {
 
   function handleSignOut() {
     try {
-      signOut(auth);
       router.push("/");
+      signOut(auth);
     } catch (err) {
-      toast.error("there was an error");
+      toast.error("there was an error signing out");
     }
   }
 
@@ -107,14 +134,32 @@ const page = () => {
 
       {/* Profile Details */}
       <section className="dark:bg-black dark:text-slate-50 rounded-2xl shadow p-6 space-y-3">
-        <h3 className="text-lg font-semibold border-b pb-2">Profile Details</h3>
-        <div className="flex justify-between">
-          <span>Account Created:</span>
-          <span className="text-sm">{user?.metadata.creationTime}</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Last Login:</span>
-          <span className="text-sm">{user?.metadata.lastSignInTime}</span>
+        <h3 className="text-lg font-semibold border-b pb-2 dark:text-gray-300">
+          Profile Details
+        </h3>
+        <div className="flex flex-col gap-4">
+          <div className="flex justify-between">
+            <span>Uid:</span>
+            <span className="text-sm text-gray-400">{user?.uid}</span>
+          </div>
+          <div className="flex justify-between">
+            <div className="text-sm">
+              {formatProviderName(authProvider || "")}
+            </div>
+            <span className="text-sm text-gray-400">Connected</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Account Created:</span>
+            <span className="text-sm text-gray-400">
+              {user?.metadata.creationTime}
+            </span>
+          </div>
+          <div className="flex justify-between">
+            <span>Last Login:</span>
+            <span className="text-sm text-gray-400">
+              {user?.metadata.lastSignInTime}
+            </span>
+          </div>
         </div>
       </section>
 

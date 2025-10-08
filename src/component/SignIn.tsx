@@ -177,7 +177,7 @@ export default function Modal() {
             <button
               disabled={loading}
               type="submit"
-              className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2"
+              className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2 cursor-pointer"
             >
               {loading ? (
                 <div className="relative m-auto w-6 h-6">
@@ -208,7 +208,7 @@ export default function Modal() {
               <button
                 type="button"
                 onClick={() => {}}
-                className="text-slate-50"
+                className="dark:text-slate-50 text-black"
               >
                 dont have an account?{" "}
                 <span
@@ -216,7 +216,7 @@ export default function Modal() {
                     reset();
                     setIsSignedUp((prev) => !prev);
                   }}
-                  className="underline cursor-pointer"
+                  className="underline cursor-pointer text-indigo-500"
                 >
                   Sign Up
                 </span>
@@ -291,7 +291,7 @@ export default function Modal() {
             <button
               disabled={loading}
               type="submit"
-              className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2"
+              className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2 cursor-pointer"
             >
               {loading ? (
                 <div className="relative m-auto w-6 h-6">
@@ -307,6 +307,7 @@ export default function Modal() {
             {/* Google Sign In */}
             <div className="flex items-center justify-center gap-4">
               <div
+                className="cursor-pointer"
                 onClick={() => {
                   handleGoogleSignIn();
                 }}
@@ -318,14 +319,14 @@ export default function Modal() {
                   width={25}
                 />
               </div>
-              <button className="text-slate-50">
+              <button className="dark:text-slate-50 text-black">
                 dont have an account?{" "}
                 <span
                   onClick={() => {
                     reset();
                     setIsSignedUp((prev) => !prev);
                   }}
-                  className="underline"
+                  className="underline text-indigo-500 cursor-pointer"
                 >
                   Sign In
                 </span>

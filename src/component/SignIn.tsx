@@ -8,15 +8,17 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import Button from "@/app/(build)/_Utils/Button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
+
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/config/firebase";
 import { toast } from "react-toastify";
@@ -40,6 +42,7 @@ export default function Modal() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<authT>({ resolver: zodResolver(schema) });
 
   const sendData = async (data: authT) => {
@@ -53,16 +56,17 @@ export default function Modal() {
           data.password
         );
         const user = userCredential.user;
-        alert("signed");
         toast.success("Successfully signed in");
+        reset();
         setModal(false);
       } catch (err: any) {
-        if (
-          err.code === "auth/invalid-credential" ||
-          err.code === "auth/user-not-found"
-        ) {
-          toast.error("there was an error");
-        }
+        err.code === "auth/invalid-credential"
+          ? toast.error("Invalid Email or Password")
+          : err.code === "auth/user-not-found"
+          ? toast.error("User not found")
+          : err.code === "auth/network-request-failed"
+          ? toast.error("Network connection error")
+          : toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -77,16 +81,20 @@ export default function Modal() {
         );
 
         const user = newUser.user;
-        alert("signed Up successfully");
-        setModal(false);
-        console.log("user signed in " + user);
+        await updateProfile(user, { displayName: data.Name });
+        console.log(user.displayName);
+
+        await signOut(auth);
+        reset();
+        setIsSignedUp(true);
       } catch (err: any) {
-        if (
-          err.code === "auth/invalid-credential" ||
-          err.code === "auth/user-not-found"
-        ) {
-          alert(`auth error ${err.message}`);
-        }
+        err.code === "auth/invalid-credential"
+          ? toast.error("Invalid Email or Password")
+          : err.code === "auth/user-not-found"
+          ? toast.error("User not found")
+          : err.code === "auth/network-request-failed"
+          ? toast.error("Network connection error")
+          : toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -97,11 +105,16 @@ export default function Modal() {
   async function handleGoogleSignIn() {
     try {
       await signInWithPopup(auth, googleProvider);
-      alert("successfully signed in");
+      toast.success("successfully signed in");
       setModal(false);
     } catch (err: any) {
-      alert("an error occured");
-      console.log(err.message);
+      err.code === "auth/invalid-credential"
+        ? toast.error("Invalid Email or Password")
+        : err.code === "auth/user-not-found"
+        ? toast.error("User not found")
+        : err.code === "auth/internal-error"
+        ? toast.error("Network connection error")
+        : toast.error(err.message);
     }
   }
 
@@ -113,20 +126,21 @@ export default function Modal() {
             {isSignedUp ? "Sign In" : "Sign Up"}
           </DialogTitle>
           <DialogDescription className="dark:text-slate-400 text-slate-600 text-md">
-            Welcome back! Please sign in to continue.
+            {isSignedUp && "Welcome back! Please sign in to continue."}
           </DialogDescription>
         </DialogHeader>
         {isSignedUp ? (
           // Handle Sign in
           <form onSubmit={handleSubmit(sendData)} className="grid gap-4 mt-4">
             {/* Email */}
+
             <label
-              htmlFor="email"
+              htmlFor="emai"
               className="mb-1 text-sm font-medium flex flex-col text-left gap-1"
             >
               Email
               <input
-                id="email"
+                id="emai"
                 type="email"
                 placeholder="e.g. johndoe@email.com"
                 className="bg-transparent border border-slate-600 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
@@ -199,6 +213,7 @@ export default function Modal() {
                 dont have an account?{" "}
                 <span
                   onClick={() => {
+                    reset();
                     setIsSignedUp((prev) => !prev);
                   }}
                   className="underline cursor-pointer"
@@ -214,11 +229,10 @@ export default function Modal() {
           /////////////
           <form onSubmit={handleSubmit(sendData)} className="grid gap-4 mt-4">
             {/* Name */}
-            <label
-              htmlFor="Name"
-              className="mb-1 text-sm font-medium flex flex-col text-left gap-1"
-            >
-              Name
+            <div className="flex flex-col text-left gap-1">
+              <label htmlFor="Name" className="mb-1 text-sm font-medium">
+                Name
+              </label>
               <input
                 id="Name"
                 type="text"
@@ -231,7 +245,7 @@ export default function Modal() {
                   {errors.Name.message}
                 </span>
               )}
-            </label>
+            </div>
 
             {/* Email */}
             <label
@@ -308,6 +322,7 @@ export default function Modal() {
                 dont have an account?{" "}
                 <span
                   onClick={() => {
+                    reset();
                     setIsSignedUp((prev) => !prev);
                   }}
                   className="underline"

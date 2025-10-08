@@ -39,7 +39,6 @@ export default function RootLayout({
             pauseOnHover
             theme="colored"
           />
-
           <Login />
         </main>
         <footer className="bg-white dark:bg-black/50 border-t border-slate-200 dark:border-slate-800 absolute bottom-0 w-full">

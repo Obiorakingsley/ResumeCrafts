@@ -4,6 +4,7 @@ const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
 // @ts-ignore
 pdfjsLib.GlobalWorkerOptions.workerSrc = require("pdfjs-dist/legacy/build/pdf.worker.js");
 const mammoth = require("mammoth");
+import { toast } from "react-toastify";
 
 //Post Request
 export async function POST(req: Request) {
@@ -21,7 +22,7 @@ export async function POST(req: Request) {
 
     let textContent = "";
 
-//File type checking
+    //File type checking
     if (fileName.endsWith(".pdf")) {
       textContent = await extractTextFromPDF(buffer);
     } else if (fileName.endsWith(".docx")) {
@@ -48,22 +49,30 @@ export async function POST(req: Request) {
 
 // Extract text from PDF using pdf.js
 async function extractTextFromPDF(buffer: Buffer): Promise<string> {
-  const pdf = await pdfjsLib.getDocument({
-    data: new Uint8Array(buffer.buffer),
-  }).promise;
+  try {
+    const pdf = await pdfjsLib.getDocument({
+      data: new Uint8Array(buffer.buffer),
+    }).promise;
 
-  let text = "";
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    text += content.items.map((item: any) => item.str).join(" ") + "\n";
+    let text = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map((item: any) => item.str).join(" ") + "\n";
+    }
+
+    return text.replace(/\s+/g, " ").trim();
+  } catch (err: any) {
+    return err.message;
   }
-
-  return text.trim();
 }
 
 // Extract text from DOCX using mammoth
 async function extractTextFromDocx(buffer: Buffer): Promise<string> {
-  const result = await mammoth.extractRawText({ buffer });
-  return result.value.trim();
+  try {
+    const result = await mammoth.extractRawText({ buffer });
+    return result.value.replace(/\s+/g, " ").trim();
+  } catch (err: any) {
+    return err.message;
+  }
 }

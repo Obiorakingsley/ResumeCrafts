@@ -12,9 +12,9 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const path = usePathname();
   const text = path === "/" ? "My Resume" : "New Resume";
-  const { resetResumeData, setModal } = useResumeStore();
+  const { resetResumeData } = useResumeStore();
   const [menu, setMenu] = useState(false);
-  const { user } = useAuthStore();
+  const { user, setModal } = useAuthStore();
   const router = useRouter();
 
   return (
@@ -52,6 +52,9 @@ const Navbar = () => {
 
         <button
           onClick={() => {
+            if (!user) {
+              return setModal(true);
+            }
             resetResumeData();
             router.push(path === "/" ? "/resume" : "/build");
           }}

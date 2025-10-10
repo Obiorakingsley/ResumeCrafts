@@ -23,10 +23,11 @@ import {
 import { auth, googleProvider } from "@/lib/config/firebase";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 export default function Modal() {
-  const { modal, setModal } = useResumeStore();
-  const { setLoading, loading, user } = useAuthStore();
+  const router = useRouter();
+  const { setLoading, loading, user, modal, setModal } = useAuthStore();
   const [isSignedUp, setIsSignedUp] = useState(true);
 
   //Form details schema
@@ -67,7 +68,15 @@ export default function Modal() {
           data.email,
           data.password
         );
-        const user = userCredential.user;
+        const token = await userCredential.user.getIdToken();
+
+        // Send token to server to set cookie
+        await fetch("/api/cookie", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        });
+
         toast.success("Successfully signed in");
         signInForm.reset();
         setModal(false);
@@ -97,6 +106,8 @@ export default function Modal() {
         console.log(user.displayName);
 
         await signOut(auth);
+        await fetch("/api/logout", { method: "POST" });
+
         signUpForm.reset();
         setIsSignedUp(true);
       } catch (err: any) {
@@ -116,7 +127,16 @@ export default function Modal() {
   //Handle Google Sign IN
   async function handleGoogleSignIn() {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const userCred = await signInWithPopup(auth, googleProvider);
+
+      const token = userCred.user.getIdToken();
+
+      // Send token to server to set cookie
+      await fetch("/api/cookie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
       toast.success("successfully signed in");
       setModal(false);
     } catch (err: any) {
@@ -230,6 +250,7 @@ export default function Modal() {
                 <span
                   onClick={() => {
                     signInForm.reset();
+                    router.refresh();
                     setIsSignedUp((prev) => !prev);
                   }}
                   className="underline cursor-pointer text-indigo-500"
@@ -343,6 +364,7 @@ export default function Modal() {
                 <span
                   onClick={() => {
                     signUpForm.reset();
+                    router.refresh();
                     setIsSignedUp((prev) => !prev);
                   }}
                   className="underline text-indigo-500 cursor-pointer"

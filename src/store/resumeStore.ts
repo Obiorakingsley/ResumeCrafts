@@ -7,8 +7,7 @@ type resume = {
   template: string;
   setTemplate: (data: string) => void;
   resumeData: ResumeData;
-  modal: boolean;
-  setModal: (data: boolean) => void;
+
   setResumeData: (data: Partial<ResumeData>) => void;
   resetResumeData: () => void;
 };
@@ -18,7 +17,6 @@ export const useResumeStore = create(
     (set) => ({
       resumeData: {},
       template: "",
-      modal: false,
 
       //Set store
       setResumeData: (data) => {
@@ -27,10 +25,6 @@ export const useResumeStore = create(
       //Set template
       setTemplate: (data: string) => {
         set(() => ({ template: data }));
-      },
-
-      setModal: (data: boolean) => {
-        set(() => ({ modal: data }));
       },
 
       //Reset store

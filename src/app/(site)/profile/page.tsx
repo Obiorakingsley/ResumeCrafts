@@ -48,6 +48,7 @@ const page = () => {
     setLoading(true);
     try {
       await updateProfile(user, { displayName: name });
+      toast.success("Name updated successfully");
       setEditingName(false);
     } catch (err) {
       toast.error("Error updating name:");
@@ -56,10 +57,12 @@ const page = () => {
     }
   };
 
-  function handleSignOut() {
+  async function handleSignOut() {
     try {
       router.push("/");
-      signOut(auth);
+      toast.success("successfully signed out");
+      await signOut(auth);
+      await fetch("/api/logout", { method: "POST" });
     } catch (err) {
       toast.error("there was an error signing out");
     }

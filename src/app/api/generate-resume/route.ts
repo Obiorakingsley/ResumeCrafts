@@ -17,22 +17,28 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const prompt = `You are a professional resume writer.  
+    // -  Do NOT create or guess content for missing sections (e.g., projects).
+
+    const prompt = `You are a professional resume parser and formatter.  
 Based on the information provided below, do the following:
+
 1. Correct any spelling or formatting errors.
 2. Complete or improve the summary section so that it matches the rest of the resume.
-3. Format the entire resume into a structured JSON object following the exact schema below.
-4. Do not include any explanations, markdown, code fences, or text outside the JSON object. 
+3. Format the entire resume into a structured JSON object using the schema below **as a reference**, but:
+   -  Only include sections that actually exist in the user's data.
+  
+   -  Omit any key whose value would be an empty string, empty object, or empty array.
+4. Do not include any explanations, markdown, code fences, or text outside the JSON object.
 5. Return ONLY valid JSON.
 
-Schema:
+Schema (for reference only):
 {
   "fullName": "...",
   "email": "...",
   "phone": "...",
   "linkedIn": "...",
   "website": "...",
-  "location": "..."
+  "location": "...",
   "summary": "...",
   "skills": [
     "skill1",
@@ -72,10 +78,10 @@ Schema:
 
 User data:
 ${JSON.stringify(body)}
+`;
 
-  `;
     const completion = await openai.chat.completions.create({
-      model: "deepseek/deepseek-chat-v3.1:free" /*"deepseek/deepseek-r1:free"*/,
+      model: "openai/gpt-oss-20b:free" /*"deepseek/deepseek-r1:free"*/,
       messages: [
         {
           role: "user",

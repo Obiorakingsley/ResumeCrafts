@@ -1,8 +1,10 @@
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import { cookies } from "next/headers";
+import { adminAuth } from "@/lib/config/firebaseAdmin";
 
-//Query Openai
+// Call OpenAI
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
   defaultHeaders: {
@@ -12,13 +14,42 @@ const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
 
-//Post request
 export async function POST(req: NextRequest) {
   try {
+    //Auth cookie
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+
+    if (!token) {
+      return NextResponse.json(
+        { error: "Unauthorized,no token found" },
+        { status: 401 }
+      );
+    }
+
+    // verify token
+    let user;
+    try {
+      user = await adminAuth.verifyIdToken(token);
+    } catch (err) {
+      return NextResponse.json(
+        { error: "Unauthorized, invalid token" },
+        { status: 401 }
+      );
+    }
+    if (!user) {
+      return NextResponse.json(
+        { error: "Unauthorized, failed to verify user" },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
+    if (!body || Object.keys(body).length === 0) {
+      return NextResponse.json({ error: "missing user data" }, { status: 400 });
+    }
 
-    // -  Do NOT create or guess content for missing sections (e.g., projects).
-
+    //prompt
     const prompt = `You are a professional resume parser and formatter.  
 Based on the information provided below, do the following:
 
@@ -80,32 +111,59 @@ User data:
 ${JSON.stringify(body)}
 `;
 
-    const completion = await openai.chat.completions.create({
-      model: "openai/gpt-oss-20b:free" /*"deepseek/deepseek-r1:free"*/,
-      messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-    });
-
-    //Format response using REGEX
-    const raw = completion.choices[0].message?.content || "";
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    let json = {};
-
-    if (jsonMatch) {
-      try {
-        json = JSON.parse(jsonMatch[0]);
-      } catch (e) {
-        console.error("Failed to parse AI JSON:", e, raw);
-      }
+    let completion;
+    try {
+      completion = await openai.chat.completions.create({
+        model: "openai/gpt-oss-20b:free",
+        messages: [{ role: "user", content: prompt }],
+      });
+    } catch (err: any) {
+      return NextResponse.json(
+        { error: "AI service error", details: err?.message || String(err) },
+        { status: 502 }
+      );
     }
 
-    return NextResponse.json(json);
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({ error: "faild to fetch" }, { status: 500 });
+    const raw = completion?.choices?.[0]?.message?.content ?? "";
+    if (!raw) {
+      return NextResponse.json(
+        { error: "AI returned empty response" },
+        { status: 502 }
+      );
+    }
+
+    // format using REGEX
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      return NextResponse.json(
+        { error: "No JSON data found in AI response", raw },
+        { status: 422 }
+      );
+    }
+
+    // Parse JSON
+    let parsed: any = null;
+    try {
+      parsed = JSON.parse(jsonMatch[0]);
+    } catch (parseErr: any) {
+      return NextResponse.json(
+        {
+          error: "Failed to parse AI JSON",
+          message: parseErr.message,
+          raw: jsonMatch[0].slice(0, 2000),
+        },
+        { status: 422 }
+      );
+    }
+
+    return NextResponse.json(parsed);
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: error?.message || String(error),
+      },
+      { status: 500 }
+    );
   }
 }

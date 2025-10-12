@@ -1,4 +1,10 @@
 import admin from "firebase-admin";
+import fetch from "node-fetch";
+
+if (!globalThis.fetch) {
+  // @ts-ignore
+  globalThis.fetch = fetch;
+}
 
 if (!admin.apps.length) {
   admin.initializeApp({

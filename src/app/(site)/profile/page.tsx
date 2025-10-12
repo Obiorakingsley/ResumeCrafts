@@ -1,17 +1,18 @@
 "use client";
-import React from "react";
+import React, { use, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/config/firebase";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getUserProfile, updateUserProfile } from "@/store/firestore";
 
 import { updateProfile } from "firebase/auth";
-import { Span } from "next/dist/trace";
+import { redirect } from "next/navigation";
 
 const page = () => {
-  const { user } = useAuthStore();
+  const { user, profile, loadProfile } = useAuthStore();
   const [name, setName] = useState("");
   const [editingName, setEditingName] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,6 +51,7 @@ const page = () => {
       await updateProfile(user, { displayName: name });
       toast.success("Name updated successfully");
       setEditingName(false);
+      await updateUserProfile(user.uid, { name });
     } catch (err) {
       toast.error("Error updating name:");
     } finally {
@@ -60,8 +62,8 @@ const page = () => {
   async function handleSignOut() {
     try {
       router.push("/");
-      toast.success("successfully signed out");
       await signOut(auth);
+      toast.success("successfully signed out");
       await fetch("/api/logout", { method: "POST" });
     } catch (err) {
       toast.error("there was an error signing out");
@@ -150,6 +152,10 @@ const page = () => {
               {formatProviderName(authProvider || "")}
             </div>
             <span className="text-sm text-gray-400">Connected</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span>Subscription:</span>
+            <span className="text-sm text-gray-400">{profile?.plan}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span>Account Created:</span>

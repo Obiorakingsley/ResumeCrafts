@@ -70,8 +70,8 @@ export default function UploadResume() {
         ) : file ? (
           <p className="text-xs sm:text-sm text-white flex items-center gap-2 m-auto text-center">
             <FaFile size={26} />{" "}
-            <span className="font-semibold">
-              {file.name.substring(0, 15) + "..."}
+            <span className="font-semibold text-sm">
+              {file.name.substring(0, 10) + "..."}
             </span>
           </p>
         ) : (

@@ -20,3 +20,5 @@ declare module "mammoth" {
     ignoreEmptyParagraphs?: boolean;
   }
 }
+
+declare module "node-fetch";

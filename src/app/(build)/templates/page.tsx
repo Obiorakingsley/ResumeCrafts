@@ -5,14 +5,23 @@ import { useResumeStore } from "@/store/resumeStore";
 
 import { FaCircleCheck } from "react-icons/fa6";
 import { useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
+import { toast } from "react-toastify";
 
 const page = () => {
   const { resumeData, setResumeData, template, setTemplate } = useResumeStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { user, setModal } = useAuthStore();
 
   //Make Request to Openai
   async function fetchData(temp: string) {
+    if (!user) {
+      return setModal(true);
+    }
+    if (!resumeData || Object.keys(resumeData).length === 0) {
+      return toast.warn("Please fill out your resume.");
+    }
     setLoading(true);
     try {
       const res = await fetch(`/api/generate-resume`, {

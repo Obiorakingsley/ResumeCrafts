@@ -12,6 +12,11 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
+import {
+  createUserProfile,
+  getUserProfile,
+  updateUserProfile,
+} from "@/store/firestore";
 
 import {
   signInWithEmailAndPassword,
@@ -27,7 +32,8 @@ import { useRouter } from "next/navigation";
 
 export default function Modal() {
   const router = useRouter();
-  const { setLoading, loading, user, modal, setModal } = useAuthStore();
+  const { setLoading, loading, user, modal, setModal, profile, loadProfile } =
+    useAuthStore();
   const [isSignedUp, setIsSignedUp] = useState(true);
 
   //Form details schema
@@ -68,6 +74,7 @@ export default function Modal() {
           data.email,
           data.password
         );
+
         const token = await userCredential.user.getIdToken();
 
         // Send token to server to set cookie
@@ -100,10 +107,11 @@ export default function Modal() {
           data.email,
           data.password
         );
+        await createUserProfile(newUser.user);
 
         const user = newUser.user;
         await updateProfile(user, { displayName: data.Name });
-        console.log(user.displayName);
+        await updateUserProfile(user.uid, { name: data.Name });
 
         await signOut(auth);
         await fetch("/api/logout", { method: "POST" });
@@ -128,8 +136,10 @@ export default function Modal() {
   async function handleGoogleSignIn() {
     try {
       const userCred = await signInWithPopup(auth, googleProvider);
+      await createUserProfile(userCred.user);
 
-      const token = userCred.user.getIdToken();
+      const token = await userCred.user.getIdToken();
+      console.log(token);
 
       // Send token to server to set cookie
       await fetch("/api/cookie", {
@@ -137,6 +147,7 @@ export default function Modal() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
       });
+
       toast.success("successfully signed in");
       setModal(false);
     } catch (err: any) {
@@ -147,6 +158,7 @@ export default function Modal() {
         : err.code === "auth/internal-error"
         ? toast.error("Network connection error")
         : toast.error(err.message);
+      console.log(err.message);
     }
   }
 

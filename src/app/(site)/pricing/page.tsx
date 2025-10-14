@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Check, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/store/useAuthStore";
+import Payment from "@/component/Payment";
 
 type BillingCycle = "monthly" | "yearly";
 
@@ -110,7 +112,7 @@ function PricingCard({
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
-
+  const store = useAuthStore.getState();
   return (
     <div className="pricing min-h-screen py-16 px-4 bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Header */}
@@ -122,6 +124,7 @@ export default function PricingPage() {
           Upgrade anytime. Start free, scale when you're ready
         </p>
       </div>
+      <Payment email="kingsleyobiora527@gmail.com" />
 
       {/* Billing Toggle */}
       <div className="flex justify-center mb-10">
@@ -156,6 +159,7 @@ export default function PricingPage() {
       </div>
 
       {/* Pricing Cards */}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         <PricingCard
           title="Free"
@@ -171,8 +175,10 @@ export default function PricingPage() {
             "Custom branding",
             "Multiple resumes",
           ]}
-          buttonText="Current Plan"
-          disabledButton
+          buttonText={
+            store.profile?.plan === "free" ? "Current Plan" : "Free plan"
+          }
+          disabledButton={store.profile?.plan === "free"}
         />
 
         <PricingCard
@@ -193,7 +199,12 @@ export default function PricingPage() {
             "Multiple resume saves",
             "Priority support",
           ]}
-          buttonText={`Upgrade to Pro (${billingCycle})`}
+          buttonText={
+            store.profile?.plan === "pro"
+              ? "Current Plan"
+              : `Upgrade to Pro (${billingCycle})`
+          }
+          disabledButton={store.profile?.plan === "pro"}
           highlight
         />
 
@@ -207,7 +218,12 @@ export default function PricingPage() {
             "Future updates included",
             "Early adopter badge",
           ]}
-          buttonText="Buy Lifetime Deal"
+          buttonText={
+            store.profile?.plan === "lifetime"
+              ? "Current Plan"
+              : "Buy Lifetime Deal"
+          }
+          disabledButton={store.profile?.plan === "lifetime"}
         />
       </div>
     </div>

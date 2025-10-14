@@ -6,31 +6,12 @@ import { useAuthStore } from "@/store/useAuthStore";
 const page = () => {
   const { profile, resumes, loading } = useAuthStore();
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   try {
-  //     async function fetchResumes() {
-  //       if (auth.currentUser) {
-  //         const resume = await getUserResumes(auth.currentUser?.uid);
-  //         loadResumes({ resume });
-  //         toast.success("Resumes loaded");
-  //       }
-  //     }
-  //     fetchResumes();
-  //   } catch (err: any) {
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [user, loadResumes]);
-
   return (
     // List of Completed Resume
     <>
       {!loading ? (
         <section className=" p-4 pb-12 min-w-full">
-          <h2 className="text-2xl sm:text-3xl mb-16 font-semibold">
-            My Resume
-          </h2>
+          <h2 className="text-lg sm:text-xl mb-16 font-semibold">My Resume</h2>
           <div className="flex flex-wrap gap-8 justify-center sm:justify-start w-full">
             {resumes.map((res: any) => {
               return (

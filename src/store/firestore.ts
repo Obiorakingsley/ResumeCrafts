@@ -11,7 +11,6 @@ import {
   query,
   where,
   getCountFromServer,
-  CollectionReference,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useAuthStore } from "./useAuthStore";
@@ -35,7 +34,8 @@ export async function createUserProfile(user: any) {
 
     console.log("User profile created:", user.uid);
   } catch (err: any) {
-    console.error("Error creating user profile:", err.message);
+    toast.error("Error creating user profile:");
+    return null;
   }
 }
 
@@ -47,9 +47,8 @@ export async function updateUserProfile(uid: string, newData: object) {
       ...newData,
       updatedAt: serverTimestamp(),
     });
-    console.log("User profile updated:", uid);
+    toast.success("User profile updated:");
   } catch (err: any) {
-    console.error("Error updating user profile:", err.message);
     toast.error("Failed to update profile");
   }
 }
@@ -107,6 +106,7 @@ export async function saveUserResume(
     toast.success("Saved");
   } catch (err: any) {
     toast.error("Failed to save resume");
+    return null;
   }
 }
 
@@ -122,10 +122,11 @@ export async function updateResume(
       data: newData,
       updatedAt: serverTimestamp(),
     });
-    console.log("Resume updated:", resumeId);
   } catch (err: any) {
-    console.error("Error updating resume:", err.message);
-    toast.error("Failed to update resume");
+    err.message === "Failed to get document because the client is offline."
+      ? toast.error("Pls check your neteork connection")
+      : toast.error("Failed to update resume");
+    return null;
   }
 }
 
@@ -137,8 +138,9 @@ export async function getUserProfile(uid: string) {
     const snap = await getDoc(userRef);
     return snap.exists() ? { uid, ...snap.data() } : null;
   } catch (err: any) {
-    console.error("Error fetching profile:", err.message);
-    toast.error("Failed to fetch profile");
+    err.message === "Failed to get document because the client is offline."
+      ? toast.error("Pls check your neteork connection")
+      : toast.error("There was an error, pls refresh");
     return null;
   }
 }
@@ -151,8 +153,19 @@ export async function getUserResumes(uid: string) {
     const snapshot = await getDocs(resumeRef);
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (err: any) {
-    console.error("Error fetching resumes:", err.message);
-    toast.error("Failed to fetch resumes");
+    err.message === "Failed to get document because the client is offline."
+      ? toast.error("Pls check your neteork connection")
+      : toast.error("Failed to fetch resumes");
     return [];
   }
+}
+
+// Save Payment Info to firestore
+
+export async function savePayment(uid: string, paymentData: any) {
+  const ref = doc(db, "users", uid, "payments", paymentData.reference);
+  await setDoc(ref, {
+    ...paymentData,
+    verifiedAt: serverTimestamp(),
+  });
 }

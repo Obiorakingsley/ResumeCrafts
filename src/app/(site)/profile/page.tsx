@@ -61,12 +61,15 @@ const page = () => {
 
   async function handleSignOut() {
     try {
+      setLoading(true);
       router.push("/");
       await signOut(auth);
       toast.success("successfully signed out");
       await fetch("/api/logout", { method: "POST" });
     } catch (err) {
       toast.error("there was an error signing out");
+    } finally {
+      setLoading(false);
     }
   }
 

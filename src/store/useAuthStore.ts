@@ -5,7 +5,7 @@ import { getUserProfile, getUserResumes } from "@/store/firestore";
 
 type AuthState = {
   user: User | null;
-  profile: any;
+  profile: any | "";
   resumes: any[];
   loading: boolean;
   modal: boolean;
@@ -19,9 +19,9 @@ type AuthState = {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  profile: null,
+  profile: "",
   resumes: [],
-  loading: true,
+  loading: false,
   modal: false,
 
   setLoading: (data) => set({ loading: data }),

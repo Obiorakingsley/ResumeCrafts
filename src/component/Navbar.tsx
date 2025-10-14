@@ -22,33 +22,40 @@ const Navbar = () => {
       <Link href="/">
         <h1 className="text-xl sm:text-2xl font-bold">ResumeCraft</h1>
       </Link>
+
       <div className="flex items-center gap-2">
-        <nav className="hidden sm:block">
-          <ul className="list-none flex items-center gap-4 justify-between max-w-80">
-            <Link
-              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-              href="/templates"
-            >
-              <li>Template</li>
-            </Link>
-            <Link
-              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-              href="/pricing"
-            >
-              <li>Pricing</li>
-            </Link>
-            {!user && (
-              <button
-                onClick={() => {
-                  setModal(true);
-                }}
-                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors cursor-pointer"
+        {useAuthStore.getState().loading ? (
+          <div className="relative hidden sm:block mr-6 w-4 h-4">
+            <span className="border-2 border-t-transparent border-slate-500 dark:border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
+          </div>
+        ) : (
+          <nav className="hidden sm:block">
+            <ul className="list-none flex items-center gap-4 justify-between max-w-80">
+              <Link
+                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+                href="/templates"
               >
-                Sign In
-              </button>
-            )}
-          </ul>
-        </nav>
+                <li>Template</li>
+              </Link>
+              <Link
+                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+                href="/pricing"
+              >
+                <li>Pricing</li>
+              </Link>
+              {!user && (
+                <button
+                  onClick={() => {
+                    setModal(true);
+                  }}
+                  className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  Sign In
+                </button>
+              )}
+            </ul>
+          </nav>
+        )}
 
         <button
           onClick={() => {
@@ -100,6 +107,7 @@ const Navbar = () => {
 
         {/* Mobile navigation */}
       </div>
+
       {menu && (
         <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[64px] sm:hidden">
           <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">

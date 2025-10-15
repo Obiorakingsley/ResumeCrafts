@@ -102,12 +102,20 @@ export default function PreviewPage({
 
       {/* Template Preview */}
       <div className="border p-4 rounded bg-white">
-        {selected === "modern" && <Modern data={resumeData} />}
+        {selected === "modern" && (
+          <Modern
+            data={Object.keys(resumeData).length ? resumeData : dummyData}
+          />
+        )}
         {selected === "classic" && (
-          <Classic data={resumeData.fullName ? resumeData : dummyData} />
+          <Classic
+            data={Object.keys(resumeData).length ? resumeData : dummyData}
+          />
         )}
         {selected === "creative" && (
-          <Creative data={resumeData.fullName ? resumeData : dummyData} />
+          <Creative
+            data={Object.keys(resumeData).length ? resumeData : dummyData}
+          />
         )}
       </div>
     </section>

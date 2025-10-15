@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getUserProfile, updateUserProfile } from "@/store/firestore";
+import Loading from "@/component/load";
 
 import { updateProfile } from "firebase/auth";
 import { redirect } from "next/navigation";
@@ -73,7 +74,11 @@ const page = () => {
     }
   }
 
-  return (
+  return useAuthStore.getState().loading ? (
+    <div className="h-[80vh] flex flex-col justify-center">
+      <Loading width={12} height={12} />
+    </div>
+  ) : (
     <div className="max-w-3xl mx-auto py-8 px-4 space-y-8">
       {/* Profile Section */}
       <section className="dark:bg-black flex-wrap gap-4 flex items-start justify-between dark:text-slate-50 rounded-2xl shadow p-6 space-y-4">
@@ -160,6 +165,14 @@ const page = () => {
             <span>Subscription:</span>
             <span className="text-sm text-gray-400">{profile?.plan}</span>
           </div>
+          {profile?.billingCycle && (
+            <div className="flex justify-between text-sm">
+              <span>BillingCycle:</span>
+              <span className="text-sm text-gray-400">
+                {profile?.billingCycle}
+              </span>
+            </div>
+          )}
           <div className="flex justify-between text-sm">
             <span>Account Created:</span>
             <span className="text-sm text-gray-400">

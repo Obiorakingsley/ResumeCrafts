@@ -1,51 +1,105 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useAuthStore } from "@/store/useAuthStore";
+import { auth } from "@/lib/config/firebase";
+import { deleteResume } from "@/store/firestore";
+import { toast } from "react-toastify";
+import { getUserResumes } from "@/store/firestore";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { profile, resumes, loading } = useAuthStore();
+  const user = auth.currentUser;
+  const router = useRouter();
+  const [resume, setResume] = useState(resumes || []);
+
+  useEffect(() => {
+    async function updateUi() {
+      if (!user?.uid) return;
+      await getUserResumes(user.uid);
+    }
+    updateUi();
+  }, []);
+
+  async function handleDelete(id: string) {
+    try {
+      if (!user) return;
+      await deleteResume(user?.uid, id);
+      toast.success("Resume deleted successfully");
+      console.log(id);
+      await getUserResumes(user.uid);
+      setResume((prev) => prev.filter((r) => r.id !== id));
+    } catch (error: any) {
+      console.log("Error deleting resume:", error.message);
+    }
+  }
 
   return (
     // List of Completed Resume
     <>
       {!loading ? (
         <section className=" p-4 pb-12 min-w-full">
-          <h2 className="text-lg sm:text-xl mb-16 font-semibold">My Resume</h2>
-          <div className="flex flex-wrap gap-8 justify-center sm:justify-start w-full">
-            {resumes.map((res: any) => {
-              return (
-                <div
-                  key={res.id}
-                  className="group relative bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full max-w-[350px]"
-                >
-                  <img
-                    src="/images/resume.png"
-                    alt="Software Engineer Resume Thumbnail"
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
-                    <button title="edit" className="text-white cursor-pointer">
-                      <span className="absolute left-[5000px]">edit</span>
-                      <FaEdit size={25} />
-                    </button>
-                    <button
-                      title="delete"
-                      className=" text-white cursor-pointer p-2"
+          {resumes.length === 0 ? (
+            <div className="flex flex-col justify-center min-h-[75vh] items-center gap-2">
+              <h1 className="text-2xl">No Saved Resume to Show</h1>
+              <button
+                onClick={() => {
+                  router.push("/build");
+                }}
+                className="py-2 px-4 bg-indigo-500 rounded-md cursor-pointer"
+              >
+                Create One
+              </button>
+            </div>
+          ) : (
+            <>
+              <h2 className="text-lg sm:text-xl mb-16 font-semibold">
+                My Resume
+              </h2>
+              <div className="flex flex-wrap gap-8 justify-center sm:justify-start w-full">
+                {resume.map((res: any) => {
+                  return (
+                    <div
+                      key={res.id}
+                      className="group relative bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full max-w-[350px]"
                     >
-                      <span className="absolute left-[5000px]">delete</span>
-                      <FaTrashAlt size={25} fill="#ff0000" />
-                    </button>
-                  </div>
-                  <div className="p-4">
-                    <p className="font-semibold text-gray-800 dark:text-gray-200 truncate">
-                      Software Engineer Resume
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                      <img
+                        src="/images/resume.png"
+                        alt="Software Engineer Resume Thumbnail"
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                        <button
+                          title="edit"
+                          className="text-white cursor-pointer"
+                        >
+                          <span className="absolute left-[5000px]">edit</span>
+                          <FaEdit size={25} />
+                        </button>
+                        <button
+                          disabled={loading}
+                          onClick={() => {
+                            handleDelete(res.id);
+                          }}
+                          title="delete"
+                          className=" text-white cursor-pointer p-2"
+                        >
+                          <span className="absolute left-[5000px]">delete</span>
+                          <FaTrashAlt size={25} fill="#ff0000" />
+                        </button>
+                      </div>
+                      <div className="p-4">
+                        <p className="font-semibold text-gray-800 dark:text-gray-200 truncate">
+                          Software Engineer Resume
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>{" "}
+            </>
+          )}
         </section>
       ) : (
         <div className="min-h-[80vh] flex flex-col items-center justify-center">

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { toast } from "react-toastify";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("auth_token")?.value;

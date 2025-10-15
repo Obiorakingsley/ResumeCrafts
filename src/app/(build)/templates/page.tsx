@@ -4,16 +4,17 @@ import { useRouter } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
 
 import { FaCircleCheck } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
+import { auth } from "@/lib/config/firebase";
 
 const page = () => {
   const { resumeData, setResumeData, template, setTemplate } = useResumeStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { user, setModal } = useAuthStore();
-
+  const { setModal } = useAuthStore();
+  const user = auth.currentUser;
   //Make Request to Openai
   async function fetchData(temp: string) {
     if (!user) {

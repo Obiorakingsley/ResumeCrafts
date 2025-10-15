@@ -3,12 +3,16 @@ import { useState } from "react";
 import { Check, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuthStore } from "@/store/useAuthStore";
-import Payment from "@/component/Payment";
+import { payWithPaystack } from "@/component/Payment";
+import { toast } from "react-toastify";
+import { auth } from "@/lib/config/firebase";
+import Load from "@/component/load";
 
 type BillingCycle = "monthly" | "yearly";
 
 interface PricingCardProps {
   title: string;
+  amount: number;
   description: string;
   price: string;
   priceSuffix?: string;
@@ -21,6 +25,7 @@ interface PricingCardProps {
 }
 
 function PricingCard({
+  amount,
   title,
   description,
   price,
@@ -32,6 +37,19 @@ function PricingCard({
   highlight,
   popular,
 }: PricingCardProps) {
+  const [loading, setLoading] = useState(false);
+  function handleApayment() {
+    setLoading(true);
+    if (!auth.currentUser?.email) {
+      toast.error("Please login to continue");
+      return setLoading(false);
+    }
+    payWithPaystack({ amount, email: auth.currentUser?.email }).catch(() => {
+      toast.error("Payment failed. Please try again.");
+
+      setLoading(false);
+    });
+  }
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -94,7 +112,10 @@ function PricingCard({
       </ul>
 
       <button
-        disabled={disabledButton}
+        onClick={() => {
+          handleApayment();
+        }}
+        disabled={disabledButton || loading}
         className={`mt-8 w-full py-2 rounded-lg font-medium transition 
         ${
           disabledButton
@@ -111,6 +132,7 @@ function PricingCard({
 }
 
 export default function PricingPage() {
+  const { user, loading, setLoading } = useAuthStore();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const store = useAuthStore.getState();
   return (
@@ -124,7 +146,6 @@ export default function PricingPage() {
           Upgrade anytime. Start free, scale when you're ready
         </p>
       </div>
-      <Payment email="kingsleyobiora527@gmail.com" />
 
       {/* Billing Toggle */}
       <div className="flex justify-center mb-10">
@@ -162,6 +183,7 @@ export default function PricingPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         <PricingCard
+          amount={0}
           title="Free"
           price="0"
           description="For beginners who want to test the waters."
@@ -184,6 +206,7 @@ export default function PricingPage() {
         <PricingCard
           popular
           title="Pro"
+          amount={billingCycle === "monthly" ? 3000 : 30000}
           price={billingCycle === "monthly" ? "3,000" : "30,000"}
           description={
             billingCycle === "monthly"
@@ -200,16 +223,21 @@ export default function PricingPage() {
             "Priority support",
           ]}
           buttonText={
-            store.profile?.plan === "pro"
+            store.profile?.plan === "pro" &&
+            billingCycle === store.profile.billingCycle
               ? "Current Plan"
               : `Upgrade to Pro (${billingCycle})`
           }
-          disabledButton={store.profile?.plan === "pro"}
+          disabledButton={
+            store.profile?.plan === "pro" &&
+            billingCycle === store.profile.billingCycle
+          }
           highlight
         />
 
         <PricingCard
           title="Lifetime"
+          amount={50000}
           price="50,000"
           description="One-time payment, unlimited forever 🔥"
           features={[

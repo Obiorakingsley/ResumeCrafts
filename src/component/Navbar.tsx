@@ -8,13 +8,14 @@ import { FaDollarSign, FaEllipsisV, FaSignInAlt, FaUser } from "react-icons/fa";
 import { FaFileLines } from "react-icons/fa6";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
+import { auth } from "@/lib/config/firebase";
 
 const Navbar = () => {
   const path = usePathname();
   const text = path === "/" ? "My Resume" : "New Resume";
   const { resetResumeData } = useResumeStore();
   const [menu, setMenu] = useState(false);
-  const { user, setModal } = useAuthStore();
+  const { setModal } = useAuthStore();
   const router = useRouter();
 
   return (
@@ -24,45 +25,40 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-2">
-        {useAuthStore.getState().loading ? (
-          <div className="relative hidden sm:block mr-6 w-4 h-4">
-            <span className="border-2 border-t-transparent border-slate-500 dark:border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
-          </div>
-        ) : (
-          <nav className="hidden sm:block">
-            <ul className="list-none flex items-center gap-4 justify-between max-w-80">
-              <Link
-                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-                href="/templates"
+        <nav className="hidden sm:block">
+          <ul className="list-none flex items-center gap-4 justify-between max-w-80">
+            <Link
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              href="/templates"
+            >
+              <li>Template</li>
+            </Link>
+            <Link
+              className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              href="/pricing"
+            >
+              <li>Pricing</li>
+            </Link>
+            {!auth.currentUser && (
+              <button
+                onClick={() => {
+                  setModal(true);
+                }}
+                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors cursor-pointer"
               >
-                <li>Template</li>
-              </Link>
-              <Link
-                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
-                href="/pricing"
-              >
-                <li>Pricing</li>
-              </Link>
-              {!user && (
-                <button
-                  onClick={() => {
-                    setModal(true);
-                  }}
-                  className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors cursor-pointer"
-                >
-                  Sign In
-                </button>
-              )}
-            </ul>
-          </nav>
-        )}
+                Sign In
+              </button>
+            )}
+          </ul>
+        </nav>
 
         <button
           onClick={() => {
-            if (!user) {
-              return setModal(true);
+            if (!auth.currentUser) {
+              setModal(true);
+              return;
             }
-            resetResumeData();
+            if (path !== "/") resetResumeData();
             router.push(path === "/" ? "/resume" : "/build");
           }}
           type="button"
@@ -73,7 +69,7 @@ const Navbar = () => {
         {/* Profile icon */}
         <button
           onClick={() => {
-            if (!user) {
+            if (!auth.currentUser) {
               return setModal(true);
             } else {
               router.push("/profile");
@@ -84,7 +80,9 @@ const Navbar = () => {
           {
             <img
               src={
-                user?.photoURL ? user?.photoURL.toString() : "/images/user.png"
+                auth.currentUser?.photoURL
+                  ? auth.currentUser.photoURL.toString()
+                  : "/images/user.png"
               }
               alt="profile pic"
               width={17}
@@ -111,7 +109,7 @@ const Navbar = () => {
       {menu && (
         <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[64px] sm:hidden">
           <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
-            {!user && (
+            {!auth.currentUser && (
               <li
                 className="flex cursor-pointer items-center gap-2"
                 onClick={() => {
@@ -146,7 +144,7 @@ const Navbar = () => {
               className="flex items-center gap-1.5"
               onClick={() => {
                 setMenu((prev) => !prev);
-                if (!user) {
+                if (!auth.currentUser) {
                   return setModal(true);
                 } else {
                   router.push("/profile");

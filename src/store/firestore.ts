@@ -11,6 +11,7 @@ import {
   query,
   where,
   getCountFromServer,
+  deleteDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useAuthStore } from "./useAuthStore";
@@ -28,6 +29,7 @@ export async function createUserProfile(user: any) {
       name: user.displayName || "",
       email: user.email,
       plan: "free",
+      billingCycle: "",
       createdAt: serverTimestamp(),
       lastLogin: serverTimestamp(),
     });
@@ -108,6 +110,13 @@ export async function saveUserResume(
     toast.error("Failed to save resume");
     return null;
   }
+}
+
+// Delete Resume
+export async function deleteResume(uid: string, resumeId: string) {
+  if (!uid || !resumeId) return;
+  const deleteRef = doc(db, "users", uid, "resumes", resumeId);
+  await deleteDoc(deleteRef);
 }
 
 // Update Resume

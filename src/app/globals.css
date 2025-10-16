@@ -54,6 +54,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  font-size: 1rem;
 }
 .menu {
   background-color: var(--background);
@@ -95,6 +96,27 @@ body {
   background-size: cover;
   background-image: url("/images/resume.png");
   height: 70vh;
+}
+
+.scale-wrapper {
+  width: 100%;
+  position: relative;
+  display: grid !important;
+  justify-content: center !important;
+}
+
+.scale-container {
+  scale: 0.4;
+  width: 100% !important;
+  display: grid;
+}
+
+.scale-temp {
+  scale: 1;
+  width: 761px !important;
+  min-height: 700px;
+
+  border: 2px solid #cacaca;
 }
 
 .modern-bg {
@@ -146,4 +168,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .pricing {
   background-color: var(--background);
   color: var(--color);
+}
+
+@media screen and (min-width: 650px) {
+  .scale-container {
+    scale: 0.8;
+    width: 100% !important;
+    display: grid;
+  }
+
+  .scale-temp {
+    scale: 1;
+    width: 796px !important;
+    min-height: 700px;
+    border: 1px solid var(--background);
+  }
 }

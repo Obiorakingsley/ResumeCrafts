@@ -50,26 +50,26 @@ export default function DownloadButtons() {
       <button
         type="button"
         onClick={() => handleSave()}
-        className="border-s-green-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 "
+        className="border-s-green-600 border dark:border-white dark:text-white text-black px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-lg "
       >
-        <FaRegSave size={20} />
-        Save Resume
+        <FaRegSave size={18} />
+        Save
       </button>
       <button
         type="button"
         onClick={() => handleDownload("pdf")}
-        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 "
+        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-lg"
       >
-        <FaFileDownload size={20} />
-        Download PDF
+        <FaFileDownload size={15} />
+        PDF
       </button>
       <button
         type="button"
         onClick={() => handleDownload("docx")}
-        className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1"
+        className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-lg"
       >
-        <FaFileDownload />
-        Download DOCX
+        <FaFileDownload size={15} />
+        DOCX
       </button>
     </div>
   );

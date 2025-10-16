@@ -108,7 +108,7 @@ const page = () => {
                       )}
                     </button>
 
-                    <Link className="hidden lg:block" href="/templates/modern">
+                    <Link href="/templates/modern">
                       <button className="bg-indigo-600 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-4 cursor-pointer">
                         Preview
                       </button>
@@ -157,7 +157,7 @@ const page = () => {
                         <span>Use Template</span>
                       )}
                     </button>
-                    <Link className="hidden lg:block" href="/templates/classic">
+                    <Link href="/templates/classic">
                       <button className="bg-indigo-600 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-4 cursor-pointer">
                         Preview
                       </button>
@@ -207,10 +207,7 @@ const page = () => {
                         <span>Use Template</span>
                       )}
                     </button>
-                    <Link
-                      className="hidden lg:block"
-                      href="/templates/creative"
-                    >
+                    <Link href="/templates/creative">
                       <button className="bg-indigo-600 text-white font-bold text-sm px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-4 cursor-pointer">
                         Preview
                       </button>

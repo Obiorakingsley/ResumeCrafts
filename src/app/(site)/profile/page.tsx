@@ -146,42 +146,42 @@ const page = () => {
       </section>
 
       {/* Profile Details */}
-      <section className="dark:bg-black dark:text-slate-50 rounded-2xl shadow p-6 space-y-3">
+      <section className="dark:bg-black dark:text-slate-50 rounded-2xl shadow p-6  space-y-3">
         <h3 className="text-lg font-semibold border-b pb-2 dark:text-gray-300">
           Profile Details
         </h3>
         <div className="flex flex-col gap-4">
           <div className="flex justify-between text-sm">
             <span>Uid:</span>
-            <span className="text-sm text-gray-400">{user?.uid}</span>
+            <span className="text-xs text-gray-400">{user?.uid}</span>
           </div>
           <div className="flex justify-between text-sm">
             <div className="text-sm">
               {formatProviderName(authProvider || "")}
             </div>
-            <span className="text-sm text-gray-400">Connected</span>
+            <span className="text-xs text-gray-400">Connected</span>
           </div>
           <div className="flex justify-between text-sm">
             <span>Subscription:</span>
-            <span className="text-sm text-gray-400">{profile?.plan}</span>
+            <span className="text-xs text-gray-400">{profile?.plan}</span>
           </div>
           {profile?.billingCycle && (
             <div className="flex justify-between text-sm">
               <span>BillingCycle:</span>
-              <span className="text-sm text-gray-400">
+              <span className="text-xs text-gray-400">
                 {profile?.billingCycle}
               </span>
             </div>
           )}
           <div className="flex justify-between text-sm">
             <span>Account Created:</span>
-            <span className="text-sm text-gray-400">
+            <span className="text-xs text-gray-400">
               {user?.metadata.creationTime}
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span>Last Login:</span>
-            <span className="text-sm text-gray-400">
+            <span className="text-xs text-gray-400">
               {user?.metadata.lastSignInTime}
             </span>
           </div>

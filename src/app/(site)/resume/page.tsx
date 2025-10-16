@@ -5,22 +5,41 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { auth } from "@/lib/config/firebase";
 import { deleteResume } from "@/store/firestore";
 import { toast } from "react-toastify";
-import { getUserResumes } from "@/store/firestore";
+import { editResume } from "@/store/firestore";
 import { useRouter } from "next/navigation";
+import { useResumeStore } from "@/store/resumeStore";
 
 const page = () => {
-  const { profile, resumes, loading } = useAuthStore();
+  const { profile, resumes, loading, setEditting } = useAuthStore();
+  const { setResumeData, resetResumeData } = useResumeStore();
   const user = auth.currentUser;
   const router = useRouter();
-  const [resume, setResume] = useState(resumes || []);
+  const [resume, setResume] = useState(resumes);
 
   useEffect(() => {
     async function updateUi() {
-      if (!user?.uid) return;
-      await getUserResumes(user.uid);
+      setResume(resumes);
     }
     updateUi();
-  }, []);
+  }, [loading, resumes]);
+
+  //Edit Resume
+  async function handleEdit(id: string) {
+    try {
+      if (!user?.uid) return;
+      setEditting(true);
+      resetResumeData();
+      const data: any = await editResume(user?.uid, id);
+      setResumeData(data.data);
+      console.log(data.data);
+      router.push("/build");
+    } catch (err: any) {
+      toast.error("Faild to edit resume");
+      console.log(err.message);
+    }
+  }
+
+  //Delete Resume
 
   async function handleDelete(id: string) {
     try {
@@ -28,10 +47,9 @@ const page = () => {
       await deleteResume(user?.uid, id);
       toast.success("Resume deleted successfully");
       console.log(id);
-      await getUserResumes(user.uid);
       setResume((prev) => prev.filter((r) => r.id !== id));
     } catch (error: any) {
-      console.log("Error deleting resume:", error.message);
+      toast.error("Error deleting resume:");
     }
   }
 
@@ -71,6 +89,9 @@ const page = () => {
                       />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
                         <button
+                          onClick={() => {
+                            handleEdit(res.id);
+                          }}
                           title="edit"
                           className="text-white cursor-pointer"
                         >

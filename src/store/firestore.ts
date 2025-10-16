@@ -119,6 +119,13 @@ export async function deleteResume(uid: string, resumeId: string) {
   await deleteDoc(deleteRef);
 }
 
+export async function editResume(uid: string, resumeId: string) {
+  if (!uid || !resumeId) return;
+  const editRef = doc(db, "users", uid, "resumes", resumeId);
+  const snapshot = await getDoc(editRef);
+  return snapshot.exists() ? { ...snapshot.data() } : null;
+}
+
 // Update Resume
 export async function updateResume(
   uid: string,

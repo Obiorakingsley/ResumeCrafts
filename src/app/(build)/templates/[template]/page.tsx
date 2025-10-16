@@ -93,15 +93,15 @@ export default function PreviewPage({
         <FaArrowLeft />
         Back
       </button>
-      <div className="mt-6  mb-6 flex items-center justify-between">
-        <h2 className="text-xl sm:text-2xl  font-bold ">
+      <div className="mt-6  mb-6 flex items-center flex-col justify-between gap-4">
+        <h2 className="text-md sm:text-lg  font-bold ">
           {template.toUpperCase()} Template Preview
         </h2>
         <DownloadResume />
       </div>
 
       {/* Template Preview */}
-      <div className="border p-4 rounded bg-white">
+      <div className=" p-4 rounded bg-white w-full scale-wrapper">
         {selected === "modern" && (
           <Modern
             data={Object.keys(resumeData).length ? resumeData : dummyData}

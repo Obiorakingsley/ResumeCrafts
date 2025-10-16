@@ -6,10 +6,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
   const router = useRouter();
   const { resumeData, setResumeData } = useResumeStore();
+  const { editting } = useAuthStore();
 
   //Persolal info zod schema
   const schema = z.object({
@@ -22,7 +24,7 @@ const page = () => {
         "Please enter your first name and last name"
       ),
     email: z.string().min(1, "Invalid email"),
-    phone: z.string().regex(/^\d{11,15}$/, "Please enter a valid phone number"),
+    phone: z.string().regex(/^\d{10,15}$/, "Please enter a valid phone number"),
     linkedIn: z.string(),
   });
 
@@ -60,6 +62,7 @@ const page = () => {
           <input
             id="fullName"
             type="text"
+            defaultValue={editting ? resumeData.fullName : ""}
             placeholder="e.g. John Doe"
             autoFocus
             {...register("fullName")}
@@ -74,6 +77,7 @@ const page = () => {
         <label htmlFor="email">
           Email
           <input
+            defaultValue={editting ? resumeData.email : ""}
             id="email"
             type="email"
             placeholder="e.g. JohnDoe@email.com"
@@ -87,6 +91,7 @@ const page = () => {
         <label htmlFor="phone">
           Phone
           <input
+            defaultValue={editting ? resumeData.phone : ""}
             id="phone"
             type="phone"
             placeholder="e.g. 555 555 555"
@@ -100,6 +105,7 @@ const page = () => {
         <label htmlFor="social">
           LinkedIn
           <input
+            defaultValue={editting ? resumeData.linkedIn : ""}
             id="social"
             type="url"
             placeholder="e.g. linkedIn.com/in/JohnDoe"

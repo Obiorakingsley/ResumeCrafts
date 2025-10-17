@@ -69,7 +69,7 @@ export async function generateModernPDF(data: any) {
     doc.on("data", (chunk) => chunks.push(chunk));
     doc.on("end", () => resolve(Buffer.concat(chunks)));
 
-    // 📐 Layout dimensions
+    // Layout dimensions
     const pageWidth =
       doc.page.width - doc.page.margins.left - doc.page.margins.right;
     const leftColWidth = pageWidth * 0.3; // 30% for sidebar
@@ -78,8 +78,7 @@ export async function generateModernPDF(data: any) {
 
     let topY = doc.y;
 
-    // ============================
-    // 🧭 LEFT SIDEBAR
+    //LEFT SIDEBAR
     // ============================
     doc.x = doc.page.margins.left;
     doc.y = topY;
@@ -87,7 +86,7 @@ export async function generateModernPDF(data: any) {
     // Full Name
     doc
       .font("Roboto-Bold")
-      .fontSize(18)
+      .fontSize(20)
       .fillColor("black")
       .text(data.fullName || "", {
         width: leftColWidth,
@@ -146,9 +145,6 @@ export async function generateModernPDF(data: any) {
       });
     }
 
-    // ============================
-    // 📝 RIGHT MAIN CONTENT
-    // ============================
     doc.x = doc.page.margins.left + leftColWidth + gutter;
     doc.y = topY;
 
@@ -156,7 +152,7 @@ export async function generateModernPDF(data: any) {
       doc.moveDown(0.5);
       doc
         .font("Roboto-Bold")
-        .fontSize(16)
+        .fontSize(14)
         .fillColor("black")
         .text(title.toUpperCase(), { width: rightColWidth });
       doc.moveDown(0.2);
@@ -181,8 +177,6 @@ export async function generateModernPDF(data: any) {
         align: "left",
       });
     }
-
-    // ✅ Removed Skills section here
 
     // === Experience ===
     if (data.experience?.length) {

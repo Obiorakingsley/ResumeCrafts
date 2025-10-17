@@ -93,8 +93,8 @@ export default function PreviewPage({
         <FaArrowLeft />
         Back
       </button>
-      <div className="mt-6  mb-6 flex items-center flex-col justify-between gap-4">
-        <h2 className="text-md sm:text-lg  font-bold ">
+      <div className="mt-6  mb-6 flex items-center flex-col sm:flex-row justify-between gap-4">
+        <h2 className="text-md sm:text-2xl  font-bold ">
           {template.toUpperCase()} Template Preview
         </h2>
         <DownloadResume />

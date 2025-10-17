@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
-  const { resumeData, setResumeData } = useResumeStore();
+  const { resumeData, setResumeData, editting } = useResumeStore();
 
   //Skills zod Schema
   const schema = z.object({
@@ -50,6 +50,7 @@ const page = () => {
             Add your skills (e.g, Project Management, Python, JavaScript, React)
           </span>
           <input
+            defaultValue={editting ? resumeData.skills : ""}
             id="skills"
             type="text"
             placeholder="e.g. React, Figma, "
@@ -69,6 +70,7 @@ const page = () => {
           <label htmlFor="location">
             Location
             <input
+              defaultValue={editting ? resumeData.location : ""}
               type="text"
               id="location"
               placeholder="e.g, Lagos, Nigeria"

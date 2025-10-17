@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import { auth } from "@/lib/config/firebase";
+import Loading from "@/component/load";
 
 const page = () => {
   const { resumeData, setResumeData, template, setTemplate } = useResumeStore();
@@ -51,8 +52,8 @@ const page = () => {
     //List of available Templates
     <>
       {useAuthStore().loading ? (
-        <div className="flex flex-col items-center justify-center h-[80vh] text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-500 border-solid mb-4"></div>
+        <div className="w-full min-h-[80vh] absolute flex flex-col justify-center items-center">
+          <Loading width={10} height={10} />
         </div>
       ) : (
         <section className="flex-grow container mx-auto px-6 py-12">
@@ -73,7 +74,7 @@ const page = () => {
               onClick={() => {
                 setTemplate("modern");
               }}
-              className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
+              className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl dark:hover:shadow-gray-500/10 container"
             >
               <span className="absolute right-0 top-0 text-indigo-500 p-4">
                 {template === "modern" && <FaCircleCheck size={20} />}
@@ -123,7 +124,7 @@ const page = () => {
               onClick={() => {
                 setTemplate("classic");
               }}
-              className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
+              className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container dark:hover:shadow-gray-500/10"
             >
               <span className="absolute right-0 top-0 text-indigo-600 p-4">
                 {template === "classic" && <FaCircleCheck size={20} />}
@@ -172,7 +173,7 @@ const page = () => {
               onClick={() => {
                 setTemplate("creative");
               }}
-              className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container"
+              className="bg-white relative dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-shadow hover:shadow-2xl container dark:hover:shadow-gray-500/10"
             >
               <span className="absolute right-0 top-0 text-indigo-600 p-4">
                 {template === "creative" && <FaCircleCheck size={20} />}

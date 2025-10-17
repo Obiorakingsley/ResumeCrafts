@@ -6,7 +6,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { payWithPaystack } from "@/component/Payment";
 import { toast } from "react-toastify";
 import { auth } from "@/lib/config/firebase";
-import Load from "@/component/load";
+import Loading from "@/component/load";
 
 type BillingCycle = "monthly" | "yearly";
 
@@ -135,7 +135,11 @@ export default function PricingPage() {
   const { user, loading, setLoading } = useAuthStore();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const store = useAuthStore.getState();
-  return (
+  return loading ? (
+    <div className="w-full min-h-[80vh] absolute flex flex-col justify-center items-center">
+      <Loading width={10} height={10} />
+    </div>
+  ) : (
     <div className="pricing min-h-screen py-16 px-4 bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-12">

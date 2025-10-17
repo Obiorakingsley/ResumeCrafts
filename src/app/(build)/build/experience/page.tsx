@@ -2,15 +2,16 @@
 import React from "react";
 import Button from "../../_Utils/Button";
 import { FaPlus } from "react-icons/fa";
-import { string, z } from "zod";
+import { object, string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
-  const { resumeData, setResumeData } = useResumeStore();
+  const { resumeData, setResumeData, editting } = useResumeStore();
   const [exp, setExp] = useState(0);
   const router = useRouter();
 
@@ -58,6 +59,13 @@ const page = () => {
         <label htmlFor="title">
           Title
           <input
+            defaultValue={
+              editting
+                ? resumeData?.experience?.length
+                  ? resumeData.experience[0]?.title
+                  : ""
+                : ""
+            }
             id="title"
             type="text"
             placeholder="e.g. Senior Project Manager"
@@ -72,6 +80,13 @@ const page = () => {
         <label htmlFor="company">
           Company
           <input
+            defaultValue={
+              editting
+                ? resumeData?.experience
+                  ? resumeData.experience[0]?.company
+                  : ""
+                : ""
+            }
             id="company"
             type="text"
             placeholder="e.g. Tech Solution inc"
@@ -87,6 +102,13 @@ const page = () => {
         <label htmlFor="start">
           Start Date
           <input
+            defaultValue={
+              editting
+                ? resumeData?.experience
+                  ? resumeData.experience[0]?.start
+                  : ""
+                : ""
+            }
             className="input-date"
             id="start"
             type="text"
@@ -101,6 +123,13 @@ const page = () => {
         <label htmlFor="end">
           End Date
           <input
+            defaultValue={
+              editting
+                ? resumeData?.experience
+                  ? resumeData.experience[0]?.end
+                  : ""
+                : ""
+            }
             className="input-date"
             id="end"
             type="text"
@@ -115,6 +144,13 @@ const page = () => {
         <label htmlFor="roles" className="sm:col-span-2">
           Role/Achievements
           <textarea
+            defaultValue={
+              editting
+                ? resumeData?.experience
+                  ? resumeData.experience[0]?.details
+                  : ""
+                : ""
+            }
             className=" border-2 dark:border-slate-50/20 border-slate-300/40 w-full p-1 placeholder:text-sm"
             id="roles"
             cols={30}
@@ -136,7 +172,9 @@ const page = () => {
           >
             <FaPlus />
             Add
-            <span>{exp > 0 || resumeData.experience ? "more" : ""}</span>
+            <span>
+              {exp > 0 || resumeData.experience?.length ? "more" : ""}
+            </span>
           </button>
 
           {/* Custom Button */}

@@ -220,7 +220,7 @@ async function generateClassicDOCX(data: any) {
     sections: [
       {
         children: [
-          //  Full Name
+          // Full Name
           new Paragraph({
             text: data.fullName,
             heading: HeadingLevel.HEADING_1,
@@ -247,8 +247,6 @@ async function generateClassicDOCX(data: any) {
             ],
             alignment: AlignmentType.CENTER,
           }),
-
-          ,
           ...(data.website
             ? [
                 new Paragraph({
@@ -259,19 +257,21 @@ async function generateClassicDOCX(data: any) {
                 }),
               ]
             : []),
-          new Paragraph({ text: "", spacing: { after: 400 } }),
+          new Paragraph({ text: "", spacing: { after: 200 } }),
 
           // Summary
           ...(data.summary
             ? [
                 new Paragraph({
-                  text: "Summary",
+                  children: [
+                    new TextRun({ text: "Summary", size: 24, bold: true }),
+                  ],
                   heading: HeadingLevel.HEADING_2,
                   spacing: { after: 200 },
                 }),
                 new Paragraph({
                   text: data.summary,
-                  spacing: { after: 200 },
+                  spacing: { after: 400 },
                 }),
               ]
             : []),
@@ -280,13 +280,15 @@ async function generateClassicDOCX(data: any) {
           ...(data.skills?.length
             ? [
                 new Paragraph({
-                  text: "Skills",
+                  children: [
+                    new TextRun({ text: "Skills", size: 24, bold: true }),
+                  ],
                   heading: HeadingLevel.HEADING_2,
                   spacing: { before: 200, after: 100 },
                 }),
                 new Paragraph({
                   text: data.skills.join(", "),
-                  spacing: { after: 200 },
+                  spacing: { after: 400 },
                 }),
               ]
             : []),
@@ -295,7 +297,9 @@ async function generateClassicDOCX(data: any) {
           ...(data.experience?.length
             ? [
                 new Paragraph({
-                  text: "Experience",
+                  children: [
+                    new TextRun({ text: "Experience", size: 24, bold: true }),
+                  ],
                   heading: HeadingLevel.HEADING_2,
                   spacing: { before: 200, after: 100 },
                 }),
@@ -306,12 +310,11 @@ async function generateClassicDOCX(data: any) {
                         text: `${exp.title} – ${exp.company}`,
                         bold: true,
                       }),
-                      new Paragraph({
+                      new TextRun({
                         text: `\u00A0\u00A0|\u00A0\u00A0${exp.start} - ${exp.end}`,
                       }),
                     ],
                   }),
-
                   ...exp.details.map(
                     (d: string) =>
                       new Paragraph({
@@ -327,7 +330,9 @@ async function generateClassicDOCX(data: any) {
           ...(data.projects?.length
             ? [
                 new Paragraph({
-                  text: "Projects",
+                  children: [
+                    new TextRun({ text: "Projects", size: 24, bold: true }),
+                  ],
                   heading: HeadingLevel.HEADING_2,
                   spacing: { before: 200, after: 100 },
                 }),
@@ -342,18 +347,20 @@ async function generateClassicDOCX(data: any) {
                     (d: string) =>
                       new Paragraph({
                         text: `• ${d}`,
-                        spacing: { after: 200 },
+                        spacing: { after: 400 },
                       })
                   ),
                 ]),
               ]
             : []),
 
-          //Education
+          // Education
           ...(data.education?.length
             ? [
                 new Paragraph({
-                  text: "Education",
+                  children: [
+                    new TextRun({ text: "Education", size: 24, bold: true }),
+                  ],
                   heading: HeadingLevel.HEADING_2,
                   spacing: { before: 200, after: 100 },
                 }),
@@ -363,7 +370,6 @@ async function generateClassicDOCX(data: any) {
                       children: [
                         new TextRun({
                           text: `${edu.degree} – ${edu.institution}`,
-
                           bold: true,
                         }),
                         new TextRun({

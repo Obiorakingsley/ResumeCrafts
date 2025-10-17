@@ -25,7 +25,7 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
             <Link href={data.website ? data.website : "#"}>{data.website}</Link>
           </p>
 
-          <h3 className="text-lg font-semibold mt-10 mb-3">Skills</h3>
+          <h3 className="text-xl font-semibold mt-10 mb-3">Skills</h3>
           <ul className="space-y-1">
             {data.skills?.map((skill, i) => (
               <li key={i} className="text-sm">
@@ -37,12 +37,12 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
 
         <div className="col-span-2 p-6">
           <section className="mb-6">
-            <h3 className="text-lg font-bold text-blue-600">Summary</h3>
+            <h3 className="text-xl font-bold text-blue-600">Summary</h3>
             <p className="mt-2 text-gray-700">{data.summary}</p>
           </section>
 
           <section className="mb-6 ">
-            <h3 className="text-lg font-bold text-blue-600">Experience</h3>
+            <h3 className="text-xl font-bold text-blue-600">Experience</h3>
             {data.experience?.map((exp, i) => (
               <div key={i} className="mt-3 mb-3">
                 <h4 className="font-semibold text-gray-700">
@@ -62,7 +62,7 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
           </section>
           {data.projects?.length && (
             <section className="mb-6">
-              <h3 className="text-lg font-semibold text-blue-700">Project</h3>
+              <h3 className="text-xl font-semibold text-blue-700">Project</h3>
               {data.projects?.map((pro, i) => (
                 <div key={i} className="mt-2">
                   <h4 className="text-md text-gray-700 ">
@@ -86,12 +86,12 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
           )}
 
           <section>
-            <h3 className="text-lg font-bold text-blue-600">Education</h3>
+            <h3 className="text-xl font-bold text-blue-600">Education</h3>
             {data.education?.map((edu, i) => (
               <div key={i} className="mt-2 text-gray-700">
-                <h3 className="font-semibold">
+                <h4 className="font-semibold">
                   {edu.degree} – {edu.institution}
-                </h3>
+                </h4>
                 <p className="text-sm font-semibold text-gray-700">
                   {edu.startDate} - {edu.endDate}
                 </p>

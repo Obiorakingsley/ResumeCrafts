@@ -7,9 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
-  const { setResumeData, resumeData } = useResumeStore();
+  const { setResumeData, resumeData, editting } = useResumeStore();
   const [project, setProject] = useState(0);
 
   //Project zod schema
@@ -48,7 +49,7 @@ const page = () => {
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[70vh]">
-      <Button type="button" path="/build/experience" />
+      <Button type="button" path="/build/summary" />
 
       <h3 className="text-2xl font-bold mb-6 border-b">Project</h3>
       <form
@@ -58,6 +59,13 @@ const page = () => {
         <label htmlFor="project">
           Project Name
           <input
+            defaultValue={
+              editting
+                ? resumeData?.projects
+                  ? resumeData.projects[0]?.projectName
+                  : ""
+                : ""
+            }
             id="project"
             type="text"
             placeholder="e.g. Ecommerce Project"
@@ -76,6 +84,13 @@ const page = () => {
             URL <span className="text-xs">(optional)</span>
           </p>
           <input
+            defaultValue={
+              editting
+                ? resumeData?.projects
+                  ? resumeData.projects[0]?.url
+                  : ""
+                : ""
+            }
             id="url"
             type="text"
             placeholder="e.g. https://project.com"
@@ -91,6 +106,13 @@ const page = () => {
           <textarea
             className=" border-2 dark:border-slate-50/20 border-slate-300/40 w-full p-1"
             id="description"
+            defaultValue={
+              editting
+                ? resumeData?.projects
+                  ? resumeData.projects[0]?.description
+                  : ""
+                : ""
+            }
             cols={30}
             rows={5}
             placeholder="Project description"
@@ -119,8 +141,8 @@ const page = () => {
           <Button
             className="bg-indigo-500 transition-colors hover:bg-indigo-600 py-1 px-3 rounded-md text-slate-50"
             type="submit"
-            path="/templates"
-            text="Choose Template"
+            path="/build/summary"
+            text="Continue"
           />
         </div>
       </form>

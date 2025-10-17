@@ -9,8 +9,7 @@ type AuthState = {
   resumes: any[];
   loading: boolean;
   modal: boolean;
-  editting: boolean;
-  setEditting: (data: boolean) => void;
+
   setLoading: (data: boolean) => void;
   setUser: (user: User | null) => void;
   loadProfile: (profile: object | null) => void;
@@ -23,11 +22,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   profile: "",
   resumes: [],
-  loading: false,
+  loading: true,
   modal: false,
-  editting: true,
 
-  setEditting: (data) => set({ editting: data }),
   setLoading: (data) => set({ loading: data }),
   setUser: (user) => set({ user }),
   loadProfile: (profile) => set({ profile }),

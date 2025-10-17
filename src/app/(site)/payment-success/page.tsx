@@ -3,6 +3,8 @@ import { useEffect, useState, use } from "react";
 import { updateUserProfile, savePayment } from "@/store/firestore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { auth } from "@/lib/config/firebase";
+import { useRouter } from "next/navigation";
+import Loading from "@/component/load";
 
 export default function PaymentSuccess({
   searchParams,
@@ -12,6 +14,7 @@ export default function PaymentSuccess({
   const [status, setStatus] = useState("Verifying payment");
   const { user } = useAuthStore();
   const searchParam = use(searchParams);
+  const router = useRouter();
 
   useEffect(() => {
     async function verifyPayment() {
@@ -56,6 +59,7 @@ export default function PaymentSuccess({
             currency: data.data.currency,
             email: data.data.customer.email,
           });
+          router.push("/pricing");
         } else {
           setStatus("Payment verification failed.");
         }
@@ -68,13 +72,11 @@ export default function PaymentSuccess({
   }, [searchParam.reference]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-[80vh]">
-      {status === "Verifying payment" && (
-        <div className="flex flex-col items-center justify-center text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-500 dark:border-white border-solid mb-4"></div>
-        </div>
-      )}
-      <h1 className="text-2xl font-normal">{status}</h1>
+    <div className="flex flex-col items-center justify-center min-h-[80vh]">
+      <div className="flex items-center flex-col gap-1.5">
+        {status === "Verifying payment" && <Loading width={10} height={10} />}
+        <h1 className="text-2xl font-normal">{status}</h1>
+      </div>
     </div>
   );
 }

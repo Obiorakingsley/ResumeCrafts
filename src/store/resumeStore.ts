@@ -8,6 +8,8 @@ type resume = {
   resumeData: ResumeData;
   setResumeData: (data: Partial<ResumeData>) => void;
   resetResumeData: () => void;
+  editting: boolean;
+  setEditting: (data: boolean) => void;
 };
 
 export const useResumeStore = create(
@@ -15,6 +17,7 @@ export const useResumeStore = create(
     (set) => ({
       resumeData: {},
       template: "",
+      editting: false,
 
       //Set store
       setResumeData: (data) => {
@@ -24,6 +27,8 @@ export const useResumeStore = create(
       setTemplate: (data: string) => {
         set(() => ({ template: data }));
       },
+
+      setEditting: (data: boolean) => set({ editting: data }),
 
       //Reset store
       resetResumeData: () => set({ resumeData: {} }),

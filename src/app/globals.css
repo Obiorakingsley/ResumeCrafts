@@ -67,6 +67,10 @@ body {
     right: -100px;
     opacity: 0;
   }
+  50% {
+    right: -50px;
+    opacity: 0.5;
+  }
   100% {
     right: 0px;
     opacity: 1;

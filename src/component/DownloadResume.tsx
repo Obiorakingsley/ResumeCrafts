@@ -4,10 +4,13 @@ import { FaFileDownload, FaRegSave } from "react-icons/fa";
 import { saveUserResume } from "@/store/firestore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import Loading from "./load";
 
 export default function DownloadButtons() {
   const { resumeData, template } = useResumeStore();
   const { user } = useAuthStore();
+  const [loading, setLoading] = useState(false);
 
   const handleDownload = async (type: "pdf" | "docx") => {
     if (Object.keys(resumeData).length === 0) return;
@@ -35,30 +38,38 @@ export default function DownloadButtons() {
       toast.error("No resume data to save");
       return;
     }
-
+    setLoading(true);
     try {
       await saveUserResume(user?.uid, resumeData, template);
-      console.log("Save functionality to be implemented");
+
+      setLoading(false);
     } catch (err: any) {
-      console.log(err.message);
       toast.error("error saving resume");
+      setLoading(false);
     }
   }
 
   return (
     <div className="flex gap-4">
       <button
+        disabled={loading}
         type="button"
         onClick={() => handleSave()}
-        className="border-s-green-600 border dark:border-white dark:text-white text-black px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-lg "
+        className="border-s-green-600 border dark:border-white dark:text-white text-black py-2 rounded cursor-pointer flex items-center justify-center w-20 gap-1 text-xs sm:text-sm "
       >
-        <FaRegSave size={18} />
-        Save
+        {loading ? (
+          <span>Saving...</span>
+        ) : (
+          <>
+            <FaRegSave size={18} />
+            Save
+          </>
+        )}
       </button>
       <button
         type="button"
         onClick={() => handleDownload("pdf")}
-        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-lg"
+        className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-sm"
       >
         <FaFileDownload size={15} />
         PDF
@@ -66,7 +77,7 @@ export default function DownloadButtons() {
       <button
         type="button"
         onClick={() => handleDownload("docx")}
-        className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-lg"
+        className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer flex items-center gap-1 text-xs sm:text-sm"
       >
         <FaFileDownload size={15} />
         DOCX

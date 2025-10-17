@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
 
 const page = () => {
-  const { profile, resumes, loading, setEditting } = useAuthStore();
-  const { setResumeData, resetResumeData } = useResumeStore();
+  const { profile, resumes, loading } = useAuthStore();
+  const { setResumeData, resetResumeData, setEditting } = useResumeStore();
   const user = auth.currentUser;
   const router = useRouter();
   const [resume, setResume] = useState(resumes);
@@ -31,11 +31,9 @@ const page = () => {
       resetResumeData();
       const data: any = await editResume(user?.uid, id);
       setResumeData(data.data);
-      console.log(data.data);
       router.push("/build");
     } catch (err: any) {
       toast.error("Faild to edit resume");
-      console.log(err.message);
     }
   }
 
@@ -46,7 +44,6 @@ const page = () => {
       if (!user) return;
       await deleteResume(user?.uid, id);
       toast.success("Resume deleted successfully");
-      console.log(id);
       setResume((prev) => prev.filter((r) => r.id !== id));
     } catch (error: any) {
       toast.error("Error deleting resume:");
@@ -77,6 +74,8 @@ const page = () => {
               </h2>
               <div className="flex flex-wrap gap-8 justify-center sm:justify-start w-full">
                 {resume.map((res: any) => {
+                  console.log(res);
+
                   return (
                     <div
                       key={res.id}
@@ -112,7 +111,7 @@ const page = () => {
                       </div>
                       <div className="p-4">
                         <p className="font-semibold text-gray-800 dark:text-gray-200 truncate">
-                          Software Engineer Resume
+                          {res.id || "Untitled Resume"}
                         </p>
                       </div>
                     </div>
@@ -125,7 +124,7 @@ const page = () => {
       ) : (
         <div className="min-h-[80vh] flex flex-col items-center justify-center">
           <div className="relative m-auto w-10 h-10">
-            <span className="border-2 border-t-transparent border-white absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
+            <span className="border-4 border-t-transparent border-indigo-600 absolute p-2 rounded-full animate-spin inset-0 m-auto"></span>
           </div>
         </div>
       )}

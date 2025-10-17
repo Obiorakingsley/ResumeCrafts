@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 import Button from "../../_Utils/Button";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -10,11 +9,13 @@ import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  const { resumeData, setResumeData } = useResumeStore();
+  const { resumeData, setResumeData, editting } = useResumeStore();
   const [website, setWebsite] = useState(false);
   const router = useRouter();
   const schema = z.object({
-    summary: z.string().optional(),
+    summary: z
+      .string()
+      .min(10, "Summary should be at least 10 characters long"),
     website: z.string().min(5, "Invalid URL").optional(),
   });
 
@@ -41,6 +42,7 @@ const page = () => {
         <label htmlFor="summart" className="sm:col-span-2 ">
           Professional Summary
           <textarea
+            defaultValue={editting ? resumeData?.summary : ""}
             className=" border-2 dark:border-slate-50/20 border-slate-300/40 w-full p-1"
             id="summary"
             cols={50}
@@ -54,6 +56,7 @@ const page = () => {
             </span>
           )}
         </label>
+
         <div className="flex items-start justify-between sm:col-span-2 my-2">
           <div className="flex gap-2 flex-wrap max-w-40">
             <span>Add more sections</span>
@@ -81,7 +84,12 @@ const page = () => {
             {website && (
               <label htmlFor="website">
                 <span className="text-xs ">Website</span>
-                <input autoFocus type="url" {...register("website")} />
+                <input
+                  defaultValue={editting ? resumeData?.website : ""}
+                  autoFocus
+                  type="url"
+                  {...register("website")}
+                />
                 {errors.website && (
                   <span className="text-xs text-red-500">
                     {errors.website.message}

@@ -4,15 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useResumeStore } from "@/store/resumeStore";
-import { FaDollarSign, FaEllipsisV, FaSignInAlt, FaUser } from "react-icons/fa";
-import { FaFileLines } from "react-icons/fa6";
+import {
+  FaDollarSign,
+  FaEllipsisV,
+  FaFile,
+  FaSignInAlt,
+  FaUser,
+} from "react-icons/fa";
+import { FaFileCirclePlus, FaFileLines } from "react-icons/fa6";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/config/firebase";
 
 const Navbar = () => {
-  const path = usePathname();
-  const text = path === "/" ? "My Resume" : "New Resume";
   const { resetResumeData } = useResumeStore();
   const [menu, setMenu] = useState(false);
   const { setModal } = useAuthStore();
@@ -27,6 +31,16 @@ const Navbar = () => {
       <div className="flex items-center gap-2">
         <nav className="hidden sm:block">
           <ul className="list-none flex items-center gap-4 justify-between max-w-80">
+            <li
+              onClick={() => {
+                resetResumeData();
+                router.push("/build");
+              }}
+              className="text-md cursor-pointer font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+            >
+              New Resume
+            </li>
+
             <Link
               className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
               href="/templates"
@@ -54,17 +68,12 @@ const Navbar = () => {
 
         <button
           onClick={() => {
-            if (!auth.currentUser) {
-              setModal(true);
-              return;
-            }
-            if (path !== "/") resetResumeData();
-            router.push(path === "/" ? "/resume" : "/build");
+            router.push("/resume");
           }}
           type="button"
-          className="py-1.5 px-1 text-sm dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
+          className="py-1.5 px-1 text-md dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
         >
-          {text}
+          My Resume
         </button>
         {/* Profile icon */}
         <button
@@ -107,8 +116,8 @@ const Navbar = () => {
       </div>
 
       {menu && (
-        <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[64px] sm:hidden">
-          <ul className="flex flex-col gap-2 px-2 pb-4 min-w-48 ">
+        <nav className="menu absolute rounded-b-md rounded-t-sm right-0 top-[64px] sm:hidden min-h-[90vh] flex flex-col pb-2 justify-between">
+          <ul className="flex flex-col gap-4 px-2 pb-4 min-w-48  ">
             {!auth.currentUser && (
               <li
                 className="flex cursor-pointer items-center gap-2"
@@ -121,6 +130,17 @@ const Navbar = () => {
                 Sign In
               </li>
             )}
+            <li
+              onClick={() => {
+                resetResumeData();
+                setMenu((prev) => !prev);
+              }}
+            >
+              <Link className="flex items-center gap-0.5" href="/build">
+                <FaFileCirclePlus />
+                New Resume
+              </Link>
+            </li>
             <li
               onClick={() => {
                 setMenu((prev) => !prev);
@@ -155,6 +175,15 @@ const Navbar = () => {
               Profile
             </li>
           </ul>
+          <button
+            onClick={() => {
+              router.push("/pricing");
+              setMenu((prev) => !prev);
+            }}
+            className="py-1 text-indigo-500 dark:text-white flex justify-center items-center px-10 border-2 rounded-full text-sm cursor-pointer border-indigo-500 mx-auto"
+          >
+            Upgrade
+          </button>
         </nav>
       )}
     </>

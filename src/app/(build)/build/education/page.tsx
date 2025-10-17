@@ -8,9 +8,10 @@ import { useResumeStore } from "@/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
-  const { setResumeData, resumeData } = useResumeStore();
+  const { setResumeData, resumeData, editting } = useResumeStore();
   const [eduCount, setEduCount] = useState(0);
   const router = useRouter();
 
@@ -52,6 +53,13 @@ const page = () => {
         <label htmlFor="institution">
           Institution
           <input
+            defaultValue={
+              editting
+                ? resumeData?.education
+                  ? resumeData.education[0]?.institution
+                  : ""
+                : ""
+            }
             id="institution"
             type="text"
             placeholder="e.g. University of Californai, Berkely"
@@ -67,6 +75,13 @@ const page = () => {
         <label htmlFor="Degree">
           Degree
           <input
+            defaultValue={
+              editting
+                ? resumeData?.education
+                  ? resumeData.education[0]?.degree
+                  : ""
+                : ""
+            }
             id="Degree"
             type="text"
             placeholder="e.g. Master of Business Administration"
@@ -82,6 +97,13 @@ const page = () => {
         <label htmlFor="startDate">
           Start Date
           <input
+            defaultValue={
+              editting
+                ? resumeData?.education
+                  ? resumeData.education[0]?.startDate
+                  : ""
+                : ""
+            }
             id="startDate"
             type="text"
             {...register("startDate")}
@@ -96,6 +118,13 @@ const page = () => {
         <label htmlFor="endDate">
           End Date
           <input
+            defaultValue={
+              editting
+                ? resumeData?.education
+                  ? resumeData.education[0]?.endDate
+                  : ""
+                : ""
+            }
             id="endDate"
             type="text"
             {...register("endDate")}
@@ -114,7 +143,9 @@ const page = () => {
           >
             <FaPlus />
             Add
-            <span>{eduCount > 0 || resumeData.education ? "more" : ""}</span>
+            <span>
+              {eduCount > 0 || resumeData.education?.length ? "more" : ""}
+            </span>
           </button>
 
           <Button

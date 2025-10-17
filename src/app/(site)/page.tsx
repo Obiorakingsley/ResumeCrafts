@@ -12,7 +12,7 @@ const Home = () => {
     //Home Page
     loading ? (
       <div className="h-[80vh] flex flex-col justify-center">
-        <Loading width={12} height={12} />
+        <Loading width={10} height={10} />
       </div>
     ) : (
       <>

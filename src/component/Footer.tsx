@@ -26,7 +26,7 @@ const Footer = () => {
           </Link>
         </nav>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          &copy; 2025 ResumeCraft. All rights reserved.
+          &copy; {new Date().getFullYear()} ResumeCraft. All rights reserved.
         </p>
       </div>
     </div>

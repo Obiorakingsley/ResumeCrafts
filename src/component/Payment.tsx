@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { updateUserProfile } from "@/store/firestore";
 import { toast } from "react-toastify";
+import { auth } from "@/lib/config/firebase";
 
 export async function payWithPaystack({
   amount,
@@ -9,18 +11,32 @@ export async function payWithPaystack({
   amount: number;
   email: string;
 }) {
-  const res = await fetch("/api/paystack/initialize", {
-    method: "POST",
-    body: JSON.stringify({
-      email,
-      amount,
-    }),
-  });
-  const data = await res.json();
+  try {
+    if (!auth.currentUser) {
+      toast.error("Please log in to continue");
+      return;
+    }
+    if (amount === 0 && auth.currentUser?.uid) {
+      toast.info("Subscribing to free plan...");
+      await updateUserProfile(auth.currentUser?.uid, { plan: "free" });
+      return;
+    }
 
-  if (data.data?.authorization_url) {
-    window.location.href = data.data.authorization_url;
-  } else {
-    toast.error("Failed to initialize payment");
+    const res = await fetch("/api/paystack/initialize", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        amount,
+      }),
+    });
+    const data = await res.json();
+
+    if (data.data?.authorization_url) {
+      window.location.href = data.data.authorization_url;
+    } else {
+      toast.error("Failed to initialize payment");
+    }
+  } catch (err) {
+    toast.error("Faild to initialize payment");
   }
 }

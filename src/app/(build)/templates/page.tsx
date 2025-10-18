@@ -24,6 +24,24 @@ const page = () => {
     if (!resumeData || Object.keys(resumeData).length === 0) {
       return toast.warn("Please fill out your resume.");
     }
+
+    //Free plan limit
+    if (
+      useAuthStore.getState().profile.plan === "free" &&
+      template === "classic"
+    ) {
+      toast.success("For pro users only");
+      return;
+    }
+
+    if (
+      useAuthStore.getState().profile.plan === "free" &&
+      template === "creative"
+    ) {
+      toast.success("For pro users only");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch(`/api/generate-resume`, {
@@ -40,7 +58,31 @@ const page = () => {
 
       setResumeData(data);
       console.log("Resume data updated:", resumeData);
-      router.push(`/templates/${temp}`);
+
+      if (
+        useAuthStore.getState().profile.plan === "free" &&
+        template === "classic"
+      ) {
+        router.push(`/templates/modern`);
+        return;
+      }
+      /////
+
+      if (
+        useAuthStore.getState().profile.plan === "free" &&
+        template === "creative"
+      ) {
+        router.push(`/templates/modern`);
+        return;
+      }
+
+      ////
+      if (useAuthStore.getState().profile.plan === "pro") {
+        router.push(`/templates/${temp}`);
+        return;
+      }
+
+      router.push(`/templates/modern`);
     } catch (error) {
       console.log(error);
     } finally {

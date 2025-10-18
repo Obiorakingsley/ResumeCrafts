@@ -4,27 +4,21 @@ import Button from "@/app/(build)/_Utils/Button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
+import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
+import { useRef } from "react";
 
 const page = () => {
   const router = useRouter();
-  const { resumeData, setResumeData } = useResumeStore();
+  const form = useRef<HTMLFormElement>(null);
 
   //Contact info zod schema
   const schema = z.object({
-    Name: z
-      .string()
-      .min(4, "Full name must be at least 4 characters long")
-      .max(60)
-      .regex(
-        /^[a-zA-Z]+(?: [a-zA-Z]+)+$/,
-        "Please enter your first name and last name"
-      ),
+    name: z.string().min(4, "Name must be at least 4 characters long").max(60),
+
     email: z.string().min(1, "Invalid email"),
-    subject: z
-      .string()
-      .regex(/^\d{11,15}$/, "Please enter a valid subject number"),
+    subject: z.string(),
     message: z.string(),
   });
 
@@ -36,7 +30,19 @@ const page = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
-  const sendData = (data: contactUs) => {};
+  const sendData = (data: contactUs) => {
+    if (!form.current) return;
+    emailjs
+      .sendForm("gmail", "template_rw9m4id", form.current, "OMD1TAWuA87VPJxeb")
+      .then(() => {
+        toast.success("Message sent successfully");
+        form.current?.reset(),
+          (error: any) => {
+            toast.error("Faild to send message");
+            console.log(error);
+          };
+      });
+  };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[80vh]">
       <Button type="button" path="/" />
@@ -48,6 +54,7 @@ const page = () => {
       </div>
 
       <form
+        ref={form}
         onSubmit={handleSubmit(sendData)}
         className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 sm:grid-cols-2 align-center border-2 border-slate-400/20"
       >
@@ -58,10 +65,10 @@ const page = () => {
             type="text"
             placeholder="e.g. John Doe"
             autoFocus
-            {...register("Name")}
+            {...register("name")}
           />
-          {errors.Name && (
-            <span className="text-red-500 text-xs">{errors.Name.message}</span>
+          {errors.name && (
+            <span className="text-red-500 text-xs">{errors.name.message}</span>
           )}
         </label>
 

@@ -191,14 +191,10 @@ export default function PricingPage() {
           title="Free"
           price="0"
           description="For beginners who want to test the waters."
-          features={[
-            "Access to 1 basic template",
-            "3 AI rewrites / month",
-            "PDF download only",
-          ]}
+          features={["Access to 1 basic template", "PDF download only"]}
           disabledFeatures={[
             "DOCX download",
-            "Custom branding",
+            "Unlimited Downloads",
             "Multiple resumes",
           ]}
           buttonText={
@@ -220,9 +216,9 @@ export default function PricingPage() {
           priceSuffix={billingCycle === "monthly" ? "/mo" : "/yr"}
           features={[
             "All premium templates",
-            "Unlimited AI rewrites",
+            "Unlimited Downloads",
             "PDF & DOCX download",
-            "Custom branding & colors",
+
             "Multiple resume saves",
             "Priority support",
           ]}

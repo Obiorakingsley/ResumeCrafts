@@ -3,6 +3,9 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { cookies } from "next/headers";
 import { adminAuth } from "@/lib/config/firebaseAdmin";
+import { auth } from "@/lib/config/firebase";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useResumeStore } from "@/store/resumeStore";
 
 // Call OpenAI
 const openai = new OpenAI({
@@ -114,7 +117,7 @@ ${JSON.stringify(body)}
     let completion;
     try {
       completion = await openai.chat.completions.create({
-        model: "openai/gpt-oss-20b:free",
+        model: process.env.NEXT_PUBLIC_MODEL || "",
         messages: [{ role: "user", content: prompt }],
       });
     } catch (err: any) {
@@ -163,7 +166,7 @@ ${JSON.stringify(body)}
         error: "Internal Server Error",
         message: error?.message || String(error),
       },
-      { status: 500 }
+      { status: 520 }
     );
   }
 }

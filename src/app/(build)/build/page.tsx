@@ -41,7 +41,13 @@ const page = () => {
   };
   return (
     <section className="flex flex-col w-full items-center justify-center py-12 px-3 min-h-[80vh]">
-      <Button type="button" path="/" />
+      <div
+        onClick={() => {
+          router.back();
+        }}
+      >
+        <Button type="button" />
+      </div>
       <div className="mb-12 text-center">
         <h2 className="text-4xl font-bold tracking-tight">Build Your Resume</h2>
         <p className="mt-2 text-lg">

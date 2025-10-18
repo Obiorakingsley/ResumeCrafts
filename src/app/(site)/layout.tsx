@@ -5,8 +5,7 @@ import "../globals.css";
 import Footer from "@/component/Footer";
 import Navbar from "@/component/Navbar";
 import Login from "@/component/SignIn";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import Theme from "@/component/Toast-theme";
 
 // export const metadata: Metadata = {
 //   title: "Ai resume builder",
@@ -27,19 +26,7 @@ export default function RootLayout({
 
         <main className="pb-30 sm:pb-24">
           {children}
-
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={true}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
+          <Theme />
           <Login />
         </main>
 

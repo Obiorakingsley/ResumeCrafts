@@ -1,4 +1,4 @@
-import { db } from "@/lib/config/firebase";
+import { auth, db } from "@/lib/config/firebase";
 import {
   doc,
   setDoc,
@@ -74,6 +74,12 @@ export async function saveUserResume(
     //check free plan limit
     if (count >= 1 && useAuthStore.getState().profile?.plan === "free") {
       toast.error("Upgrade to save more resume.");
+      return;
+    }
+
+    //check pro plan limit
+    if (count > 4 && useAuthStore.getState().profile?.plan === "pro") {
+      toast.error("Max limit of 5 resume reached.");
       return;
     }
 

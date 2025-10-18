@@ -3,9 +3,6 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { cookies } from "next/headers";
 import { adminAuth } from "@/lib/config/firebaseAdmin";
-import { auth } from "@/lib/config/firebase";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useResumeStore } from "@/store/resumeStore";
 
 // Call OpenAI
 const openai = new OpenAI({

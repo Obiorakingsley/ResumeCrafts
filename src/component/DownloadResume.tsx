@@ -1,18 +1,27 @@
 "use client";
 import { useResumeStore } from "@/store/resumeStore";
-import { FaFileDownload, FaRegSave } from "react-icons/fa";
+import { FaFileDownload, FaLock, FaRegSave } from "react-icons/fa";
 import { saveUserResume } from "@/store/firestore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import Loading from "./load";
+import { auth } from "@/lib/config/firebase";
 
 export default function DownloadButtons() {
   const { resumeData, template } = useResumeStore();
-  const { user } = useAuthStore();
+  const { user, profile } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async (type: "pdf" | "docx") => {
+    if (!auth.currentUser && type === "docx") {
+      toast.success("Please Sign In to continue");
+      return;
+    }
+
+    if (type === "docx" && profile?.plan === "free") {
+      toast.success("Template only available to pro users");
+      return;
+    }
     if (Object.keys(resumeData).length === 0) return;
     const res = await fetch(`/api/download-${template}`, {
       method: "POST",

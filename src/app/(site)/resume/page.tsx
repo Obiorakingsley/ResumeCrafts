@@ -45,6 +45,7 @@ const page = () => {
       await deleteResume(user?.uid, id);
       toast.success("Resume deleted successfully");
       setResume((prev) => prev.filter((r) => r.id !== id));
+      router.refresh();
     } catch (error: any) {
       toast.error("Error deleting resume:");
     }
@@ -55,7 +56,7 @@ const page = () => {
     <>
       {!loading ? (
         <section className=" p-4 pb-12 min-w-full">
-          {resumes.length === 0 ? (
+          {!resume.length ? (
             <div className="flex flex-col justify-center min-h-[75vh] items-center gap-2">
               <h1 className="text-2xl">No Saved Resume to Show</h1>
               <button

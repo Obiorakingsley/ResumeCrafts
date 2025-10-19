@@ -29,15 +29,15 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-2">
-        <nav className="hidden sm:block">
-          <ul className="list-none flex items-center gap-4 justify-between max-w-80">
+        <nav className="hidden w-full sm:block">
+          <ul className="list-none flex items-center gap-4">
             <li
               onClick={() => {
                 resetResumeData();
                 setEditting(false);
                 router.push("/build");
               }}
-              className="text-md cursor-pointer font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+              className="text-md cursor-pointer font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors "
             >
               New Resume
             </li>
@@ -80,7 +80,7 @@ const Navbar = () => {
             router.push("/resume");
           }}
           type="button"
-          className="py-1.5 px-1 text-md dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer"
+          className="py-1.5 px-1 text-md dark:hover:text-slate-300 bg-indigo-600/10 text-indigo-500 dark:text-slate-100 rounded-md font-semibold hover:bg-indigo-500/5 transition-colors focus:outline-none focus:ring-1 hover:ring-indigo-400 focus:ring-offset-2 cursor-pointer whitespace-nowrap"
         >
           My Resume
         </button>

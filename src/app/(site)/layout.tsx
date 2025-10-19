@@ -53,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="flex flex-col justify-between min-h-[80vh] relative">
+      <body className="flex flex-col justify-between min-h-screen relative">
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

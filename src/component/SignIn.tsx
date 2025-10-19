@@ -11,12 +11,7 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useResumeStore } from "@/store/resumeStore";
-import {
-  createUserProfile,
-  getUserProfile,
-  updateUserProfile,
-} from "@/store/firestore";
+import { createUserProfile, updateUserProfile } from "@/store/firestore";
 
 import {
   signInWithEmailAndPassword,

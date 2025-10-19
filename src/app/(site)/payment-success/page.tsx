@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, use } from "react";
 import { updateUserProfile, savePayment } from "@/store/firestore";
-import { useAuthStore } from "@/store/useAuthStore";
+
 import { auth } from "@/lib/config/firebase";
 import { useRouter } from "next/navigation";
 import Loading from "@/component/load";
@@ -12,7 +12,6 @@ export default function PaymentSuccess({
   searchParams: Promise<{ reference?: string }>;
 }) {
   const [status, setStatus] = useState("Verifying payment");
-  const { user } = useAuthStore();
   const searchParam = use(searchParams);
   const router = useRouter();
 

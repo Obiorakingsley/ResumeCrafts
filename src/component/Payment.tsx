@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
 import { updateUserProfile } from "@/store/firestore";
 import { toast } from "react-toastify";
 import { auth } from "@/lib/config/firebase";

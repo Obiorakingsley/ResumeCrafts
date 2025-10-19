@@ -82,11 +82,7 @@ const page = () => {
     }
   }
 
-  return useAuthStore.getState().loading ? (
-    <div className="h-[80vh] flex flex-col justify-center">
-      <Loading width={12} height={12} />
-    </div>
-  ) : (
+  return (
     <div className="max-w-3xl mx-auto py-8 px-4 space-y-8">
       {/* Profile Section */}
       <section className="dark:bg-black flex-wrap gap-4 flex items-start justify-between dark:text-slate-50 rounded-2xl shadow p-6 space-y-4">
@@ -173,7 +169,9 @@ const page = () => {
             <span>Subscription:</span>
             <span className="text-xs text-gray-400">{profile?.plan}</span>
           </div>
-          {profile?.billingCycle && (
+          {profile?.plan === "free" ? (
+            ""
+          ) : (
             <div className="flex justify-between text-sm">
               <span>BillingCycle:</span>
               <span className="text-xs text-gray-400">

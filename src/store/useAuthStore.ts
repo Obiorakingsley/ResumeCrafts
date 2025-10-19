@@ -41,6 +41,7 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     const profile = await getUserProfile(user.uid);
     const resumes = await getUserResumes(user.uid);
+    
 
     useAuthStore.setState({
       user,

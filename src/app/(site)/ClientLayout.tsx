@@ -17,7 +17,7 @@ export default function ClientLayout({
         <Navbar />
       </header>
 
-      <main className="pb-30 sm:pb-24">
+      <main className="pb-30 sm:pb-24 min-h-[90vh]">
         {children}
         <Theme />
         <Login />

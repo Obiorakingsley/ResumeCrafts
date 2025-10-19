@@ -2,18 +2,15 @@
 import React from "react";
 import Button from "../../_Utils/Button";
 import { FaPlus } from "react-icons/fa";
-import { object, string, z } from "zod";
+import { string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
   const { resumeData, setResumeData, editting } = useResumeStore();
   const [exp, setExp] = useState(0);
-  const router = useRouter();
 
   //Experience zod schema
   const schema = z.object({

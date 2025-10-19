@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import Button from "../../_Utils/Button";
-import { string, z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";

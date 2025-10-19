@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
   const { setResumeData, resumeData, editting } = useResumeStore();

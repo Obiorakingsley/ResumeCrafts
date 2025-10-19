@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "../_Utils/Button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
-  const { resumeData, setResumeData, editting, setEditting } = useResumeStore();
+  const { resumeData, setResumeData, editting } = useResumeStore();
 
   //Persolal info zod schema
   const schema = z.object({

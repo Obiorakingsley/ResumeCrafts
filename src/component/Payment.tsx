@@ -34,7 +34,7 @@ export async function payWithPaystack({
     } else {
       toast.error("Failed to initialize payment");
     }
-  } catch (err) {
+  } catch (_err) {
     toast.error("Faild to initialize payment");
   }
 }

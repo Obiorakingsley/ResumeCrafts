@@ -4,7 +4,6 @@ const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
 // @ts-ignore
 pdfjsLib.GlobalWorkerOptions.workerSrc = require("pdfjs-dist/legacy/build/pdf.worker.js");
 const mammoth = require("mammoth");
-import { toast } from "react-toastify";
 
 //Post Request
 export async function POST(req: Request) {

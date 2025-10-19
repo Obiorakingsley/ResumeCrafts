@@ -27,7 +27,7 @@ import { useRouter } from "next/navigation";
 
 export default function Modal() {
   const router = useRouter();
-  const { setLoading, loading, user, modal, setModal, profile, loadProfile } =
+  const { setLoading, loading, modal, setModal} =
     useAuthStore();
   const [isSignedUp, setIsSignedUp] = useState(true);
 

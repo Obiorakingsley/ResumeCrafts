@@ -3,7 +3,7 @@ import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
 
 const Edit = () => {
-  const { editting, setEditting } = useResumeStore();
+  const { setEditting } = useResumeStore();
   const router = useRouter();
   return (
     <div className="flex items-center gap-4 ">

@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { FaFile } from "react-icons/fa";
 import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function UploadResume() {
   const router = useRouter();
-  const { setResumeData, resumeData } = useResumeStore();
+  const { setResumeData } = useResumeStore();
   const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   //Handle file selection
@@ -29,7 +29,7 @@ export default function UploadResume() {
     //Upload file to server and parse
     try {
       if (!file) return;
-      setError("");
+     
       setLoading(true);
 
       const formData = new FormData();
@@ -44,14 +44,13 @@ export default function UploadResume() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "something went wrong");
       setResumeData(data.text);
-      console.log("Parsed resume data:", resumeData);
 
       // Simulate delay for better UX
       await new Promise((r) => setTimeout(r, 300));
 
       router.push("/templates");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (_err) {
+      toast.error("Error loading file");
     } finally {
       setLoading(false);
     }

@@ -1,10 +1,9 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { use, useState } from "react";
 import { ResumeData } from "@/app/(site)/resume/types";
 import Modern from "@/component/ModernTemplate";
 import Classic from "@/component/ClassicTemplate";
 import Creative from "@/component/CreativeTemplate";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useResumeStore } from "@/store/resumeStore";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
@@ -78,10 +77,10 @@ export default function PreviewPage({
   const { template } = use(params);
 
   // Set selected templates
-  const [selected, setSelected] = useState(template);
+  const [selected] = useState(template);
 
   const router = useRouter();
-  const { resumeData, setResumeData } = useResumeStore();
+  const { resumeData } = useResumeStore();
   return (
     <section className="p-6">
       <button

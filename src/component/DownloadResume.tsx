@@ -1,6 +1,6 @@
 "use client";
 import { useResumeStore } from "@/store/resumeStore";
-import { FaFileDownload, FaLock, FaRegSave } from "react-icons/fa";
+import { FaFileDownload, FaRegSave } from "react-icons/fa";
 import { saveUserResume } from "@/store/firestore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";

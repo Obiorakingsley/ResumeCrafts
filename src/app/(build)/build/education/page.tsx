@@ -7,13 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useResumeStore } from "@/store/resumeStore";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/useAuthStore";
 
 const page = () => {
   const { setResumeData, resumeData, editting } = useResumeStore();
   const [eduCount, setEduCount] = useState(0);
-  const router = useRouter();
 
   //Education zod schema
   const schema = z.object({

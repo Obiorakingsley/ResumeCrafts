@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 //Modern Resume template
 
 // Generate PDF
-export async function generateModernPDF(data: any) {
+async function generateModernPDF(data: any) {
   return new Promise<Buffer>((resolve) => {
     const regularFont = path.resolve("./public/fonts/Roboto-Regular.ttf");
     const boldFont = path.resolve("./public/fonts/Roboto-Bold.ttf");

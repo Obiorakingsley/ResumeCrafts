@@ -20,7 +20,8 @@ export async function POST(req: Request) {
   if (fileType === "pdf") {
     const pdfBuffer = await generateModernPDF(data);
 
-    return new Response(new Uint8Array(pdfBuffer), {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
+      status: 200,
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": "attachment; filename=resume.pdf",
@@ -29,7 +30,8 @@ export async function POST(req: Request) {
   } else if (fileType === "docx") {
     const docxBuffer = await generateModernDOCX(data);
 
-    return new Response(new Uint8Array(docxBuffer), {
+    return new NextResponse(new Uint8Array(docxBuffer), {
+      status: 200,
       headers: {
         "Content-Type":
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

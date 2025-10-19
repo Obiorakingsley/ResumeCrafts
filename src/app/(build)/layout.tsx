@@ -3,7 +3,7 @@ import "../globals.css";
 import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Build Your Resume | Resume Crafts",
+  title: "Build Your Resume - Resume Crafts",
   description:
     "Craft your personalized, ATS-friendly resume in real time. Edit sections, preview changes instantly, and download your final design with Resume Crafts.",
   icons: {
@@ -45,7 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className=" min-h-screen">
         <ClientLayout> {children} </ClientLayout>
       </body>
     </html>

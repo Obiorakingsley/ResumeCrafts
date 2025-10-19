@@ -1,6 +1,5 @@
+import "./globals.css";
 import type { Metadata } from "next";
-import "../globals.css";
-import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: "Resume Crafts - Build ATS-Friendly Resumes with Real-Time Preview",
@@ -48,14 +47,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="flex flex-col justify-between min-h-[80vh] relative">
-        <ClientLayout>{children}</ClientLayout>
-      </body>
-    </html>
-  );
+}) {
+  return <>{children}</>;
 }

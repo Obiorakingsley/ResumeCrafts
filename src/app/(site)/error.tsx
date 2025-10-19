@@ -47,7 +47,7 @@ export default function Error({
 
           <button
             onClick={() => router.push("/")}
-            className="flex cursor-pointer border items-center gap-2"
+            className="flex cursor-pointer items-center gap-2"
           >
             Go home
           </button>

@@ -48,18 +48,22 @@ const page = () => {
       >
         <Button type="button" />
       </div>
-      <div className="mb-12 text-center">
-        <h2 className="text-4xl font-bold tracking-tight">Build Your Resume</h2>
-        <p className="mt-2 text-lg">
-          Fill in the details below to generate a professional resume.
-        </p>
-      </div>
+      {!editting && (
+        <div className="mb-12 text-center">
+          <h2 className="text-4xl font-bold tracking-tight">
+            Build Your Resume
+          </h2>
+          <p className="mt-2 text-lg">
+            Fill in the details below to generate a professional resume.
+          </p>
+        </div>
+      )}
 
       <h3 className="text-2xl font-bold mb-6 border-b">Personal Information</h3>
 
       <form
         onSubmit={handleSubmit(sendData)}
-        className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 sm:grid-cols-2 align-center border-2 border-slate-400/20"
+        className="form dark:text-slate-300 text-black dark:bg-black/80 shadow-lg bg-slate-50 text-center p-8 rounded-xl shadow-slate-400/10 grid gap-4 sm:grid-cols-2 align-center border-2 border-slate-400/20 relative"
       >
         <label htmlFor="fullName">
           Full Name

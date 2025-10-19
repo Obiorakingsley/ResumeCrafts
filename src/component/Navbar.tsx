@@ -10,6 +10,7 @@ import {
   FaFile,
   FaSignInAlt,
   FaUser,
+  FaWindowRestore,
 } from "react-icons/fa";
 import { FaFileCirclePlus, FaFileLines } from "react-icons/fa6";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -17,15 +18,16 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/lib/config/firebase";
 
 const Navbar = () => {
-  const { resetResumeData } = useResumeStore();
+  const { resetResumeData, setEditting } = useResumeStore();
   const [menu, setMenu] = useState(false);
   const { setModal } = useAuthStore();
   const router = useRouter();
+  const path = usePathname();
 
   return (
     <>
       <Link href="/">
-        <h1 className="text-xl sm:text-2xl font-bold">ResumeCraft</h1>
+        <h1 className="text-xl sm:text-2xl font-bold">ResumeCrafts</h1>
       </Link>
 
       <div className="flex items-center gap-2">
@@ -34,6 +36,7 @@ const Navbar = () => {
             <li
               onClick={() => {
                 resetResumeData();
+                setEditting(false);
                 router.push("/build");
               }}
               className="text-md cursor-pointer font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
@@ -47,6 +50,14 @@ const Navbar = () => {
             >
               <li>Template</li>
             </Link>
+            {path.startsWith("/build") && (
+              <Link
+                className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
+                href="/templates/modern"
+              >
+                <li>Preview</li>
+              </Link>
+            )}
             <Link
               className="text-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white transition-colors"
               href="/pricing"
@@ -128,6 +139,21 @@ const Navbar = () => {
               >
                 <FaSignInAlt />
                 Sign In
+              </li>
+            )}
+            {path.startsWith("/build") && (
+              <li
+                onClick={() => {
+                  setMenu((prev) => !prev);
+                }}
+              >
+                <Link
+                  className="flex items-center gap-0.5"
+                  href="/templates/modern"
+                >
+                  <FaWindowRestore />
+                  Preview
+                </Link>
               </li>
             )}
             <li

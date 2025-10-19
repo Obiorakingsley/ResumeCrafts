@@ -11,12 +11,24 @@ import { auth } from "@/lib/config/firebase";
 import Loading from "@/component/load";
 
 const page = () => {
-  const { resumeData, setResumeData, template, setTemplate } = useResumeStore();
+  const {
+    resumeData,
+    setResumeData,
+    template,
+    setTemplate,
+    setEditting,
+    editting,
+  } = useResumeStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { setModal } = useAuthStore();
   const user = auth.currentUser;
   //Make Request to Openai
+
+  useEffect(() => {
+    if (editting) setEditting(false);
+  });
+
   async function fetchData(temp: string) {
     if (!user) {
       return setModal(true);

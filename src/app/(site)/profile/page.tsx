@@ -13,12 +13,20 @@ import { updateProfile } from "firebase/auth";
 import { redirect } from "next/navigation";
 
 const page = () => {
-  const { user, profile, loadProfile } = useAuthStore();
+  const { user, profile } = useAuthStore();
   const [name, setName] = useState("");
   const [editingName, setEditingName] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const authProvider = user?.providerData[0]?.providerId;
+
+  useEffect(() => {
+    useAuthStore.getState().loading && (
+      <div className="h-[80vh] flex flex-col justify-center">
+        <Loading width={12} height={12} />
+      </div>
+    );
+  });
 
   const formatProviderName = (id: string) => {
     switch (id) {

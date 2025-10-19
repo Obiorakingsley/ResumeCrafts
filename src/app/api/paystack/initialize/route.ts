@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           email,
           amount: amount * 100,
-          callback_url: "https://resumecrafts.vercel.app/payment-success",
+          callback_url: `${process.env.SITE_URL}.app/payment-success`,
         }),
       }
     );

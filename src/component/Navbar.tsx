@@ -93,7 +93,7 @@ const Navbar = () => {
               router.push("/profile");
             }
           }}
-          className="hidden sm:block"
+          className="hidden w-12 sm:block"
         >
           {
             <img
@@ -105,7 +105,7 @@ const Navbar = () => {
               alt="profile pic"
               width={17}
               height={17}
-              className="size-8 rounded-full cursor-pointer"
+              className="size-8 rounded-full mx-auto cursor-pointer"
             />
           }
         </button>

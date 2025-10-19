@@ -21,8 +21,9 @@ export default function ResumeTemplate3({ data }: { data: ResumeData }) {
             </Link>
           </p>
           <p className="mb-2">
-            {" "}
-            <Link href={data.website ? data.website : "#"}>{data.website}</Link>
+            <Link href={data.website ? data.website.trim() : "#"}>
+              {data.website?.trim()}
+            </Link>
           </p>
 
           <h3 className="text-xl font-semibold mt-10 mb-3">Skills</h3>

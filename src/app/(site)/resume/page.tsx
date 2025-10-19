@@ -87,7 +87,7 @@ const page = () => {
                         alt="Software Engineer Resume Thumbnail"
                         className="w-full h-40 object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                      <div className="absolute inset-0 bg-black/50 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
                         <button
                           onClick={() => {
                             handleEdit(res.id);

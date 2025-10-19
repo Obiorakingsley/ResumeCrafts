@@ -69,7 +69,6 @@ const page = () => {
       if (!data) return;
 
       setResumeData(data);
-      console.log("Resume data updated:", resumeData);
 
       if (
         useAuthStore.getState().profile.plan === "free" &&
@@ -96,7 +95,7 @@ const page = () => {
 
       router.push(`/templates/modern`);
     } catch (error) {
-      console.log(error);
+      toast.error("Error generating resume. Please try again.");
     } finally {
       setLoading(false);
     }

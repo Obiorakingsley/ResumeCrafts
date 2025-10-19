@@ -6,11 +6,10 @@ import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getUserProfile, updateUserProfile } from "@/store/firestore";
+import { updateUserProfile } from "@/store/firestore";
 import Loading from "@/component/load";
 
 import { updateProfile } from "firebase/auth";
-import { redirect } from "next/navigation";
 
 const page = () => {
   const { user, profile } = useAuthStore();
@@ -167,7 +166,9 @@ const page = () => {
           </div>
           <div className="flex justify-between text-sm">
             <span>Subscription:</span>
-            <span className="text-xs text-gray-400">{profile?.plan}</span>
+            <span className="text-xs text-gray-400">
+              {profile?.plan || "--"}
+            </span>
           </div>
           {profile?.plan === "free" ? (
             ""
@@ -175,7 +176,7 @@ const page = () => {
             <div className="flex justify-between text-sm">
               <span>BillingCycle:</span>
               <span className="text-xs text-gray-400">
-                {profile?.billingCycle}
+                {profile?.billingCycle || "--"}
               </span>
             </div>
           )}

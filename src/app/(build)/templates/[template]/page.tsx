@@ -1,5 +1,5 @@
 "use client";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ResumeData } from "@/app/(site)/resume/types";
 import Modern from "@/component/ModernTemplate";
 import Classic from "@/component/ClassicTemplate";
@@ -81,6 +81,7 @@ export default function PreviewPage({
 
   const router = useRouter();
   const { resumeData } = useResumeStore();
+
   return (
     <section className="p-6">
       <button

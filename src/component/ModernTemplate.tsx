@@ -29,7 +29,7 @@ export default function ResumeTemplate1({ data }: { data: ResumeData }) {
 
             <Link
               className="text-blue-700"
-              href={data.website ? data.website : ""}
+              href={data.website ? data.website.trim() : ""}
             >
               {data.website?.trim()}
             </Link>

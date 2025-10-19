@@ -24,7 +24,7 @@ export default function ResumeTemplate2({ data }: { data: ResumeData }) {
           >
             {data.linkedIn}
           </Link>
-          <Link href={data.website || ""} className="text-blue-700">
+          <Link href={data.website?.trim() || ""} className="text-blue-700">
             {data.website?.trim()}
           </Link>
         </p>

@@ -61,6 +61,7 @@ Based on the information provided below, do the following:
    -  Omit any key whose value would be an empty string, empty object, or empty array.
 4. Do not include any explanations, markdown, code fences, or text outside the JSON object.
 5. Return ONLY valid JSON.
+6. Trim extra spaces before the website section
 
 Schema (for reference only):
 {
@@ -124,7 +125,7 @@ ${JSON.stringify(body)}
       );
     }
 
-    const raw = completion?.choices?.[0]?.message?.content ?? "";
+    const raw = completion?.choices?.[0]?.message?.content?.trim() ?? "";
     if (!raw) {
       return NextResponse.json(
         { error: "AI returned empty response" },

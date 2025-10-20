@@ -7,32 +7,31 @@
 
 ## 🚀 Features
 
-*  **AI-Powered Resume Generation** — Generate professional summaries and experience bullet points using GPT.
-*  **Real-Time Resume Builder** — Edit your resume with instant preview updates.
-*  **Multiple Export Formats** — Export your resume as **PDF**, **DOCX**, using `pdfkit`, `docx`, and `canvas`.
-*  **ATS-Friendly Templates** — Clean, modern, recruiter-ready designs that pass Applicant Tracking Systems.
-*  **Dynamic Resume Editor** — Built with `react-hook-form`, `zustand`, and `zod` for type-safe form validation and state management.
-*  **Firebase Authentication & Firestore Storage** — Secure user accounts, cloud resume saving, and easy syncing across devices.
+- **AI-Powered Resume Generation** — Generate professional summaries and experience bullet points using GPT.
+- **Real-Time Resume Builder** — Edit your resume with instant preview updates.
+- **Multiple Export Formats** — Export your resume as **PDF**, **DOCX**, using `pdfkit`, `docx`, and `canvas`.
+- **ATS-Friendly Templates** — Clean, modern, recruiter-ready designs that pass Applicant Tracking Systems.
+- **Dynamic Resume Editor** — Built with `react-hook-form`, `zustand`, and `zod` for type-safe form validation and state management.
+- **Firebase Authentication & Firestore Storage** — Secure user accounts, cloud resume saving, and easy syncing across devices.
 
 ---
 
 ## 📸
-<img src="./src/images/screen.png" alt="App Screenshot" width="500" />
 
+<img src="./public/images/screen.jpeg" alt="App Screenshot" width="500" />
 
-## 🛠️ Tech Stack  
+## 🛠️ Tech Stack
 
 ![My Stack](https://skillicons.dev/icons?i=ts,tailwind,nextjs,firebase)
 
-
 | Category               | Tools                                                                                                                                                                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | **Frontend Framework** | [Next.js 15](https://nextjs.org/)                                                                                                                                                                                                     |
-| **UI Styling**         | [TailwindCSS](https://tailwindcss.com/)                                                                                                        |
-| **State Management**   | [Zustand](https://github.com/pmndrs/zustand), [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev)                                                                                                                 |                                                                                                                                                                                       |
+| **UI Styling**         | [TailwindCSS](https://tailwindcss.com/)                                                                                                                                                                                               |
+| **State Management**   | [Zustand](https://github.com/pmndrs/zustand), [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev)                                                                                                                 |     |
 | **Backend**            | [Firebase](https://firebase.google.com/), [Firestore](https://firebase.google.com/docs/firestore), [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)                                                                 |
 | **AI Integration**     | [OpenAI API](https://platform.openai.com/)                                                                                                                                                                                            |
-| **File Handling**      | [PDFKit](https://pdfkit.org/), [DOCX](https://github.com/dolanmiu/docx), [Mammoth.js](https://github.com/mwilliamson/mammoth.js), [canvas](https://www.npmjs.com/package/canvas), [pdfjs-dist](https://github.com/mozilla/pdfjs-dist) |                                                                                                                                                                                                   |
+| **File Handling**      | [PDFKit](https://pdfkit.org/), [DOCX](https://github.com/dolanmiu/docx), [Mammoth.js](https://github.com/mwilliamson/mammoth.js), [canvas](https://www.npmjs.com/package/canvas), [pdfjs-dist](https://github.com/mozilla/pdfjs-dist) |     |
 | **Notifications**      | [React Toastify](https://fkhadra.github.io/react-toastify/)                                                                                                                                                                           |
 | **Fetch / HTTP**       | [node-fetch](https://github.com/node-fetch/node-fetch)                                                                                                                                                                                |
 
@@ -76,8 +75,6 @@ NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
-
-
 ---
 
 ## 🧠 Folder Structure
@@ -100,4 +97,3 @@ app/
 
 Pull requests are welcome!
 For major changes, please open an issue first to discuss what you’d like to change.
-

@@ -16,6 +16,8 @@
 
 ---
 
+## 🔗[Demo](https://resumecrafts.vercel.app/)
+
 ## 📸
 
 <img src="./public/images/screen.jpeg" alt="App Screenshot" width="500" />

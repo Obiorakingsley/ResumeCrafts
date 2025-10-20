@@ -16,6 +16,10 @@
 
 ---
 
+## 📸
+<img src="./src/images/screen.png" alt="App Screenshot" width="500" />
+
+
 ## 🛠️ Tech Stack  
 
 ![My Stack](https://skillicons.dev/icons?i=ts,tailwind,nextjs,firebase)

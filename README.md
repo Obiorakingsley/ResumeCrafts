@@ -24,16 +24,17 @@
 
 ![My Stack](https://skillicons.dev/icons?i=ts,tailwind,nextjs,firebase)
 
-| Category               | Tools                                                                                                                                                                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| **Category**           | **Tools / Technologies**                                                                                                                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Frontend Framework** | [Next.js 15](https://nextjs.org/)                                                                                                                                                                                                     |
-| **UI Styling**         | [TailwindCSS](https://tailwindcss.com/)                                                                                                                                                                                               |
-| **State Management**   | [Zustand](https://github.com/pmndrs/zustand), [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev)                                                                                                                 |     |
+| **UI & Styling**       | [TailwindCSS](https://tailwindcss.com/)                                                                                                                                                                                               |
+| **State Management**   | [Zustand](https://github.com/pmndrs/zustand), [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev)                                                                                                                 |
 | **Backend**            | [Firebase](https://firebase.google.com/), [Firestore](https://firebase.google.com/docs/firestore), [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)                                                                 |
 | **AI Integration**     | [OpenAI API](https://platform.openai.com/)                                                                                                                                                                                            |
-| **File Handling**      | [PDFKit](https://pdfkit.org/), [DOCX](https://github.com/dolanmiu/docx), [Mammoth.js](https://github.com/mwilliamson/mammoth.js), [canvas](https://www.npmjs.com/package/canvas), [pdfjs-dist](https://github.com/mozilla/pdfjs-dist) |     |
+| **File Handling**      | [PDFKit](https://pdfkit.org/), [docx](https://github.com/dolanmiu/docx), [Mammoth.js](https://github.com/mwilliamson/mammoth.js), [canvas](https://www.npmjs.com/package/canvas), [pdfjs-dist](https://github.com/mozilla/pdfjs-dist) |
 | **Notifications**      | [React Toastify](https://fkhadra.github.io/react-toastify/)                                                                                                                                                                           |
-| **Fetch / HTTP**       | [node-fetch](https://github.com/node-fetch/node-fetch)                                                                                                                                                                                |
+| **HTTP / Fetching**    | [node-fetch](https://github.com/node-fetch/node-fetch)                                                                                                                                                                                |
+
 
 ---
 
